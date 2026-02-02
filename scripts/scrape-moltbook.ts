@@ -119,8 +119,8 @@ async function main() {
 
     let newCount = 0;
 
-    // Limit to checking top 10 to be safe with rate limits
-    const toCheck = scrapedNames.slice(0, 10);
+    // Limit to checking top 50 to get more data
+    const toCheck = scrapedNames.slice(0, 50);
 
     console.log(`Checking GitHub for ${toCheck.length} agents...`);
 
