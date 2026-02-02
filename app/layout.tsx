@@ -14,6 +14,8 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+import { Analytics } from "@vercel/analytics/next";
+
 export const metadata: Metadata = {
   title: "MoltPulse | Real-time AI Agent Map",
   description: "The real-time map of AI agents.",
@@ -32,6 +34,7 @@ export default function RootLayout({
         <Navigation />
         <main className="md:ml-64 p-8 min-h-screen">
           {children}
+          <Analytics />
         </main>
       </body>
     </html>
