@@ -1,0 +1,86 @@
+
+import React from 'react';
+import Link from 'next/link';
+import VoteButton from './VoteButton';
+
+interface Agent {
+  name: string;
+  repo: string;
+  description: string | null;
+  stars: number;
+  last_update: string;
+  trend: string;
+  votes?: number; // Optional as older rows might not have it yet
+}
+
+interface AgentCardProps {
+  agent: Agent;
+}
+
+const AgentCard: React.FC<AgentCardProps> = ({ agent }) => {
+  // Format stars
+  const formatStars = (num: number) => {
+    if (num >= 1000) return (num / 1000).toFixed(1) + 'k';
+    return num.toString();
+  };
+
+  // Format date relative
+  const getRelativeTime = (dateStr: string) => {
+    const date = new Date(dateStr);
+    const now = new Date();
+    const diffMs = now.getTime() - date.getTime();
+    const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+    
+    if (diffDays === 0) return 'Today';
+    if (diffDays === 1) return 'Yesterday';
+    return `${diffDays}d ago`;
+  };
+
+  const isPositive = agent.trend.startsWith('+') || agent.trend === 'New';
+
+  // Extract owner and repo from full repo string (e.g. "facebook/react")
+  const [owner, repoName] = agent.repo.split('/');
+
+  return (
+    <Link href={`/agents/${owner}/${repoName}`} className="block group">
+      <div className="glass rounded-xl p-5 hover:bg-white/5 transition-all duration-300 hover:scale-[1.02] cursor-pointer h-full flex flex-col relative overflow-hidden">
+        
+        {/* Glow effect on hover */}
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-500/0 via-purple-500/0 to-pink-500/0 group-hover:from-blue-500/5 group-hover:via-purple-500/5 group-hover:to-pink-500/5 transition-all duration-500" />
+
+        <div className="flex justify-between items-start mb-2 relative z-10">
+          <div className="flex-1 min-w-0 pr-2">
+            <h3 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400 truncate">
+              {agent.name}
+            </h3>
+            <p className="text-xs text-gray-500 font-mono truncate">{agent.repo}</p>
+          </div>
+          <VoteButton repo={agent.repo} initialVotes={agent.votes || 0} />
+        </div>
+        
+        <div className="flex justify-between items-center mb-4 relative z-10">
+           <div className={`text-xs font-mono px-2 py-1 rounded-full ${isPositive ? 'bg-green-500/10 text-green-400' : 'bg-red-500/10 text-red-400'}`}>
+            {agent.trend}
+          </div>
+        </div>
+        
+        <p className="text-gray-400 text-sm mb-4 line-clamp-2 h-10 relative z-10">
+          {agent.description || "No description available."}
+        </p>
+        
+        <div className="mt-auto flex items-center justify-between text-sm text-gray-300 relative z-10 pt-4 border-t border-white/5">
+          <div className="flex items-center gap-1">
+            <span className="text-yellow-500">⭐</span>
+            <span>{formatStars(agent.stars)}</span>
+          </div>
+          <div className="flex items-center gap-1 opacity-70 group-hover:opacity-100 transition-opacity">
+            <span>⏱</span>
+            <span>{getRelativeTime(agent.last_update)}</span>
+          </div>
+        </div>
+      </div>
+    </Link>
+  );
+};
+
+export default AgentCard;

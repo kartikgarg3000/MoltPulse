@@ -1,0 +1,74 @@
+[
+  {
+    "name": "AutoGPT",
+    "repo": "Significant-Gravitas/AutoGPT",
+    "description": "AutoGPT is the vision of accessible AI for everyone, to use and to build on. Our mission is to provide the tools, so that you can focus on what matters.",
+    "stars": 181635,
+    "lastUpdate": "2026-02-02T16:44:10Z",
+    "trend": "+0.0%"
+  },
+  {
+    "name": "MetaGPT",
+    "repo": "FoundationAgents/MetaGPT",
+    "description": "🌟 The Multi-Agent Framework: First AI Software Company, Towards Natural Language Programming",
+    "stars": 63791,
+    "lastUpdate": "2026-01-21T10:12:33Z",
+    "trend": "+0.0%"
+  },
+  {
+    "name": "open-interpreter",
+    "repo": "openinterpreter/open-interpreter",
+    "description": "A natural language interface for computers",
+    "stars": 61965,
+    "lastUpdate": "2025-12-05T18:57:03Z",
+    "trend": "+0.0%"
+  },
+  {
+    "name": "autogen",
+    "repo": "microsoft/autogen",
+    "description": "A programming framework for agentic AI",
+    "stars": 54168,
+    "lastUpdate": "2026-01-22T16:27:56Z",
+    "trend": "+0.0%"
+  },
+  {
+    "name": "AgentGPT",
+    "repo": "reworkd/AgentGPT",
+    "description": "🤖 Assemble, configure, and deploy autonomous AI Agents in your browser.",
+    "stars": 35644,
+    "lastUpdate": "2025-04-29T01:19:32Z",
+    "trend": "+0.0%"
+  },
+  {
+    "name": "babyagi",
+    "repo": "yoheinakajima/babyagi",
+    "description": null,
+    "stars": 22113,
+    "lastUpdate": "2026-01-31T05:05:45Z",
+    "trend": "+0.0%"
+  },
+  {
+    "name": "Sisu_Chi",
+    "repo": "mrbian/Web-SISU-Chinese",
+    "description": "上海外国语大学语料分析工具",
+    "stars": 2,
+    "lastUpdate": "2019-12-20T03:03:58Z",
+    "trend": "New"
+  },
+  {
+    "name": "lwxBot",
+    "repo": "yangwanjun1/LWXBot",
+    "description": "Lagrange机器人框架适配器，使用springboot进行封装",
+    "stars": 0,
+    "lastUpdate": "2024-09-24T06:54:41Z",
+    "trend": "New"
+  },
+  {
+    "name": "fxnch",
+    "repo": "Fxnch/isuhadolnik",
+    "description": null,
+    "stars": 0,
+    "lastUpdate": "2024-12-17T13:20:11Z",
+    "trend": "New"
+  }
+]
