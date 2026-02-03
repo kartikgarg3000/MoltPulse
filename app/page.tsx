@@ -12,6 +12,7 @@ interface Agent {
   last_update: string;
   trend: string;
   category?: string;
+  velocity?: number;
 }
 
 async function getAgents(): Promise<Agent[]> {
@@ -19,7 +20,7 @@ async function getAgents(): Promise<Agent[]> {
   const { data, error } = await supabase
     .from('agents')
     .select('*')
-    .order('stars', { ascending: false });
+    .order('velocity', { ascending: false });
 
   if (error) {
     console.error("Failed to fetch agents:", error);

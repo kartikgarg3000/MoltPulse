@@ -13,6 +13,7 @@ interface Agent {
   trend: string;
   votes?: number;
   category?: string;
+  velocity?: number;
 }
 
 interface AgentCardProps {
@@ -71,6 +72,12 @@ const AgentCard: React.FC<AgentCardProps> = ({ agent }) => {
           {agent.category && (
             <div className="text-[10px] uppercase tracking-wider font-bold px-2 py-1 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20">
               {agent.category}
+            </div>
+          )}
+          {agent.velocity && agent.velocity > 0.01 && (
+            <div className="text-[10px] uppercase tracking-wider font-bold px-2 py-1 rounded-full bg-orange-500/10 text-orange-400 border border-orange-500/20 flex items-center gap-1 animate-pulse">
+               <span className="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
+               Pulsing
             </div>
           )}
         </div>

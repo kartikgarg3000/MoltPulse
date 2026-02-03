@@ -7,8 +7,25 @@ create table if not exists agents (
   stars int4 default 0,
   last_update timestamptz,
   trend text,
-  created_at timestamptz default now()
+  created_at timestamptz default now(),
+  velocity float4 default 0        -- Votes per hour or growth metric
 );
+
+-- Function to calculate and update velocity for all agents
+-- This can be called via a trigger or a cron job
+create or replace function update_agent_velocity()
+returns void as $$
+begin
+  update agents a
+  set velocity = (
+    select count(*)
+    from agent_votes v
+    where v.agent_repo = a.repo
+    and v.created_at > now() - interval '24 hours'
+  ) / 24.0;
+end;
+$$ language plpgsql security definer;
+
 
 -- Enable Row Level Security (RLS) is good practice, 
 -- but for this scraper we need to write to it.
