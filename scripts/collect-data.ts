@@ -1,6 +1,9 @@
 
+import fs from 'fs';
 import dotenv from 'dotenv';
-dotenv.config({ path: '.env.local' });
+if (fs.existsSync('.env.local')) {
+    dotenv.config({ path: '.env.local' });
+}
 import { createClient } from '@supabase/supabase-js';
 
 // Define the Agent interface matching Supabase table
