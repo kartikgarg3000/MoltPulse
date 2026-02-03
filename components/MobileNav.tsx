@@ -4,14 +4,14 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Zap, Bot, Trophy, BookOpen, PlusSquare } from 'lucide-react';
+import { Zap, Bot, Trophy, BookOpen, PlusSquare, User } from 'lucide-react';
 
 const navItems = [
   { name: 'Pulse', href: '/', icon: <Zap size={20} /> },
   { name: 'Agents', href: '/agents', icon: <Bot size={20} /> },
   { name: 'Submit', href: '/submit', icon: <PlusSquare size={20} /> },
+  { name: 'Account', href: '/login', icon: <User size={20} /> },
   { name: 'Ranks', href: '/rankings', icon: <Trophy size={20} /> },
-  { name: 'Guides', href: '/playbooks', icon: <BookOpen size={20} /> },
 ];
 
 export default function MobileNav() {

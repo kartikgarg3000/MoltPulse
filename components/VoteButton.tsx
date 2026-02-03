@@ -1,9 +1,10 @@
 
 'use client';
 
-import { useState } from 'react';
-import { supabase } from '@/lib/supabase';
-import { ChevronUp } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { createClient } from '@/utils/supabase/client';
+import { ChevronUp, Loader2 } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 interface VoteButtonProps {
     repo: string;
@@ -14,12 +15,45 @@ export default function VoteButton({ repo, initialVotes }: VoteButtonProps) {
     const [votes, setVotes] = useState(initialVotes);
     const [hasVoted, setHasVoted] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [checking, setChecking] = useState(true);
+    const supabase = createClient();
+    const router = useRouter();
+
+    useEffect(() => {
+        const checkVoteStatus = async () => {
+            const { data: { user } } = await supabase.auth.getUser();
+            if (user) {
+                const { data } = await supabase
+                    .from('agent_votes')
+                    .select('id')
+                    .eq('user_id', user.id)
+                    .eq('agent_repo', repo)
+                    .single();
+                
+                if (data) setHasVoted(true);
+            }
+            setChecking(false);
+        };
+        checkVoteStatus();
+    }, [repo]);
 
     const handleVote = async (e: React.MouseEvent) => {
-        e.preventDefault(); // Prevent navigation if inside a Link
+        e.preventDefault();
         e.stopPropagation();
 
-        if (hasVoted || loading) return;
+        if (loading || checking) return;
+
+        const { data: { user } } = await supabase.auth.getUser();
+        
+        if (!user) {
+            router.push('/login');
+            return;
+        }
+
+        if (hasVoted) {
+            // Optional: Implement Unvote
+            return;
+        }
 
         setLoading(true);
         
@@ -28,16 +62,21 @@ export default function VoteButton({ repo, initialVotes }: VoteButtonProps) {
         setHasVoted(true);
 
         try {
-            const { error } = await supabase.rpc('increment_vote', { repo_id: repo });
+            // 1. Record the unique vote
+            const { error: voteError } = await supabase
+                .from('agent_votes')
+                .insert([{ user_id: user.id, agent_repo: repo }]);
+
+            if (voteError) throw voteError;
+
+            // 2. Increment the total count (Ideally triggered via DB function)
+            const { error: rpcError } = await supabase.rpc('increment_vote', { repo_id: repo });
             
-            if (error) {
-                console.error("Vote failed:", error);
-                // Revert
-                setVotes(v => v - 1);
-                setHasVoted(false);
-            }
-        } catch (e) {
-            console.error("Vote error:", e);
+            if (rpcError) throw rpcError;
+
+        } catch (e: any) {
+            console.error("Vote failed:", e.message);
+            // Revert
             setVotes(v => v - 1);
             setHasVoted(false);
         } finally {
@@ -47,12 +86,13 @@ export default function VoteButton({ repo, initialVotes }: VoteButtonProps) {
 
     return (
         <button 
+            disabled={checking}
             onClick={handleVote}
             className={`flex flex-col items-center gap-0.5 p-2 rounded-lg transition-all duration-200 border border-transparent
                 ${hasVoted 
-                    ? 'bg-orange-500/10 text-orange-500 border-orange-500/20' 
+                    ? 'bg-orange-500/20 text-orange-500 border-orange-500/30 shadow-lg shadow-orange-500/10' 
                     : 'hover:bg-white/10 hover:border-white/10 text-gray-400 hover:text-white'
-                }`}
+                } ${loading ? 'opacity-70 animate-pulse' : ''}`}
         >
             <ChevronUp className={`w-6 h-6 ${hasVoted ? 'stroke-[3px]' : ''}`} />
             <span className="text-sm font-bold">{votes}</span>

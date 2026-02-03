@@ -3,6 +3,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import UserNav from './UserNav';
 
 const navItems = [
   { name: 'Pulse', href: '/', icon: '⚡' },
@@ -26,7 +27,7 @@ export default function Navigation() {
         </h1>
       </div>
 
-      <div className="space-y-2">
+      <div className="space-y-2 mb-8">
         {navItems.map((item) => {
           const isActive = pathname === item.href;
           return (
@@ -46,9 +47,13 @@ export default function Navigation() {
         })}
       </div>
 
+      <div className="mt-4 pt-8 border-t border-white/5">
+         {/* @ts-ignore */}
+         <UserNav />
+      </div>
+
       <div className="mt-auto">
         <div className="p-4 rounded-xl bg-gradient-to-br from-blue-500/10 to-purple-600/10 border border-white/5">
-           {/* <p className="text-xs text-gray-400 mb-2">Phase 1 MVP</p> */}
            <div className="h-1 w-full bg-gray-800 rounded-full overflow-hidden">
              <div className="h-full bg-blue-500 w-1/4"></div>
            </div>

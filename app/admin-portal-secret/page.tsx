@@ -3,7 +3,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabase';
-import { Check, X, externalLink, Github, Clock, User, Trash2 } from 'lucide-react';
+import { Check, X, ExternalLink, Github, Clock, User, Trash2 } from 'lucide-react';
 
 export default function AdminPortal() {
   const [submissions, setSubmissions] = useState<any[]>([]);
