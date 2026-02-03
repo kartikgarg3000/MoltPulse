@@ -1,9 +1,10 @@
-import { supabase } from '@/lib/supabase';
+import { createClient } from '@/utils/supabase/server';
 import DirectoryFilter from '@/components/DirectoryFilter';
 
 export const revalidate = 0;
 
 async function getAgents() {
+  const supabase = await createClient();
   const { data } = await supabase
     .from('agents')
     .select('*')

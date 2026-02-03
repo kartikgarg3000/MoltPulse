@@ -2,11 +2,12 @@
 import { signInWithGithub } from '../auth/actions'
 import { Github } from 'lucide-react'
 
-export default function LoginPage({
+export default async function LoginPage({
   searchParams,
 }: {
-  searchParams: { error?: string }
+  searchParams: Promise<{ error?: string }>
 }) {
+  const { error } = await searchParams;
   return (
     <div className="flex flex-col items-center justify-center min-h-[70vh] space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
       <div className="text-center space-y-4">
@@ -22,9 +23,9 @@ export default function LoginPage({
       </div>
 
       <div className="w-full max-w-sm glass p-8 rounded-[2rem] border border-white/10 space-y-6">
-        {searchParams?.error && (
+        {error && (
           <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 text-sm text-center">
-            {searchParams.error}
+            {error}
           </div>
         )}
 

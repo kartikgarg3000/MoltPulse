@@ -1,12 +1,12 @@
-
 import React from 'react';
-import { supabase } from '@/lib/supabase';
+import { createClient } from '@/utils/supabase/server';
 import AgentCard from '@/components/AgentCard';
 import { Trophy, Star, ThumbsUp } from 'lucide-react';
 
 export const revalidate = 0;
 
 async function getTopAgents() {
+  const supabase = await createClient();
   // Get top 5 by stars
   const { data: topStars } = await supabase
     .from('agents')

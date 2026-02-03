@@ -1,6 +1,5 @@
-
 import React from 'react';
-import { supabase } from '@/lib/supabase';
+import { createClient } from '@/utils/supabase/server';
 import { notFound } from 'next/navigation';
 import ReactMarkdown from 'react-markdown';
 import VoteButton from '@/components/VoteButton';
@@ -18,11 +17,12 @@ interface PageProps {
 
 // Fetch Agent from Supabase
 async function getAgent(owner: string, repo: string) {
+  const supabase = await createClient();
   const fullRepoName = `${owner}/${repo}`;
   const { data } = await supabase
     .from('agents')
     .select('*')
-    .ilike('repo', fullRepoName) // Case insensitive match just in case
+    .ilike('repo', fullRepoName)
     .single();
   return data;
 }
@@ -35,10 +35,12 @@ async function getReadme(owner: string, repo: string) {
                 'Accept': 'application/vnd.github.v3.raw', // Get raw markdown
                 'User-Agent': 'MoltPulse',
                 ...(process.env.GITHUB_TOKEN ? { 'Authorization': `token ${process.env.GITHUB_TOKEN}` } : {})
-            }
+            },
+            next: { revalidate: 3600 } // Cache for 1 hour
         });
         if (!res.ok) return "# No README found.";
-        return await res.text();
+        const text = await res.text();
+        return text;
     } catch (e) {
         return "# Error loading README.";
     }

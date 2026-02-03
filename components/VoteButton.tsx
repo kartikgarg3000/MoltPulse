@@ -35,6 +35,25 @@ export default function VoteButton({ repo, initialVotes }: VoteButtonProps) {
             setChecking(false);
         };
         checkVoteStatus();
+
+        // Realtime sync for global vote count
+        const channel = supabase
+            .channel(`agent_votes_${repo}`)
+            .on('postgres_changes', {
+                event: 'UPDATE',
+                schema: 'public',
+                table: 'agents',
+                filter: `repo=eq.${repo}`
+            }, (payload) => {
+                if (payload.new && payload.new.votes !== undefined) {
+                    setVotes(payload.new.votes);
+                }
+            })
+            .subscribe();
+
+        return () => {
+            supabase.removeChannel(channel);
+        };
     }, [repo]);
 
     const handleVote = async (e: React.MouseEvent) => {

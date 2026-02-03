@@ -2,6 +2,7 @@
 import React from 'react';
 import Link from 'next/link';
 import VoteButton from './VoteButton';
+import WatchlistButton from './WatchlistButton';
 
 interface Agent {
   name: string;
@@ -49,16 +50,20 @@ const AgentCard: React.FC<AgentCardProps> = ({ agent }) => {
         {/* Glow effect on hover */}
         <div className="absolute inset-0 bg-gradient-to-br from-blue-500/0 via-purple-500/0 to-pink-500/0 group-hover:from-blue-500/5 group-hover:via-purple-500/5 group-hover:to-pink-500/5 transition-all duration-500" />
 
-        <div className="flex justify-between items-start mb-2 relative z-10">
-          <div className="flex-1 min-w-0 pr-2">
-            <h3 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400 truncate">
+        <div className="flex justify-between items-start mb-4">
+          <div className="flex-1">
+            <h3 className="text-xl font-bold text-white group-hover:text-blue-400 transition-colors">
               {agent.name}
             </h3>
-            <p className="text-xs text-gray-500 font-mono truncate">{agent.repo}</p>
+            <p className="text-sm text-gray-500 font-mono">{agent.repo}</p>
           </div>
-          <VoteButton repo={agent.repo} initialVotes={agent.votes || 0} />
+          <div className="flex items-center gap-2">
+            <WatchlistButton repo={agent.repo} />
+            <div className="w-10 h-12 flex items-center justify-center p-2 rounded-lg bg-white/5 border border-white/10 group-hover:border-blue-500/30 transition-all">
+              <VoteButton repo={agent.repo} initialVotes={agent.votes || 0} />
+            </div>
+          </div>
         </div>
-        
         <div className="flex justify-between items-center mb-4 relative z-10">
            <div className={`text-xs font-mono px-2 py-1 rounded-full ${isPositive ? 'bg-green-500/10 text-green-400' : 'bg-red-500/10 text-red-400'}`}>
             {agent.trend}

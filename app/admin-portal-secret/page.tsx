@@ -1,11 +1,9 @@
-
-'use client';
-
 import React, { useEffect, useState } from 'react';
-import { supabase } from '@/lib/supabase';
+import { createClient } from '@/utils/supabase/client';
 import { Check, X, ExternalLink, Github, Clock, User, Trash2 } from 'lucide-react';
 
 export default function AdminPortal() {
+  const supabase = createClient();
   const [submissions, setSubmissions] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 

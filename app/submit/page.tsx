@@ -1,12 +1,11 @@
-
-'use client';
-
+"use client";
 import React, { useState } from 'react';
-import { supabase } from '@/lib/supabase';
+import { createClient } from '@/utils/supabase/client';
 import { Send, CheckCircle2, AlertCircle, Github, Loader2 } from 'lucide-react';
 import Link from 'next/link';
 
 export default function SubmitPage() {
+  const supabase = createClient();
   const [repo, setRepo] = useState('');
   const [name, setName] = useState('');
   const [contact, setContact] = useState('');
