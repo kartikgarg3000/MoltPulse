@@ -10,7 +10,8 @@ interface Agent {
   stars: number;
   last_update: string;
   trend: string;
-  votes?: number; // Optional as older rows might not have it yet
+  votes?: number;
+  category?: string;
 }
 
 interface AgentCardProps {
@@ -62,6 +63,11 @@ const AgentCard: React.FC<AgentCardProps> = ({ agent }) => {
            <div className={`text-xs font-mono px-2 py-1 rounded-full ${isPositive ? 'bg-green-500/10 text-green-400' : 'bg-red-500/10 text-red-400'}`}>
             {agent.trend}
           </div>
+          {agent.category && (
+            <div className="text-[10px] uppercase tracking-wider font-bold px-2 py-1 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20">
+              {agent.category}
+            </div>
+          )}
         </div>
         
         <p className="text-gray-400 text-sm mb-4 line-clamp-2 h-10 relative z-10">

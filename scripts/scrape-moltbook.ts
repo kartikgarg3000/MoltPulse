@@ -15,6 +15,7 @@ interface Agent {
     stars: number;
     last_update: string;
     trend: string;
+    category?: string;
 }
 
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
@@ -145,13 +146,23 @@ async function main() {
 
             console.log(`MATCH: ${name} -> ${repo.full_name} (${repo.stargazers_count} stars)`);
 
+            // Simple categorization logic
+            const desc = (repo.description || "").toLowerCase();
+            let category = "General";
+            if (desc.includes("code") || desc.includes("dev") || desc.includes("hack")) category = "Coding";
+            else if (desc.includes("chat") || desc.includes("social") || desc.includes("talk")) category = "Assistant";
+            else if (desc.includes("web") || desc.includes("search") || desc.includes("browse")) category = "Web Browsing";
+            else if (desc.includes("autonomous") || desc.includes("auto") || desc.includes("agent")) category = "Autonomous";
+            else if (desc.includes("crypto") || desc.includes("chain") || desc.includes("wallet")) category = "Web3";
+
             newAgents.push({
                 name: name, // Use MoltBook name 
                 repo: repo.full_name,
                 description: repo.description,
                 stars: repo.stargazers_count,
                 last_update: repo.pushed_at,
-                trend: "New"
+                trend: "New",
+                category: category as any // Adding category to agent object
             });
 
             existingRepos.add(repo.full_name);

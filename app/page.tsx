@@ -11,6 +11,7 @@ interface Agent {
   stars: number;
   last_update: string;
   trend: string;
+  category?: string;
 }
 
 async function getAgents(): Promise<Agent[]> {

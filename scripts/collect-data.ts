@@ -15,6 +15,7 @@ interface Agent {
     stars: number;
     last_update: string; // ISO date
     trend: string;
+    category?: string;
 }
 
 const SEED_AGENTS = [
@@ -137,7 +138,8 @@ async function main() {
                 description: githubData.description || "",
                 stars: githubData.stars || 0,
                 last_update: githubData.last_update!,
-                trend: trend
+                trend: trend,
+                category: oldAgent ? oldAgent.category : "Uncategorized"
             });
         }
     }
