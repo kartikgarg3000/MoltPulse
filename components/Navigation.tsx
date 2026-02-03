@@ -9,6 +9,7 @@ const navItems = [
   { name: 'Directory', href: '/agents', icon: '🤖' },
   { name: 'Rankings', href: '/rankings', icon: '🏆' },
   { name: 'Playbooks', href: '/playbooks', icon: '📚' },
+  { name: 'Submit', href: '/submit', icon: '📤' },
 ];
 
 export default function Navigation() {
