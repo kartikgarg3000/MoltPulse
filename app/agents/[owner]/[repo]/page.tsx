@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation';
 import ReactMarkdown from 'react-markdown';
 import VoteButton from '@/components/VoteButton';
 import Link from 'next/link';
-import { ArrowLeft, Star, GitBranch, Terminal } from 'lucide-react';
+import { ArrowLeft, Star, GitBranch, Terminal, Zap } from 'lucide-react';
 
 export const revalidate = 0; // Dynamic
 
@@ -68,9 +68,24 @@ export default async function AgentPage({ params }: PageProps) {
 
                 <div className="glass p-8 rounded-2xl flex flex-col md:flex-row gap-8 items-start justify-between">
                     <div className="flex-1 space-y-4">
-                        <h1 className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 pb-2">
-                            {agentData.name}
-                        </h1>
+                        <div className="flex items-center gap-4">
+                            <h1 className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 pb-2">
+                                {agentData.name}
+                            </h1>
+                        </div>
+                        
+                        {agentData.ai_summary && (
+                            <div className="p-6 rounded-2xl glass border border-blue-500/20 bg-gradient-to-br from-blue-600/10 to-transparent relative overflow-hidden group">
+                                <h3 className="text-blue-400 font-bold uppercase tracking-widest text-[10px] mb-2 flex items-center gap-2">
+                                    <Zap size={12} className="fill-blue-400" />
+                                    AI Pulse Analysis
+                                </h3>
+                                <p className="text-lg font-medium text-white/90 leading-relaxed italic">
+                                    "{agentData.ai_summary}"
+                                </p>
+                            </div>
+                        )}
+
                         <p className="text-xl text-gray-300">
                             {agentData.description}
                         </p>

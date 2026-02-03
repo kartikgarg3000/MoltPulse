@@ -27,7 +27,7 @@ export default function WatchlistButton({ repo, variant = 'compact' }: Watchlist
           .select('id')
           .eq('user_id', user.id)
           .eq('agent_repo', repo)
-          .single();
+          .maybeSingle();
         
         if (data) setIsWatching(true);
       }

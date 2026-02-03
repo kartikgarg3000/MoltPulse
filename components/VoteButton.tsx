@@ -28,7 +28,7 @@ export default function VoteButton({ repo, initialVotes }: VoteButtonProps) {
                     .select('id')
                     .eq('user_id', user.id)
                     .eq('agent_repo', repo)
-                    .single();
+                    .maybeSingle();
                 
                 if (data) setHasVoted(true);
             }

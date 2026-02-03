@@ -8,7 +8,8 @@ create table if not exists agents (
   last_update timestamptz,
   trend text,
   created_at timestamptz default now(),
-  velocity float4 default 0        -- Votes per hour or growth metric
+  velocity float4 default 0,        -- Votes per hour or growth metric
+  ai_summary text                  -- AI-generated insights
 );
 
 -- Function to calculate and update velocity for all agents
