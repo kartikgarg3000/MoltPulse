@@ -14,6 +14,7 @@ interface Agent {
   votes?: number;
   category?: string;
   velocity?: number;
+  pulse_score?: number;
 }
 
 interface AgentCardProps {
@@ -58,10 +59,20 @@ const AgentCard: React.FC<AgentCardProps> = ({ agent }) => {
             </h3>
             <p className="text-sm text-gray-500 font-mono">{agent.repo}</p>
           </div>
-          <div className="flex items-center gap-2">
-            <WatchlistButton repo={agent.repo} />
-            <div className="w-10 h-12 flex items-center justify-center p-2 rounded-lg bg-white/5 border border-white/10 group-hover:border-blue-500/30 transition-all">
-              <VoteButton repo={agent.repo} initialVotes={agent.votes || 0} />
+          <div className="flex flex-col items-end gap-2">
+            {agent.pulse_score !== undefined && (
+              <div className="flex flex-col items-end">
+                <span className="text-[8px] uppercase tracking-tighter text-gray-500 font-black mb-0.5">Pulse Score</span>
+                <div className="text-2xl font-black text-white bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
+                  {Math.round(agent.pulse_score)}
+                </div>
+              </div>
+            )}
+            <div className="flex items-center gap-2">
+              <WatchlistButton repo={agent.repo} />
+              <div className="w-10 h-12 flex items-center justify-center p-2 rounded-lg bg-white/5 border border-white/10 group-hover:border-blue-500/30 transition-all">
+                <VoteButton repo={agent.repo} initialVotes={agent.votes || 0} />
+              </div>
             </div>
           </div>
         </div>
@@ -70,14 +81,20 @@ const AgentCard: React.FC<AgentCardProps> = ({ agent }) => {
             {agent.trend}
           </div>
           {agent.category && (
-            <div className="text-[10px] uppercase tracking-wider font-bold px-2 py-1 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20">
+            <div className={`text-[10px] uppercase tracking-wider font-bold px-2 py-1 rounded-full border 
+              ${agent.category === 'MoltHub' 
+                ? 'bg-purple-500/10 text-purple-400 border-purple-500/20 shadow-[0_0_10px_rgba(168,85,247,0.15)]' 
+                : 'bg-blue-500/10 text-blue-400 border-blue-500/20'}`}>
               {agent.category}
             </div>
           )}
           {agent.velocity && agent.velocity > 0.01 && (
-            <div className="text-[10px] uppercase tracking-wider font-bold px-2 py-1 rounded-full bg-orange-500/10 text-orange-400 border border-orange-500/20 flex items-center gap-1 animate-pulse">
-               <span className="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
-               Pulsing
+            <div className={`text-[10px] uppercase tracking-wider font-bold px-2 py-1 rounded-full border flex items-center gap-1 animate-pulse
+              ${agent.category === 'MoltHub'
+                ? 'bg-pink-500/10 text-pink-400 border-pink-500/20'
+                : 'bg-orange-500/10 text-orange-400 border-orange-500/20'}`}>
+               <span className={`w-1.5 h-1.5 rounded-full ${agent.category === 'MoltHub' ? 'bg-pink-500' : 'bg-orange-500'}`}></span>
+               {agent.category === 'MoltHub' ? 'Racing' : 'Pulsing'}
             </div>
           )}
         </div>

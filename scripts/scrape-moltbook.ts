@@ -148,8 +148,13 @@ async function main() {
 
             // Simple categorization logic
             const desc = (repo.description || "").toLowerCase();
+            const repoName = repo.full_name.toLowerCase();
             let category = "General";
-            if (desc.includes("code") || desc.includes("dev") || desc.includes("hack")) category = "Coding";
+
+            if (desc.includes("molthub") || repoName.includes("molthub") || desc.includes("nsfw") || desc.includes("adult") || desc.includes("hub")) {
+                category = "MoltHub";
+            }
+            else if (desc.includes("code") || desc.includes("dev") || desc.includes("hack")) category = "Coding";
             else if (desc.includes("chat") || desc.includes("social") || desc.includes("talk")) category = "Assistant";
             else if (desc.includes("web") || desc.includes("search") || desc.includes("browse")) category = "Web Browsing";
             else if (desc.includes("autonomous") || desc.includes("auto") || desc.includes("agent")) category = "Autonomous";

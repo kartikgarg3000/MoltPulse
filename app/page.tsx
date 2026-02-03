@@ -13,6 +13,7 @@ interface Agent {
   trend: string;
   category?: string;
   velocity?: number;
+  pulse_score?: number;
 }
 
 async function getAgents(): Promise<Agent[]> {
@@ -45,17 +46,37 @@ export default async function Home() {
       </header>
       
       <div className="grid grid-cols-1 xl:grid-cols-4 gap-12 items-start">
-        <section className="xl:col-span-3">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {agents.length > 0 ? (
-              agents.map((agent) => (
-                <AgentCard key={agent.repo} agent={agent} />
-              ))
-            ) : (
-              <div className="col-span-full p-10 text-center text-gray-500 glass rounded-xl">
-                <p>No agent data found. Database might be empty or connecting...</p>
+        <section className="xl:col-span-3 space-y-12">
+          {/* Top 3 Bento Section */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {agents.slice(0, 3).map((agent, i) => (
+              <div key={agent.repo} className={`relative ${i === 0 ? 'md:col-span-2 md:row-span-1' : ''}`}>
+                 {i === 0 && (
+                   <div className="absolute -top-4 -left-4 z-20 bg-gradient-to-r from-yellow-500 to-orange-500 text-black text-[10px] font-black px-3 py-1 rounded-full shadow-xl animate-bounce">
+                     #1 TRENDING
+                   </div>
+                 )}
+                 <AgentCard agent={agent} />
               </div>
-            )}
+            ))}
+          </div>
+
+          {/* Standard Grid for the rest */}
+          <div className="space-y-6">
+            <h3 className="text-sm font-black text-gray-600 uppercase tracking-[0.3em] pl-2 border-l-2 border-blue-500">
+              Ecosystem Pulse
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {agents.length > 3 ? (
+                agents.slice(3).map((agent) => (
+                  <AgentCard key={agent.repo} agent={agent} />
+                ))
+              ) : agents.length === 0 && (
+                <div className="col-span-full p-20 text-center text-gray-500 glass rounded-[3rem] border border-dashed border-white/5">
+                  <p>Initializing ecosystem data...</p>
+                </div>
+              )}
+            </div>
           </div>
         </section>
 

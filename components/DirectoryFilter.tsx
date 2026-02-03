@@ -20,7 +20,7 @@ interface DirectoryFilterProps {
   initialAgents: Agent[];
 }
 
-const CATEGORIES = ["All", "Coding", "Assistant", "Web Browsing", "Autonomous", "Web3", "General"];
+const CATEGORIES = ["All", "MoltHub", "Coding", "Assistant", "Web Browsing", "Autonomous", "Web3", "General"];
 
 export default function DirectoryFilter({ initialAgents }: DirectoryFilterProps) {
   const [search, setSearch] = useState('');
