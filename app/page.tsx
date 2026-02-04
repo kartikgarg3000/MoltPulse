@@ -10,10 +10,13 @@ interface Agent {
   description: string | null;
   stars: number;
   last_update: string;
-  trend: string;
+  trend: string | null;
   category?: string;
   velocity?: number;
   pulse_score?: number;
+  solana_address?: string;
+  is_solana_verified?: boolean;
+  token_mint?: string;
 }
 
 async function getAgents(): Promise<Agent[]> {

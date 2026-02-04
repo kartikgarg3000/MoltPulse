@@ -1,8 +1,10 @@
+'use client';
 
 import React from 'react';
 import Link from 'next/link';
 import NavLinks from './NavLinks';
 import UserNav from './UserNav';
+import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
 
 const navItems = [
   { name: 'Pulse', href: '/', icon: '⚡' },
@@ -31,8 +33,15 @@ export default function Navigation() {
          <UserNav />
       </div>
 
-      <div className="mt-auto">
+      <div className="mt-auto space-y-4">
+        <div className="flex justify-center w-full">
+           <WalletMultiButton className="!bg-gradient-to-r !from-blue-600 !to-purple-600 !rounded-xl !font-black !text-xs !py-3 !px-6 !transition-all hover:!scale-105 active:!scale-95" />
+        </div>
         <div className="p-4 rounded-xl bg-gradient-to-br from-blue-500/10 to-purple-600/10 border border-white/5">
+           <div className="flex items-center justify-between mb-2">
+              <span className="text-[10px] font-black text-gray-500 uppercase tracking-widest">Solana Pulse</span>
+              <span className="text-[10px] font-black text-blue-400">Mainnet</span>
+           </div>
            <div className="h-1 w-full bg-gray-800 rounded-full overflow-hidden">
              <div className="h-full bg-blue-500 w-1/4"></div>
            </div>

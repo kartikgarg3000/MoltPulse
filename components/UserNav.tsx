@@ -1,12 +1,30 @@
+'use client';
 
-import { createClient } from '@/utils/supabase/server'
+import { createClient } from '@/utils/supabase/client'
 import Link from 'next/link'
-import { signOut } from '@/app/auth/actions'
+import { useEffect, useState } from 'react'
 import { LogOut, User, Settings, Zap } from 'lucide-react'
 
-export default async function UserNav() {
-  const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+export default function UserNav() {
+  const [user, setUser] = useState<any>(null)
+  const [loading, setLoading] = useState(true)
+  const supabase = createClient()
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser()
+      setUser(user)
+      setLoading(false)
+    }
+    fetchUser()
+  }, [])
+
+  const handleSignOut = async () => {
+    await supabase.auth.signOut()
+    window.location.href = '/login'
+  }
+
+  if (loading) return <div className="h-10 bg-white/5 animate-pulse rounded-xl"></div>
 
   if (!user) {
     return (
@@ -45,12 +63,13 @@ export default async function UserNav() {
           <Zap size={16} />
           <span>My Watchlist</span>
         </Link>
-        <form action={signOut}>
-          <button className="flex items-center gap-3 w-full px-4 py-2 rounded-lg text-red-400/70 hover:bg-red-500/10 hover:text-red-400 transition-all text-sm">
-            <LogOut size={16} />
-            <span>Sign Out</span>
-          </button>
-        </form>
+        <button 
+          onClick={handleSignOut}
+          className="flex items-center gap-3 w-full px-4 py-2 rounded-lg text-red-400/70 hover:bg-red-500/10 hover:text-red-400 transition-all text-sm"
+        >
+          <LogOut size={16} />
+          <span>Sign Out</span>
+        </button>
       </div>
     </div>
   )

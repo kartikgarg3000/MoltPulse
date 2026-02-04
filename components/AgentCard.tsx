@@ -1,8 +1,9 @@
-
-import React from 'react';
-import Link from 'next/link';
-import VoteButton from './VoteButton';
+"use client";import Link from 'next/link';
+import { TrendingUp, TrendingDown, Star, MessageSquare, ExternalLink, Zap, Heart, Check } from 'lucide-react';
 import WatchlistButton from './WatchlistButton';
+import VoteButton from './VoteButton';
+import SupportButton from './SupportButton';
+import JupiterButton from './JupiterButton';
 
 interface Agent {
   name: string;
@@ -10,18 +11,21 @@ interface Agent {
   description: string | null;
   stars: number;
   last_update: string;
-  trend: string;
+  trend: string | null;
   votes?: number;
   category?: string;
   velocity?: number;
   pulse_score?: number;
+  solana_address?: string;
+  is_solana_verified?: boolean;
+  token_mint?: string;
 }
 
 interface AgentCardProps {
   agent: Agent;
 }
 
-const AgentCard: React.FC<AgentCardProps> = ({ agent }) => {
+export default function AgentCard({ agent }: AgentCardProps) {
   // Format stars
   const formatStars = (num: number) => {
     if (num >= 1000) return (num / 1000).toFixed(1) + 'k';
@@ -40,7 +44,7 @@ const AgentCard: React.FC<AgentCardProps> = ({ agent }) => {
     return `${diffDays}d ago`;
   };
 
-  const isPositive = agent.trend.startsWith('+') || agent.trend === 'New';
+  const isPositive = agent.trend?.startsWith('+') || agent.trend === 'New';
 
   // Extract owner and repo from full repo string (e.g. "facebook/react")
   const [owner, repoName] = agent.repo.split('/');
@@ -78,7 +82,7 @@ const AgentCard: React.FC<AgentCardProps> = ({ agent }) => {
         </div>
         <div className="flex justify-between items-center mb-4 relative z-10">
            <div className={`text-xs font-mono px-2 py-1 rounded-full ${isPositive ? 'bg-green-500/10 text-green-400' : 'bg-red-500/10 text-red-400'}`}>
-            {agent.trend}
+            {agent.trend || 'New'}
           </div>
           {agent.category && (
             <div className={`text-[10px] uppercase tracking-wider font-bold px-2 py-1 rounded-full border 
@@ -107,15 +111,31 @@ const AgentCard: React.FC<AgentCardProps> = ({ agent }) => {
           <div className="flex items-center gap-1">
             <span className="text-yellow-500">⭐</span>
             <span>{formatStars(agent.stars)}</span>
+            {agent.is_solana_verified && (
+              <span className="ml-2 text-[8px] bg-blue-500/20 text-blue-400 px-1.5 py-0.5 rounded-full border border-blue-500/20 font-black flex items-center gap-1">
+                <Check size={8} /> SOL VERIFIED
+              </span>
+            )}
           </div>
-          <div className="flex items-center gap-1 opacity-70 group-hover:opacity-100 transition-opacity">
-            <span>⏱</span>
-            <span>{getRelativeTime(agent.last_update)}</span>
+          <div className="flex items-center gap-3">
+            {agent.token_mint && (
+              <JupiterButton 
+                mint={agent.token_mint} 
+              />
+            )}
+            {agent.solana_address && (
+              <SupportButton 
+                solanaAddress={agent.solana_address} 
+                agentName={agent.name} 
+              />
+            )}
+            <div className="flex items-center gap-1 opacity-70 group-hover:opacity-100 transition-opacity">
+              <span>⏱</span>
+              <span>{getRelativeTime(agent.last_update)}</span>
+            </div>
           </div>
         </div>
       </div>
     </Link>
   );
-};
-
-export default AgentCard;
+}
