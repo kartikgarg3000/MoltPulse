@@ -1,9 +1,11 @@
-"use client";import Link from 'next/link';
+"use client";
+import Link from 'next/link';
 import { TrendingUp, TrendingDown, Star, MessageSquare, ExternalLink, Zap, Heart, Check } from 'lucide-react';
+
 import WatchlistButton from './WatchlistButton';
 import VoteButton from './VoteButton';
-import SupportButton from './SupportButton';
-import JupiterButton from './JupiterButton';
+import StatusBadge from './StatusBadge';
+import PulseChart from './PulseChart';
 
 interface Agent {
   name: string;
@@ -16,9 +18,6 @@ interface Agent {
   category?: string;
   velocity?: number;
   pulse_score?: number;
-  solana_address?: string;
-  is_solana_verified?: boolean;
-  token_mint?: string;
 }
 
 interface AgentCardProps {
@@ -44,7 +43,23 @@ export default function AgentCard({ agent }: AgentCardProps) {
     return `${diffDays}d ago`;
   };
 
-  const isPositive = agent.trend?.startsWith('+') || agent.trend === 'New';
+  // Determine Status Badge
+  const getBadgeType = () => {
+    if (agent.velocity && agent.velocity > 0.5 && agent.stars > 1000) return 'blue-chip';
+    if (agent.velocity && agent.velocity > 0.8 && agent.stars < 500) return 'gem';
+    if (agent.velocity && agent.velocity > 0.2) return 'trending';
+    if (agent.trend === 'New') return 'new';
+    return null;
+  };
+
+  const badgeType = getBadgeType();
+
+  // Mock Sparkline Data (Replace with real history later)
+  const sparklineData = Array.from({ length: 10 }, (_, i) => ({
+    date: i.toString(),
+    value: Math.floor(Math.random() * 50) + (agent.velocity ? agent.velocity * 10 : 0)
+  }));
+
 
   // Extract owner and repo from full repo string (e.g. "facebook/react")
   const [owner, repoName] = agent.repo.split('/');
@@ -61,7 +76,10 @@ export default function AgentCard({ agent }: AgentCardProps) {
             <h3 className="text-xl font-bold text-white group-hover:text-blue-400 transition-colors">
               {agent.name}
             </h3>
-            <p className="text-sm text-gray-500 font-mono">{agent.repo}</p>
+            <div className="flex items-center gap-2 mt-1">
+               <p className="text-sm text-gray-500 font-mono">{agent.repo}</p>
+               {badgeType && <StatusBadge type={badgeType} />}
+            </div>
           </div>
           <div className="flex flex-col items-end gap-2">
             {agent.pulse_score !== undefined && (
@@ -80,27 +98,8 @@ export default function AgentCard({ agent }: AgentCardProps) {
             </div>
           </div>
         </div>
-        <div className="flex justify-between items-center mb-4 relative z-10">
-           <div className={`text-xs font-mono px-2 py-1 rounded-full ${isPositive ? 'bg-green-500/10 text-green-400' : 'bg-red-500/10 text-red-400'}`}>
-            {agent.trend || 'New'}
-          </div>
-          {agent.category && (
-            <div className={`text-[10px] uppercase tracking-wider font-bold px-2 py-1 rounded-full border 
-              ${agent.category === 'MoltHub' 
-                ? 'bg-purple-500/10 text-purple-400 border-purple-500/20 shadow-[0_0_10px_rgba(168,85,247,0.15)]' 
-                : 'bg-blue-500/10 text-blue-400 border-blue-500/20'}`}>
-              {agent.category}
-            </div>
-          )}
-          {agent.velocity && agent.velocity > 0.01 && (
-            <div className={`text-[10px] uppercase tracking-wider font-bold px-2 py-1 rounded-full border flex items-center gap-1 animate-pulse
-              ${agent.category === 'MoltHub'
-                ? 'bg-pink-500/10 text-pink-400 border-pink-500/20'
-                : 'bg-orange-500/10 text-orange-400 border-orange-500/20'}`}>
-               <span className={`w-1.5 h-1.5 rounded-full ${agent.category === 'MoltHub' ? 'bg-pink-500' : 'bg-orange-500'}`}></span>
-               {agent.category === 'MoltHub' ? 'Racing' : 'Pulsing'}
-            </div>
-          )}
+        <div className="mb-4 h-16 opacity-50 group-hover:opacity-100 transition-opacity">
+            <PulseChart data={sparklineData} height={60} showAxis={false} color={badgeType === 'gem' ? '#a855f7' : '#3b82f6'} />
         </div>
         
         <p className="text-gray-400 text-sm mb-4 line-clamp-2 h-10 relative z-10">
@@ -111,24 +110,8 @@ export default function AgentCard({ agent }: AgentCardProps) {
           <div className="flex items-center gap-1">
             <span className="text-yellow-500">⭐</span>
             <span>{formatStars(agent.stars)}</span>
-            {agent.is_solana_verified && (
-              <span className="ml-2 text-[8px] bg-blue-500/20 text-blue-400 px-1.5 py-0.5 rounded-full border border-blue-500/20 font-black flex items-center gap-1">
-                <Check size={8} /> SOL VERIFIED
-              </span>
-            )}
           </div>
           <div className="flex items-center gap-3">
-            {agent.token_mint && (
-              <JupiterButton 
-                mint={agent.token_mint} 
-              />
-            )}
-            {agent.solana_address && (
-              <SupportButton 
-                solanaAddress={agent.solana_address} 
-                agentName={agent.name} 
-              />
-            )}
             <div className="flex items-center gap-1 opacity-70 group-hover:opacity-100 transition-opacity">
               <span>⏱</span>
               <span>{getRelativeTime(agent.last_update)}</span>

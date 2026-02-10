@@ -1,83 +1,116 @@
 
 import { createClient } from '@supabase/supabase-js';
 import dotenv from 'dotenv';
+import { resolve } from 'path';
 
-dotenv.config({ path: '.env.local' });
+// Load environment variables from .env.local
+dotenv.config({ path: resolve(process.cwd(), '.env.local') });
 
-const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+// Ideally use SERVICE_ROLE_KEY for writing, but let's try ANON first if RLS allows, 
+// otherwise we assume the user running this has the right env vars.
+// For a script, SERVICE_ROLE is better.
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || supabaseKey;
 
-const initialPlaybooks = [
+if (!supabaseUrl || !supabaseServiceKey) {
+    console.error("Missing Supabase credentials.");
+    process.exit(1);
+}
+
+const supabase = createClient(supabaseUrl, supabaseServiceKey);
+
+const playbooks = [
     {
-        title: 'MoltBook Setup Guide: From Zero to Agent',
-        slug: 'moltbook-setup-guide',
-        description: 'The definitive guide to setting up your first agent on the Molt ecosystem. Configuration, keys, and deployment.',
-        category: 'Starter Kit',
-        difficulty: 'Beginner',
+        title: "Zero to Hero: Building Your First Agent",
+        slug: "zero-to-hero-agent-building",
+        description: "A comprehensive guide to scaffolding, coding, and deploying your first autonomous agent using modern frameworks.",
+        category: "Development",
+        difficulty: "Beginner",
         content: `
-# MoltBook Setup Guide
+# Building Your First Agent
 
-Welcome to the Molt ecosystem. Setting up your first agent is easier than you think.
+Welcome to the **MoltPulse** guide on building autonomous agents. In this playbook, we'll cover the essentials of creating an agent that can interact with the world.
 
-## Prerequisities
-- Node.js v20+
-- A MoltBook account
-- Deepseek or Gemini API Key
+## Prerequisites
 
-## Step 1: Clone the Template
-\`\`\`bash
-git clone https://github.com/molt-templates/basic-agent
-cd basic-agent
+- Node.js v18+
+- TypeScript knowledge
+- An OpenAI API Key
+
+## Step 1: choosing a Framework
+
+There are several great frameworks for building agents:
+
+1. **LangChain**: Great for chaining LLM calls.
+2. **AutoGPT**: Good for autonomous loops.
+3. **BabyAGI**: Simple and effective task management.
+
+## Step 2: The Loop
+
+Every agent operates on a core loop:
+1. **Perceive**: Read input or environment state.
+2. **Think**: Use an LLM to decide on an action.
+3. **Act**: Execute the action (HTTP request, file write, etc.).
+
+\`\`\`typescript
+while (true) {
+  const state = await perceive();
+  const action = await think(state);
+  await act(action);
+}
 \`\`\`
 
-## Step 2: Configure Environment
-Copy the example env file and fill in your keys.
+## Step 3: Deployment
 
-## Step 3: Pushing Live
-Learn how to list your agent on MoltPulse using our submission form.
-    `,
+Deploy your agent to a cloud provider like Vercel or Railway. Ensure your environment variables are set securely.
+    `
     },
     {
-        title: 'Monetizing AI: MoltHub Strategies',
-        slug: 'monetizing-ai-molthub',
-        description: 'Learn how the top creators are monetizing their autonomous agents on the new MoltHub platform.',
-        category: 'Economics',
-        difficulty: 'Intermediate',
+        title: "Monetization Patterns for 2024",
+        slug: "agent-monetization-patterns",
+        description: "Explore the emerging business models for AI agents, from token-gating to SaaS subscriptions.",
+        category: "Business",
+        difficulty: "Intermediate",
         content: `
-# Monetizing AI on MoltHub
+# Monetizing Your Agent
 
-MoltHub is the frontier of agent commerce. Here is how to win.
+So you've built a great agent. How do you make it sustainable?
 
-## The Model
-- Subscription based tokens
-- Pay-per-interaction (PPI)
-- Advertising revenue share
+## 1. The SaaS Model
 
-## Tips for Success
-1. **Uniqueness**: Agents that watch or interact in novel ways get more "Pulse".
-2. **Speed**: Use MoltPulse to track which categories are trending.
-    `,
+Charge a monthly subscription for access to your agent. This is the most common model for tools like productivity assistants.
+
+## 2. Usage-Based Pricing
+
+Charge per token or per task. This aligns your revenue with your costs (LLM API fees).
+
+## 3. Token Gating (Web3)
+
+For crypto-native agents, require users to hold a specific NFT or token to access premium features. 
+*Note: MoltPulse supports tracking these agents!*
+
+## 4. Affiliate & Tipping
+
+Free-to-use agents can generate revenue through affiliate links or direct tips (if integrated with a wallet).
+    `
     }
 ];
 
-async function seedPlaybooks() {
-    console.log("📚 Seeding Molt Playbooks...");
+async function seed() {
+    console.log("Seeding playbooks...");
 
-    for (const playbook of initialPlaybooks) {
+    for (const p of playbooks) {
         const { error } = await supabase
             .from('playbooks')
-            .upsert(playbook, { onConflict: 'slug' });
+            .upsert(p, { onConflict: 'slug' });
 
         if (error) {
-            console.error(`❌ Error seeding ${playbook.title}:`, error.message);
+            console.error(`Error seeding ${p.title}:`, error);
         } else {
-            console.log(`✅ Seeded: ${playbook.title}`);
+            console.log(`Seeded: ${p.title}`);
         }
     }
-
-    console.log("✨ Seeding complete.");
 }
 
-seedPlaybooks();
+seed();

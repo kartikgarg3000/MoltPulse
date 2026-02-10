@@ -1,9 +1,7 @@
+"use client";
 
-'use client';
-
-import React from 'react';
 import Link from 'next/link';
-import { BookOpen, Clock, BarChart, ArrowRight } from 'lucide-react';
+import { BookOpen, Sparkles, Clock, ArrowRight } from 'lucide-react';
 
 interface Playbook {
   id: string;
@@ -12,55 +10,56 @@ interface Playbook {
   description: string;
   category: string;
   difficulty: string;
-  thumbnail_url?: string;
+  created_at: string;
 }
 
-interface PlaybookCardProps {
-  playbook: Playbook;
-}
+export default function PlaybookCard({ playbook }: { playbook: Playbook }) {
+  
+  const getDifficultyColor = (diff: string) => {
+    switch (diff.toLowerCase()) {
+      case 'beginner': return 'text-green-400 bg-green-500/10 border-green-500/20';
+      case 'intermediate': return 'text-blue-400 bg-blue-500/10 border-blue-500/20';
+      case 'advanced': return 'text-purple-400 bg-purple-500/10 border-purple-500/20';
+      default: return 'text-gray-400 bg-gray-500/10 border-gray-500/20';
+    }
+  };
 
-export default function PlaybookCard({ playbook }: PlaybookCardProps) {
   return (
     <Link href={`/playbooks/${playbook.slug}`} className="group block h-full">
-      <div className="glass rounded-[2rem] p-8 border border-white/10 hover:border-blue-500/30 transition-all duration-500 flex flex-col h-full bg-gradient-to-br from-white/5 to-transparent relative overflow-hidden">
+      <div className="h-full glass rounded-[2rem] p-8 border border-white/5 hover:border-white/20 hover:bg-white/5 transition-all duration-500 flex flex-col relative overflow-hidden">
         
-        {/* Category Badge */}
-        <div className="flex justify-between items-start mb-6">
-           <span className="text-[10px] uppercase tracking-[0.2em] font-black px-3 py-1.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20">
-             {playbook.category}
-           </span>
-           <div className="p-3 rounded-2xl bg-white/5 border border-white/10 group-hover:bg-blue-500/10 group-hover:border-blue-500/30 transition-all duration-500">
-             <BookOpen size={20} className="text-gray-400 group-hover:text-blue-400 transition-colors" />
+        {/* Glow Element */}
+        <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 blur-[60px] rounded-full group-hover:bg-blue-500/20 transition-all" />
+
+        <div className="mb-6 flex items-start justify-between relative z-10">
+           <div className={`px-3 py-1 rounded-full border text-[10px] font-black uppercase tracking-widest ${getDifficultyColor(playbook.difficulty)}`}>
+              {playbook.difficulty}
+           </div>
+           <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-gray-400 group-hover:bg-white/10 group-hover:text-white transition-colors">
+              <BookOpen size={18} />
            </div>
         </div>
 
-        <h3 className="text-2xl font-bold text-white group-hover:text-blue-400 transition-colors mb-4 leading-tight">
-          {playbook.title}
-        </h3>
-        
-        <p className="text-gray-400 text-sm mb-8 line-clamp-3 leading-relaxed">
-          {playbook.description}
-        </p>
+        <div className="flex-1 relative z-10">
+           <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-blue-400 transition-colors">
+             {playbook.title}
+           </h3>
+           <p className="text-gray-400 leading-relaxed text-sm">
+             {playbook.description}
+           </p>
+        </div>
 
-        <div className="mt-auto pt-6 border-t border-white/5 flex items-center justify-between">
-           <div className="flex items-center gap-4 text-[10px] font-bold uppercase tracking-wider text-gray-500">
-              <div className="flex items-center gap-1.5">
-                 <Clock size={14} className="text-gray-600" />
-                 <span>5 min</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                 <BarChart size={14} className="text-gray-600" />
-                 <span>{playbook.difficulty}</span>
-              </div>
+        <div className="mt-8 pt-6 border-t border-white/5 flex items-center justify-between text-xs font-mono text-gray-500 relative z-10">
+           <div className="flex items-center gap-2">
+              <Sparkles size={12} className="text-blue-400" />
+              <span>{playbook.category}</span>
            </div>
-           
-           <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-blue-500 group-hover:text-white transition-all duration-500">
-              <ArrowRight size={16} />
+           <div className="flex items-center gap-2 group-hover:translate-x-1 transition-transform text-white">
+              <span>Read Guide</span>
+              <ArrowRight size={12} />
            </div>
         </div>
 
-        {/* Decorative background glow */}
-        <div className="absolute top-0 right-0 -mr-12 -mt-12 w-32 h-32 bg-blue-500/5 blur-[60px] rounded-full group-hover:bg-blue-500/10 transition-all duration-500" />
       </div>
     </Link>
   );

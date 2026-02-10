@@ -5,14 +5,13 @@ import React, { useEffect, useState } from 'react';
 import { createClient } from '@/utils/supabase/client';
 import { Activity, TrendingUp, Users, Zap } from 'lucide-react';
 
+
 interface Stats {
   total_agents: number;
   total_votes: number;
   total_stars: number;
   new_agents_24h: number;
 }
-
-const SOL_ICON = "https://cryptologos.cc/logos/solana-sol-logo.png";
 
 export default function MarketTicker() {
   const [stats, setStats] = useState<Stats | null>(null);
@@ -52,11 +51,6 @@ export default function MarketTicker() {
         
         {/* Global Overview */}
         <div className="flex items-center gap-6 border-r border-white/10 pr-6 shrink-0">
-          <div className="flex items-center gap-2 pr-2 border-r border-white/5">
-             <img src={SOL_ICON} alt="SOL" className="w-3 h-3" />
-             <span className="text-white font-mono">$184.21</span>
-             <span className="text-green-500 font-mono text-[8px]">+2.4%</span>
-          </div>
           <div className="flex items-center gap-1.5">
             <span className="text-gray-600">Agents:</span>
             <span className="text-white font-mono">{stats.total_agents}</span>

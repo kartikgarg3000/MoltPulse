@@ -4,9 +4,9 @@ import { notFound } from 'next/navigation';
 import ReactMarkdown from 'react-markdown';
 import VoteButton from '@/components/VoteButton';
 import Link from 'next/link';
-import { ArrowLeft, Star, GitBranch, Terminal, Zap, Check, ExternalLink, ShieldCheck } from 'lucide-react';
-import SupportButton from '@/components/SupportButton';
-import JupiterButton from '@/components/JupiterButton';
+import { ArrowLeft, Star, GitBranch, Terminal, Zap, Check, ExternalLink, Sliders, Activity } from 'lucide-react';
+import PulseChart from '@/components/PulseChart';
+import StatusBadge from '@/components/StatusBadge';
 
 export const revalidate = 0; // Dynamic
 
@@ -100,45 +100,53 @@ export default async function AgentPage({ params }: PageProps) {
                                 <GitBranch size={16} />
                                 {agentData.repo}
                             </a>
-
-                            {agentData.solana_address && (
-                                <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 font-mono text-xs">
-                                    <span className="font-bold">SOL:</span>
-                                    <span>{agentData.solana_address.slice(0, 4)}...{agentData.solana_address.slice(-4)}</span>
-                                    <a 
-                                        href={`https://explorer.solana.com/address/${agentData.solana_address}?cluster=devnet`} 
-                                        target="_blank"
-                                        className="hover:text-white transition-colors"
-                                    >
-                                        <ExternalLink size={12} />
-                                    </a>
-                                </div>
-                            )}
-                        </div>
-
-                        <div className="flex flex-wrap gap-4 pt-4">
-                            {agentData.solana_address && (
-                                <SupportButton 
-                                    solanaAddress={agentData.solana_address} 
-                                    agentName={agentData.name} 
-                                    variant="lg" 
-                                />
-                            )}
-                            {agentData.token_mint && (
-                                <JupiterButton 
-                                    mint={agentData.token_mint} 
-                                    variant="lg"
-                                />
-                            )}
+                            
+                             {/* Badge Logic Replica for Details Page */}
+                             {(agentData.velocity && agentData.velocity > 0.5 && agentData.stars > 1000) && <StatusBadge type="blue-chip" />}
+                             {(agentData.velocity && agentData.velocity > 0.8 && agentData.stars < 500) && <StatusBadge type="gem" />}
                         </div>
                     </div>
 
-                    <div className="flex flex-col gap-4 items-center min-w-[150px]">
-                        {agentData.is_solana_verified && (
-                            <div className="bg-blue-500/20 text-blue-400 px-4 py-2 rounded-xl border border-blue-500/30 font-black text-[10px] uppercase tracking-[0.2em] flex items-center gap-2 mb-2 w-full justify-center">
-                                <Check size={14} strokeWidth={3} /> Verified On Solana
-                            </div>
-                        )}
+                    <div className="flex flex-col gap-4 items-center min-w-[300px] w-full md:w-auto">
+                        
+                        {/* Analytics Card */}
+                        <div className="w-full glass p-6 rounded-2xl border border-white/10 bg-gradient-to-br from-blue-500/5 to-purple-500/5">
+                             <div className="flex items-center justify-between mb-4">
+                                <h3 className="text-sm font-black uppercase tracking-widest text-blue-400 flex items-center gap-2">
+                                    <Activity size={16} /> Molt Analytics
+                                </h3>
+                                <div className="px-2 py-0.5 rounded bg-blue-500/20 text-blue-400 text-[10px] font-bold">24H</div>
+                             </div>
+                             
+                             <div className="mb-6">
+                                <div className="text-3xl font-black text-white mb-1">{(agentData.velocity || 0).toFixed(1)}</div>
+                                <div className="text-xs text-gray-500 uppercase tracking-wider font-bold">Pulse Velocity</div>
+                             </div>
+
+                             <div className="h-32 w-full mb-4">
+                                 {/* Mock Data for Details Chart */}
+                                 <PulseChart 
+                                    data={Array.from({ length: 20 }, (_, i) => ({
+                                        date: i.toString(),
+                                        value: Math.floor(Math.random() * 80) + (agentData.velocity ? agentData.velocity * 5 : 10)
+                                    }))} 
+                                    height={120} 
+                                    color="#3b82f6" 
+                                 />
+                             </div>
+                             
+                             <div className="grid grid-cols-2 gap-4 pt-4 border-t border-white/5">
+                                 <div>
+                                     <div className="text-xl font-bold text-white">{(agentData.stars || 0).toLocaleString()}</div>
+                                     <div className="text-[10px] text-gray-500 uppercase tracking-widest">Stars</div>
+                                 </div>
+                                 <div>
+                                     <div className="text-xl font-bold text-green-400">High</div>
+                                     <div className="text-[10px] text-gray-500 uppercase tracking-widest">Sentiment</div>
+                                 </div>
+                             </div>
+                        </div>
+
                         <div className="flex flex-col items-center p-4 rounded-xl bg-white/5 border border-white/10 w-full">
                            <span className="text-gray-400 text-sm uppercase tracking-wider font-bold">Votes</span>
                            <VoteButton repo={agentData.repo} initialVotes={agentData.votes || 0} />
@@ -173,30 +181,6 @@ export default async function AgentPage({ params }: PageProps) {
                 </div>
 
                 <div className="lg:col-span-1 space-y-8">
-                    {/* On-Chain Audit Log */}
-                    <div className="glass p-6 rounded-2xl border border-blue-500/20 bg-gradient-to-b from-blue-500/5 to-transparent">
-                        <h3 className="text-sm font-black uppercase tracking-widest text-blue-400 mb-6 flex items-center gap-2">
-                            <ShieldCheck size={16} />
-                            On-Chain Pulse Audit
-                        </h3>
-                        
-                        <div className="space-y-4">
-                             {/* Placeholder for real query, showing logic */}
-                             <div className="p-3 rounded-xl bg-white/5 border border-white/5 flex items-center justify-between">
-                                <span className="text-[10px] font-mono text-gray-400">7xKX...4YfS</span>
-                                <span className="text-[8px] bg-green-500/20 text-green-400 px-1.5 py-0.5 rounded font-black">VERIFIED VOTE</span>
-                             </div>
-                             <div className="p-3 rounded-xl bg-white/5 border border-white/5 flex items-center justify-between opacity-50">
-                                <span className="text-[10px] font-mono text-gray-400">Caw7...B1C3</span>
-                                <span className="text-[8px] bg-blue-500/20 text-blue-400 px-1.5 py-0.5 rounded font-black">SUPPORT TIP</span>
-                             </div>
-                        </div>
-                        
-                        <p className="text-[10px] text-gray-500 mt-6 leading-relaxed">
-                            Every vote from a Solana wallet is cryptographically signed and stored in our decentralized audit log to prevent sybil attacks.
-                        </p>
-                    </div>
-
                     <div className="glass p-6 rounded-2xl border border-white/10">
                         <h3 className="font-bold mb-2">Ecosystem Role</h3>
                         <p className="text-xs text-gray-400 italic">
