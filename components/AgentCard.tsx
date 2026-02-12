@@ -18,6 +18,11 @@ interface Agent {
   category?: string;
   velocity?: number;
   pulse_score?: number;
+  growth_score?: number;
+  activity_score?: number;
+  popularity_score?: number;
+  trust_score?: number;
+  created_at: string;
 }
 
 interface AgentCardProps {
@@ -45,10 +50,20 @@ export default function AgentCard({ agent }: AgentCardProps) {
 
   // Determine Status Badge
   const getBadgeType = () => {
-    if (agent.velocity && agent.velocity > 0.5 && agent.stars > 1000) return 'blue-chip';
-    if (agent.velocity && agent.velocity > 0.8 && agent.stars < 500) return 'gem';
-    if (agent.velocity && agent.velocity > 0.2) return 'trending';
-    if (agent.trend === 'New') return 'new';
+    // 1. Blue Chip: Pulse > 80 AND Stars > 1000
+    if (agent.pulse_score && agent.pulse_score > 80 && agent.stars > 1000) return 'blue-chip';
+    
+    // 2. Hidden Gem: Pulse > 65 AND Stars < 200
+    if (agent.pulse_score && agent.pulse_score > 65 && agent.stars < 200) return 'gem';
+    
+    // 3. Surging: Growth Score > 20 (approx top 10%) OR High Velocity
+    // Note: We need growth_score in interface, but can fallback to velocity
+    if ((agent.growth_score && agent.growth_score > 20) || (agent.velocity && agent.velocity > 0.5)) return 'trending';
+    
+    // 4. Fresh Mint: Created < 7 days ago
+    const daysOld = (new Date().getTime() - new Date(agent.created_at).getTime()) / (1000 * 3600 * 24);
+    if (daysOld < 7) return 'new';
+
     return null;
   };
 

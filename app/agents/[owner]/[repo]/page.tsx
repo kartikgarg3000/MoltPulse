@@ -109,28 +109,51 @@ export default async function AgentPage({ params }: PageProps) {
 
                     <div className="flex flex-col gap-4 items-center min-w-[300px] w-full md:w-auto">
                         
-                        {/* Analytics Card */}
+                        {/* Pulse Score \u0026 Analytics Card */}
                         <div className="w-full glass p-6 rounded-2xl border border-white/10 bg-gradient-to-br from-blue-500/5 to-purple-500/5">
-                             <div className="flex items-center justify-between mb-4">
+                             <div className="flex items-center justify-between mb-6">
                                 <h3 className="text-sm font-black uppercase tracking-widest text-blue-400 flex items-center gap-2">
-                                    <Activity size={16} /> Molt Analytics
+                                    <Activity size={16} /> Molt Pulse
                                 </h3>
-                                <div className="px-2 py-0.5 rounded bg-blue-500/20 text-blue-400 text-[10px] font-bold">24H</div>
+                                {(agentData.pulse_score !== undefined) && (
+                                    <div className="text-3xl font-black bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
+                                        {Math.round(agentData.pulse_score)}
+                                    </div>
+                                )}
                              </div>
                              
-                             <div className="mb-6">
-                                <div className="text-3xl font-black text-white mb-1">{(agentData.velocity || 0).toFixed(1)}</div>
-                                <div className="text-xs text-gray-500 uppercase tracking-wider font-bold">Pulse Velocity</div>
+                             {/* Pulse Pillars */}
+                             <div className="space-y-4 mb-6">
+                                {[
+                                    { label: 'Growth', value: agentData.growth_score, max: 30, color: 'bg-blue-500' },
+                                    { label: 'Activity', value: agentData.activity_score, max: 25, color: 'bg-purple-500' },
+                                    { label: 'Popularity', value: agentData.popularity_score, max: 25, color: 'bg-green-500' },
+                                    { label: 'Trust', value: agentData.trust_score, max: 20, color: 'bg-yellow-500' }
+                                ].map((stat) => (
+                                    <div key={stat.label}>
+                                        <div className="flex justify-between text-xs mb-1">
+                                            <span className="text-gray-400 font-bold">{stat.label}</span>
+                                            <span className="text-white font-mono">{stat.value ? Math.round(stat.value) : 0}/{stat.max}</span>
+                                        </div>
+                                        <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
+                                            <div 
+                                                className={`h-full ${stat.color} rounded-full transition-all duration-1000`} 
+                                                style={{ width: `${((stat.value || 0) / stat.max) * 100}%` }}
+                                            />
+                                        </div>
+                                    </div>
+                                ))}
                              </div>
 
-                             <div className="h-32 w-full mb-4">
-                                 {/* Mock Data for Details Chart */}
+                             <div className="h-24 w-full mb-4 opacity-50">
+                                 {/* Sparkline for overall trend */}
                                  <PulseChart 
                                     data={Array.from({ length: 20 }, (_, i) => ({
                                         date: i.toString(),
                                         value: Math.floor(Math.random() * 80) + (agentData.velocity ? agentData.velocity * 5 : 10)
                                     }))} 
-                                    height={120} 
+                                    height={96} 
+                                    showAxis={false}
                                     color="#3b82f6" 
                                  />
                              </div>

@@ -14,7 +14,11 @@
 
 ### 2. Comprehensive Agent Profiles
 - **Deep Dive Metrics**: Detailed charts tracking star history and community growth.
-- **Pulse Score**: A proprietary 0-100 score rating an agent's overall health and potential.
+- **Pulse Score**: A proprietary 0-100 score rating an agent's overall health based on 4 pillars:
+    - 📈 **Growth (30%)**: Momentum from stars, forks, and contributors.
+    - ⚙️ **Activity (25%)**: Development velocity and commit recency.
+    - ⭐ **Popularity (25%)**: Total market reach and watchers.
+    - 🗳️ **Trust (20%)**: Community voting and watchlist signals.
 - **Vote & Watch**: Community-driven ranking system.
 
 ### 3. Knowledge Base (Playbooks)
