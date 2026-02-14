@@ -6,18 +6,7 @@ import { TrendingUp, Clock, Filter, Layers } from 'lucide-react';
 
 export const revalidate = 0; // Disable static caching for real-time updates
 
-interface Agent {
-  name: string;
-  repo: string;
-  description: string | null;
-  stars: number;
-  last_update: string;
-  trend: string | null;
-  category?: string;
-  velocity?: number;
-  pulse_score?: number;
-  created_at: string;
-}
+import { Agent } from '@/types';
 
 async function getAgents(): Promise<Agent[]> {
   const supabase = await createClient();

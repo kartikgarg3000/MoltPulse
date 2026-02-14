@@ -4,15 +4,10 @@ import React from 'react';
 import Link from 'next/link';
 import { ExternalLink, Star } from 'lucide-react';
 
+import { Agent } from '@/types';
+
 interface AgentFeedItemProps {
-  agent: {
-    name: string;
-    repo: string;
-    description: string | null;
-    stars: number;
-    created_at: string;
-    category?: string;
-  };
+  agent: Agent;
 }
 
 export default function AgentFeedItem({ agent }: AgentFeedItemProps) {

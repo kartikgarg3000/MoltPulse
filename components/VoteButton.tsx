@@ -23,7 +23,7 @@ export default function VoteButton({ repo, initialVotes }: VoteButtonProps) {
         const checkVoteStatus = async () => {
             const { data: { user } } = await supabase.auth.getUser();
             
-            let query = supabase.from('agent_votes').select('id').eq('agent_repo', repo);
+            const query = supabase.from('agent_votes').select('id').eq('agent_repo', repo);
             
             if (user) {
                 const { data: userVote } = await query.eq('user_id', user.id).maybeSingle();
@@ -71,7 +71,7 @@ export default function VoteButton({ repo, initialVotes }: VoteButtonProps) {
         setLoading(true);
         
         try {
-            let voteData: any = { agent_repo: repo, user_id: user.id };
+            const voteData: any = { agent_repo: repo, user_id: user.id };
 
             // Record the unique vote
             const { error: voteError } = await supabase.from('agent_votes').insert([voteData]);
