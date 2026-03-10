@@ -17,8 +17,21 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://molt-pulse.com'),
   title: "MoltPulse | Real-time AI Agent Map",
-  description: "The real-time map of AI agents.",
+  description: "The Bloomberg for AI Agents. Discover, track, and rank the top autonomous agents, dev frameworks, and AI tools with real-time Pulse Scores.",
+  openGraph: {
+    title: "MoltPulse | The Real-time AI Agent Map",
+    description: "Discover, track, and rank the top autonomous agents with real-time Pulse Scores and market analytics.",
+    url: "https://molt-pulse.com",
+    siteName: "MoltPulse",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "MoltPulse | Real-time AI Agent Map",
+    description: "Discover, track, and rank the top autonomous agents with real-time Pulse Scores.",
+  },
 };
 
 export default function RootLayout({
@@ -34,7 +47,7 @@ export default function RootLayout({
         <MarketTicker />
         <Navigation />
         <MobileNav />
-        <main className="md:ml-64 p-8 min-h-screen pb-24 md:pb-8">
+        <main className="md:ml-64 p-4 md:p-8 min-h-screen pb-24 md:pb-8 max-w-7xl mx-auto">
           {children}
           <Analytics />
         </main>

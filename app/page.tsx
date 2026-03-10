@@ -20,7 +20,7 @@ async function getAgents(): Promise<Agent[]> {
     return [];
   }
 
-  return data as Agent[];
+  return data as unknown as Agent[];
 }
 
 export default async function Home() {

@@ -17,6 +17,36 @@ interface PageProps {
     }>;
 }
 
+export async function generateMetadata({ params }: PageProps) {
+  const { owner, repo } = await params;
+  const agent = await getAgent(owner, repo);
+
+  if (!agent) {
+    return { title: 'Agent Not Found | MoltPulse' };
+  }
+
+  const title = `${agent.name} (${owner}/${repo}) | MoltPulse`;
+  const description = agent.description 
+    ? `${agent.description} - View pulse score, activity, and community trust.`
+    : `View pulse score and analytics for ${agent.name} on MoltPulse.`;
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      type: 'article',
+      siteName: 'MoltPulse',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+    },
+  };
+}
+
 // Fetch Agent from Supabase
 async function getAgent(owner: string, repo: string) {
   const supabase = await createClient();
@@ -107,9 +137,9 @@ export default async function AgentPage({ params }: PageProps) {
                         </div>
                     </div>
 
-                    <div className="flex flex-col gap-4 items-center min-w-[300px] w-full md:w-auto">
+                    <div className="flex flex-col gap-4 items-center w-full md:w-auto md:min-w-[300px]">
                         
-                        {/* Pulse Score \u0026 Analytics Card */}
+                        {/* Pulse Score & Analytics Card */}
                         <div className="w-full glass p-6 rounded-2xl border border-white/10 bg-gradient-to-br from-blue-500/5 to-purple-500/5">
                              <div className="flex items-center justify-between mb-6">
                                 <h3 className="text-sm font-black uppercase tracking-widest text-blue-400 flex items-center gap-2">
@@ -218,11 +248,3 @@ export default async function AgentPage({ params }: PageProps) {
     );
 }
 
-// Generate Metadata for better SEO
-export async function generateMetadata({ params }: PageProps) {
-    const { owner, repo } = await params;
-    return {
-        title: `${owner}/${repo} - MoltPulse`,
-        description: `Explore details and stats for ${owner}/${repo} AI agent.`
-    };
-}

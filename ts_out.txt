@@ -1,0 +1,1 @@
+MoltPulse/app/page.tsx(49,43): error TS2741: Property 'created_at' is missing in type 'Agent' but required in type 'import("D:/moltpulse/types/index").Agent'.
