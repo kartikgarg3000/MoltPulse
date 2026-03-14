@@ -11,6 +11,7 @@ const navItems = [
   { name: 'Rankings', href: '/rankings', icon: '🏆' },
   { name: 'Playbooks', href: '/playbooks', icon: '📚' },
   { name: 'Submit', href: '/submit', icon: '📤' },
+  { name: 'GitHub', href: 'https://github.com/kartikgarg3000/MoltPulse', icon: '⭐' },
 ];
 
 export default function Navigation() {

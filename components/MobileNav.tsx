@@ -11,7 +11,7 @@ const navItems = [
   { name: 'Agents', href: '/agents', icon: <Bot size={20} /> },
   { name: 'Submit', href: '/submit', icon: <PlusSquare size={20} /> },
   { name: 'Account', href: '/login', icon: <User size={20} /> },
-  { name: 'Ranks', href: '/rankings', icon: <Trophy size={20} /> },
+  { name: 'GitHub', href: 'https://github.com/kartikgarg3000/MoltPulse', icon: <Bot size={20} /> },
 ];
 
 export default function MobileNav() {
@@ -22,10 +22,14 @@ export default function MobileNav() {
       <div className="flex justify-around items-center h-16">
         {navItems.map((item) => {
           const isActive = pathname === item.href;
+          const isExternal = item.href.startsWith('http');
+          
           return (
             <Link
               key={item.href}
               href={item.href}
+              target={isExternal ? "_blank" : "_self"}
+              rel={isExternal ? "noopener noreferrer" : ""}
               className={`flex flex-col items-center gap-1 transition-colors ${
                 isActive ? 'text-blue-400' : 'text-gray-500 hover:text-gray-300'
               }`}

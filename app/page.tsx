@@ -109,10 +109,7 @@ export default async function Home() {
               </div>
            </section>
 
-           {/* Pulse Activity Widget */}
-           <PulseActivity />
-
-           {/* Categories / Sectors */}
+           {/* Pulse Activity Widget Removed (temporarily hidden until enough volume) */}           {/* Categories / Sectors */}
            <section className="glass rounded-xl border border-white/10 p-5">
               <div className="flex items-center gap-2 mb-4 text-gray-400">
                  <Layers size={16} />
