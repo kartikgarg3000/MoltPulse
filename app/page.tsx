@@ -32,7 +32,7 @@ export default async function Home() {
   const ecosystems = [...new Set(agents.map(a => a.category).filter(Boolean))];
 
   return (
-    <div className="min-h-screen bg-black text-gray-300 font-sans selection:bg-blue-500/30">
+    <div className="text-gray-300 font-sans selection:bg-blue-500/30">
       
       {/* Header / Market Status */}
       <header className="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-white/10 pb-6">

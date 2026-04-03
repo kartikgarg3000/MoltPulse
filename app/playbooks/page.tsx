@@ -14,7 +14,7 @@ export default async function PlaybooksPage() {
         .order('created_at', { ascending: false });
 
     return (
-      <div className="min-h-screen bg-black space-y-20 pb-20 animate-in fade-in duration-700">
+      <div className="space-y-20 pb-20 animate-in fade-in duration-700">
          
          {/* Hero Section */}
          <header className="relative pt-32 pb-20 px-4 overflow-hidden border-b border-white/5">
