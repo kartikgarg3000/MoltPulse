@@ -5,7 +5,7 @@ import Navigation from "../components/Navigation";
 import MobileNav from "../components/MobileNav";
 import MarketTicker from "../components/MarketTicker";
 import { Analytics } from "@vercel/analytics/next";
-import { GoogleAnalytics } from "@next/third-parties/google";
+import GoogleAnalytics from "../components/GoogleAnalytics";
 
 const outfit = Outfit({
   variable: "--font-outfit",
@@ -52,9 +52,9 @@ export default function RootLayout({
           <main className="flex-1 p-4 md:p-8 pb-24 md:pb-8 max-w-[1600px] w-full mx-auto">
             {children}
             <Analytics />
-            {process.env.NEXT_PUBLIC_GA_ID && (
+            {process.env.NEXT_PUBLIC_GA_ID ? (
               <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
-            )}
+            ) : null}
           </main>
         </div>
       </body>
