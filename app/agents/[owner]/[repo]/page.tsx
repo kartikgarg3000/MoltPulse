@@ -4,9 +4,10 @@ import { notFound } from 'next/navigation';
 import ReactMarkdown from 'react-markdown';
 import VoteButton from '@/components/VoteButton';
 import Link from 'next/link';
-import { ArrowLeft, Star, GitBranch, Terminal, Zap, Check, ExternalLink, Sliders, Activity } from 'lucide-react';
+import { ArrowLeft, Star, GitBranch, Terminal, Zap, Check, ExternalLink, Sliders, Activity, Code } from 'lucide-react';
 import PulseChart from '@/components/PulseChart';
 import StatusBadge from '@/components/StatusBadge';
+import CopyBadgeSnippet from '@/components/CopyBadgeSnippet';
 
 export const revalidate = 0; // Dynamic
 
@@ -142,9 +143,14 @@ export default async function AgentPage({ params }: PageProps) {
                         {/* Pulse Score & Analytics Card */}
                         <div className="w-full glass p-6 rounded-2xl border border-white/10 bg-gradient-to-br from-blue-500/5 to-purple-500/5">
                              <div className="flex items-center justify-between mb-6">
-                                <h3 className="text-sm font-black uppercase tracking-widest text-blue-400 flex items-center gap-2">
-                                    <Activity size={16} /> Molt Pulse
-                                </h3>
+                                <div className="relative group/pulse cursor-help">
+                                  <h3 className="text-sm font-black uppercase tracking-widest text-blue-400 flex items-center gap-2 border-b border-dashed border-blue-400/50 pb-0.5">
+                                      <Activity size={16} /> Molt Pulse
+                                  </h3>
+                                  <div className="absolute left-0 top-full mt-2 w-48 p-2.5 bg-[#111] border border-white/10 rounded-md text-xs text-gray-400 opacity-0 invisible group-hover/pulse:opacity-100 group-hover/pulse:visible transition-all duration-200 z-50 shadow-2xl pointer-events-none normal-case tracking-normal font-medium">
+                                    Based on repository activity, growth velocity and community engagement.
+                                  </div>
+                                </div>
                                 {(agentData.pulse_score !== undefined) && (
                                     <div className="text-3xl font-black bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
                                         {Math.round(agentData.pulse_score)}
@@ -241,6 +247,22 @@ export default async function AgentPage({ params }: PageProps) {
                                 "This agent is part of the MoltHub Racing ecosystem, demonstrating high on-chain velocity." : 
                                 "Standard MoltPulse indexed agent."}
                         </p>
+                    </div>
+
+                    <div className="glass p-6 rounded-2xl border border-white/10">
+                        <h3 className="font-bold mb-4 flex items-center gap-2 text-white">
+                           <Code size={18} /> Embed Badge
+                        </h3>
+                        <p className="text-xs text-gray-400 mb-4 leading-relaxed">
+                           Show off your Pulse Score in your GitHub README to build trust and rank higher.
+                        </p>
+                        
+                        <div className="mb-4 inline-block bg-black/50 p-2 rounded-lg border border-white/5">
+                           {/* eslint-disable-next-line @next/next/no-img-element */}
+                           <img src={`/api/badge/${owner}/${repo}`} alt="MoltPulse Badge" />
+                        </div>
+                        
+                        <CopyBadgeSnippet textToCopy={`[![MoltPulse Score](https://molt-pulse.com/api/badge/${owner}/${repo})](https://molt-pulse.com/agents/${owner}/${repo})`} />
                     </div>
                 </div>
             </div>

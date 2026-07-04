@@ -49,7 +49,7 @@ export default function RootLayout({
         <MarketTicker />
         <Navigation />
         <MobileNav />
-        <div className="md:ml-64 min-h-screen flex flex-col">
+        <div className="md:ml-16 min-h-screen flex flex-col">
           <main className="flex-1 p-4 md:p-8 pb-24 md:pb-8 max-w-[1600px] w-full mx-auto">
             {children}
             <Analytics />

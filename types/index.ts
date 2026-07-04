@@ -17,4 +17,16 @@ export interface Agent {
     activity_score?: number;
     popularity_score?: number;
     trust_score?: number;
+
+    // Quality Gate & Curation
+    is_verified?: boolean;
+    is_visible?: boolean;
+    quality_score?: number;
+
+    // Extended Metadata
+    readme_length?: number;
+    has_releases?: boolean;
+    license?: string | null;
+    language?: string | null;
+    topics?: string[];
 }

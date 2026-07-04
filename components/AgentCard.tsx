@@ -64,59 +64,58 @@ export default function AgentCard({ agent }: AgentCardProps) {
   const [owner, repoName] = agent.repo.split('/');
 
   return (
-    <Link href={`/agents/${owner}/${repoName}`} className="block group">
-      <div className="glass rounded-xl p-5 hover:bg-white/5 transition-all duration-300 hover:scale-[1.02] cursor-pointer h-full flex flex-col relative overflow-hidden">
+    <Link href={`/agents/${owner}/${repoName}`} className="block group h-full">
+      <div className="bg-[#0a0a0a] border border-white/10 rounded-lg p-5 hover:border-white/20 transition-all duration-200 cursor-pointer h-full flex flex-col">
         
-        {/* Glow effect on hover */}
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-500/0 via-purple-500/0 to-pink-500/0 group-hover:from-blue-500/5 group-hover:via-purple-500/5 group-hover:to-pink-500/5 transition-all duration-500" />
-
-        <div className="flex justify-between items-start mb-4">
-          <div className="flex-1">
-            <h3 className="text-xl font-bold text-white group-hover:text-blue-400 transition-colors">
+        <div className="flex justify-between items-start mb-3">
+          <div className="flex-1 pr-4">
+            <h3 className="text-lg font-bold text-gray-100 group-hover:text-white transition-colors line-clamp-1">
               {agent.name}
             </h3>
-            <div className="flex items-center gap-2 mt-1">
-               <p className="text-sm text-gray-500 font-mono">{agent.repo}</p>
+            <div className="flex items-center gap-2 mt-1.5 flex-wrap">
+               <p className="text-xs text-gray-500 font-mono truncate max-w-[150px]">{agent.repo}</p>
+               {agent.is_verified && <StatusBadge type="verified" />}
                {badgeType && <StatusBadge type={badgeType} />}
             </div>
           </div>
-          <div className="flex flex-col items-end gap-2">
+          
+          <div className="flex items-start gap-3">
             {agent.pulse_score !== undefined && (
-              <div className="flex flex-col items-end">
-                <span className="text-[8px] uppercase tracking-tighter text-gray-500 font-black mb-0.5">Pulse Score</span>
-                <div className="text-2xl font-black text-white bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
+              <div className="flex flex-col items-end relative group/pulse cursor-help">
+                <span className="text-[10px] text-gray-500 font-medium tracking-wide uppercase border-b border-dashed border-gray-600/50 pb-0.5">Pulse</span>
+                <div className="text-xl font-bold text-white">
                   {Math.round(agent.pulse_score)}
+                </div>
+                
+                {/* Tooltip */}
+                <div className="absolute right-0 top-full mt-2 w-48 p-2.5 bg-[#111] border border-white/10 rounded-md text-xs text-gray-400 opacity-0 invisible group-hover/pulse:opacity-100 group-hover/pulse:visible transition-all duration-200 z-50 shadow-2xl pointer-events-none">
+                  Based on repository activity, growth velocity and community engagement.
                 </div>
               </div>
             )}
-            <div className="flex items-center gap-2">
-              <WatchlistButton repo={agent.repo} />
-              <div className="w-10 h-12 flex items-center justify-center p-2 rounded-lg bg-white/5 border border-white/10 group-hover:border-blue-500/30 transition-all">
-                <VoteButton repo={agent.repo} initialVotes={agent.votes || 0} />
-              </div>
-            </div>
           </div>
         </div>
-        <div className="mb-4 h-16 opacity-50 group-hover:opacity-100 transition-opacity">
-            <PulseChart data={sparklineData} height={60} showAxis={false} color={badgeType === 'gem' ? '#a855f7' : '#3b82f6'} />
-        </div>
         
-        <p className="text-gray-400 text-sm mb-4 line-clamp-2 h-10 relative z-10">
-          {agent.description || "No description available."}
+        <p className="text-gray-400 text-sm mb-4 line-clamp-2 h-10">
+          {agent.description || "No description provided."}
         </p>
         
-        <div className="mt-auto flex items-center justify-between text-sm text-gray-300 relative z-10 pt-4 border-t border-white/5">
-          <div className="flex items-center gap-1">
-            <span className="text-yellow-500">⭐</span>
-            <span>{formatStars(agent.stars)}</span>
-          </div>
-          <div className="flex items-center gap-3">
-            <div className="flex items-center gap-1 opacity-70 group-hover:opacity-100 transition-opacity">
-              <span>⏱</span>
-              <span>{getRelativeTime(agent.last_update)}</span>
+        <div className="mt-auto flex items-center justify-between text-xs text-gray-400 pt-4 border-t border-white/5">
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-1.5 hover:text-white transition-colors">
+              <Star size={14} className="text-gray-500" />
+              <span>{formatStars(agent.stars)}</span>
+            </div>
+            <div className="flex items-center gap-1.5" title="Votes">
+               <TrendingUp size={14} className="text-gray-500" />
+               <span>{agent.votes || 0}</span>
             </div>
           </div>
+          <div className="flex items-center gap-1.5">
+            <span className="text-gray-500">Updated {getRelativeTime(agent.last_update)}</span>
+          </div>
         </div>
+
       </div>
     </Link>
   );

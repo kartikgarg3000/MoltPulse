@@ -19,9 +19,10 @@ export default function WatchlistButton({ repo, variant = 'compact' }: Watchlist
   const router = useRouter();
 
   useEffect(() => {
+    let isMounted = true;
     const checkWatchStatus = async () => {
       const { data: { user } } = await supabase.auth.getUser();
-      if (user) {
+      if (user && isMounted) {
         const { data } = await supabase
           .from('watchlist')
           .select('id')
@@ -29,11 +30,13 @@ export default function WatchlistButton({ repo, variant = 'compact' }: Watchlist
           .eq('agent_repo', repo)
           .maybeSingle();
         
-        if (data) setIsWatching(true);
+        if (data && isMounted) setIsWatching(true);
       }
-      setChecking(false);
+      if (isMounted) setChecking(false);
     };
     checkWatchStatus();
+    
+    return () => { isMounted = false; };
   }, [repo]);
 
   const handleToggleWatch = async (e: React.MouseEvent) => {

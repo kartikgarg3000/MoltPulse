@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import { createClient } from '@/utils/supabase/server';
 import DirectoryFilter from '@/components/DirectoryFilter';
 
@@ -5,10 +6,23 @@ export const revalidate = 0;
 
 async function getAgents() {
   const supabase = await createClient();
-  const { data } = await supabase
+
+  // Try with quality gate filter first
+  const { data, error } = await supabase
     .from('agents')
     .select('*')
-    .order('name');
+    .or('is_visible.eq.true,is_visible.is.null')
+    .order('pulse_score', { ascending: false, nullsFirst: false });
+
+  // If is_visible column doesn't exist yet (pre-migration), fall back to unfiltered
+  if (error) {
+    const { data: fallback } = await supabase
+      .from('agents')
+      .select('*')
+      .order('stars', { ascending: false });
+    return fallback || [];
+  }
+
   return data || [];
 }
 
@@ -23,7 +37,9 @@ export default async function AgentsPage() {
         <p className="text-gray-400">Discover and explore the ever-growing index of AI innovators.</p>
        </header>
        
-       <DirectoryFilter initialAgents={agents as any} />
+       <Suspense fallback={<div className="h-96 w-full animate-pulse bg-white/5 rounded-xl"></div>}>
+         <DirectoryFilter initialAgents={agents as any} />
+       </Suspense>
     </div>
   );
 }

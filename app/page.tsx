@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { createClient } from '@/utils/supabase/server';
 import AgentCard from '@/components/AgentCard';
 import PulseActivity from '@/components/PulseActivity';
@@ -10,14 +11,26 @@ import { Agent } from '@/types';
 
 async function getAgents(): Promise<Agent[]> {
   const supabase = await createClient();
+
+  // Try with quality gate filter first
   const { data, error } = await supabase
     .from('agents')
     .select('*')
+    .or('is_visible.eq.true,is_visible.is.null')
     .order('velocity', { ascending: false });
 
+  // If is_visible column doesn't exist yet (pre-migration), fall back to unfiltered
   if (error) {
-    console.error("Failed to fetch agents:", error);
-    return [];
+    const { data: fallback, error: fallbackError } = await supabase
+      .from('agents')
+      .select('*')
+      .order('velocity', { ascending: false });
+
+    if (fallbackError) {
+      console.error("Failed to fetch agents:", fallbackError);
+      return [];
+    }
+    return fallback as unknown as Agent[];
   }
 
   return data as unknown as Agent[];
@@ -29,7 +42,7 @@ export default async function Home() {
   // Derived Lists
   const trendingAgents = agents.slice(0, 5); // Top 5 by Velocity
   const newArrivals = [...agents].sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()).slice(0, 10);
-  const ecosystems = [...new Set(agents.map(a => a.category).filter(Boolean))];
+  const ecosystems = [...new Set(agents.map(a => a.category).filter((c): c is string => !!c))];
 
   return (
     <div className="text-gray-300 font-sans selection:bg-blue-500/30">
@@ -51,12 +64,16 @@ export default async function Home() {
         
         <div className="flex gap-4">
            <div className="px-4 py-2 rounded-lg bg-white/5 border border-white/10 text-center">
-              <span className="block text-xs uppercase tracking-wider text-gray-500 font-bold">Volume</span>
-              <span className="text-xl font-mono text-white font-bold">{agents.length}</span>
+              <span className="block text-[10px] uppercase tracking-wider text-gray-500 font-bold mb-0.5">Total Volume</span>
+              <span className="text-xl font-mono text-white font-bold">
+                 {new Intl.NumberFormat('en-US', { notation: "compact", compactDisplay: "short" }).format(
+                    agents.reduce((sum, agent) => sum + (agent.stars || 0) + (agent.votes || 0), 0)
+                 )}
+              </span>
            </div>
            <div className="px-4 py-2 rounded-lg bg-white/5 border border-white/10 text-center">
-              <span className="block text-xs uppercase tracking-wider text-gray-500 font-bold">24h Movers</span>
-              <span className="text-xl font-mono text-blue-400 font-bold">{trendingAgents.length}</span>
+              <span className="block text-[10px] uppercase tracking-wider text-gray-500 font-bold mb-0.5">Listed Agents</span>
+              <span className="text-xl font-mono text-blue-400 font-bold">{agents.length}</span>
            </div>
         </div>
       </header>
@@ -118,13 +135,20 @@ export default async function Home() {
               
               <div className="flex flex-wrap gap-2">
                  {ecosystems.map((cat) => (
-                    <button key={cat} className="px-3 py-1.5 rounded-md bg-white/5 border border-white/5 hover:bg-white/10 hover:border-white/20 transition-all text-xs text-gray-400 hover:text-white">
+                    <Link 
+                       href={`/agents?category=${encodeURIComponent(cat)}`} 
+                       key={cat} 
+                       className="px-3 py-1.5 rounded-md bg-white/5 border border-white/5 hover:bg-white/10 hover:border-white/20 transition-all text-xs text-gray-400 hover:text-white"
+                    >
                        {cat}
-                    </button>
+                    </Link>
                  ))}
-                 <button className="px-3 py-1.5 rounded-md border border-dashed border-white/10 text-xs text-gray-600 hover:text-gray-400 transition-colors">
+                 <Link 
+                    href="/agents" 
+                    className="px-3 py-1.5 rounded-md border border-dashed border-white/10 text-xs text-gray-600 hover:text-gray-400 transition-colors"
+                 >
                     + All Sectors
-                 </button>
+                 </Link>
               </div>
            </section>
 

@@ -20,36 +20,28 @@ export default function VoteButton({ repo, initialVotes }: VoteButtonProps) {
     const router = useRouter();
 
     useEffect(() => {
+        let isMounted = true;
         const checkVoteStatus = async () => {
             const { data: { user } } = await supabase.auth.getUser();
-            
-            const query = supabase.from('agent_votes').select('id').eq('agent_repo', repo);
-            
-            if (user) {
-                const { data: userVote } = await query.eq('user_id', user.id).maybeSingle();
-                if (userVote) setHasVoted(true);
+            if (!user || !isMounted) {
+                if (isMounted) setChecking(false);
+                return;
             }
             
-            setChecking(false);
+            const { data: userVote } = await supabase
+                .from('agent_votes')
+                .select('id')
+                .eq('agent_repo', repo)
+                .eq('user_id', user.id)
+                .maybeSingle();
+                
+            if (userVote && isMounted) setHasVoted(true);
+            if (isMounted) setChecking(false);
         };
         checkVoteStatus();
 
-        const channel = supabase
-            .channel(`agent_votes_${repo}`)
-            .on('postgres_changes', {
-                event: 'UPDATE',
-                schema: 'public',
-                table: 'agents',
-                filter: `repo=eq.${repo}`
-            }, (payload) => {
-                if (payload.new && payload.new.votes !== undefined) {
-                    setVotes(payload.new.votes);
-                }
-            })
-            .subscribe();
-
         return () => {
-            supabase.removeChannel(channel);
+            isMounted = false;
         };
     }, [repo]);
 
