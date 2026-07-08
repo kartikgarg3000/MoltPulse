@@ -5,7 +5,6 @@ import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Activity, LayoutGrid, BarChart2, Book, PlusSquare, Github, User } from 'lucide-react';
-import { useScrollDirection } from '@/hooks/useScrollDirection';
 
 const navItems = [
   { name: 'Pulse', href: '/', icon: <Activity size={20} /> },
@@ -17,15 +16,9 @@ const navItems = [
 
 export default function MobileNav() {
   const pathname = usePathname();
-  const scrollDirection = useScrollDirection();
-  
-  // Hide the nav when scrolling down (unless at the very top)
-  const isHidden = scrollDirection === 'down';
 
   return (
-    <nav className={`md:hidden fixed bottom-0 left-0 right-0 z-50 bg-[#0a0a0a] border-t border-white/10 px-2 pb-safe transition-transform duration-300 ease-in-out ${
-      isHidden ? 'translate-y-full' : 'translate-y-0'
-    }`}>
+    <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-[#0a0a0a] border-t border-white/10 px-2 pb-safe">
       <div className="flex justify-around items-center h-16">
         {navItems.map((item) => {
           const isActive = pathname === item.href;

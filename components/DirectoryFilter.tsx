@@ -26,7 +26,7 @@ interface DirectoryFilterProps {
   initialAgents: Agent[];
 }
 
-const CATEGORIES = ["All", "MoltHub", "Coding", "Assistant", "Web Browsing", "Autonomous", "Web3", "General"];
+const CATEGORIES = ["All", "Coding", "Assistant", "Web Browsing", "Autonomous", "Web3", "Trading", "General"];
 
 type SortOption = 'pulse' | 'stars' | 'newest' | 'activity' | 'quality';
 
