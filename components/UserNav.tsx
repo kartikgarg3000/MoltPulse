@@ -30,45 +30,58 @@ export default function UserNav() {
     return (
       <Link 
         href="/login"
-        className="flex items-center justify-center gap-2 w-full py-3 bg-white text-black font-bold rounded-xl hover:bg-gray-200 transition-all text-sm"
+        className="flex items-center gap-4 px-3 py-3 bg-white text-black font-bold rounded-xl hover:bg-gray-200 transition-all duration-300 text-sm whitespace-nowrap overflow-hidden"
       >
-        Sign In
+        <div className="flex-shrink-0 flex items-center justify-center w-5">
+           <User size={20} className="text-black" />
+        </div>
+        <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">Sign In</span>
       </Link>
     )
   }
 
-  const avatarUrl = user.user_metadata?.avatar_url
+  const avatarUrl = user.user_metadata?.avatar_url || `https://ui-avatars.com/api/?name=${user.email}&background=random`
   const fullName = user.user_metadata?.full_name || user.email
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center gap-3 p-3 bg-white/5 rounded-2xl border border-white/10">
+      {/* Profile Bubble */}
+      <div className="flex items-center gap-4 p-2 bg-white/5 rounded-2xl border border-white/10 w-full overflow-hidden transition-all duration-300">
         <img 
           src={avatarUrl} 
           alt={fullName} 
-          className="w-10 h-10 rounded-full border border-white/20"
+          className="w-8 h-8 rounded-full border border-white/20 flex-shrink-0 ml-1"
         />
-        <div className="flex-1 min-w-0">
+        <div className="flex-1 min-w-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
           <p className="text-sm font-bold truncate">{fullName}</p>
-          <p className="text-[10px] text-blue-400 font-bold uppercase tracking-widest">Active Pulse</p>
+          <p className="text-[10px] text-blue-400 font-bold uppercase tracking-widest truncate">Active Pulse</p>
         </div>
       </div>
 
+      {/* Nav Actions */}
       <div className="grid grid-cols-1 gap-1">
-        <Link href="/profile" className="flex items-center gap-3 px-4 py-2 rounded-lg text-gray-400 hover:bg-white/5 hover:text-white transition-all text-sm">
-          <User size={16} />
-          <span>Profile</span>
+        <Link href="/profile" className="flex items-center gap-4 px-3 py-3 rounded-md transition-all duration-300 text-sm font-medium whitespace-nowrap overflow-hidden text-gray-400 hover:text-gray-200 hover:bg-[#111] border border-transparent">
+          <div className="flex-shrink-0 flex items-center justify-center w-5">
+            <User size={20} />
+          </div>
+          <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">Profile</span>
         </Link>
-        <Link href="/watchlist" className="flex items-center gap-3 px-4 py-2 rounded-lg text-gray-400 hover:bg-white/5 hover:text-white transition-all text-sm">
-          <Zap size={16} />
-          <span>My Watchlist</span>
+        
+        <Link href="/watchlist" className="flex items-center gap-4 px-3 py-3 rounded-md transition-all duration-300 text-sm font-medium whitespace-nowrap overflow-hidden text-gray-400 hover:text-gray-200 hover:bg-[#111] border border-transparent">
+          <div className="flex-shrink-0 flex items-center justify-center w-5">
+            <Zap size={20} />
+          </div>
+          <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">My Watchlist</span>
         </Link>
+        
         <button 
           onClick={handleSignOut}
-          className="flex items-center gap-3 w-full px-4 py-2 rounded-lg text-red-400/70 hover:bg-red-500/10 hover:text-red-400 transition-all text-sm"
+          className="flex items-center gap-4 px-3 py-3 rounded-md transition-all duration-300 text-sm font-medium whitespace-nowrap overflow-hidden text-red-400/70 hover:text-red-400 hover:bg-[#111] border border-transparent w-full text-left"
         >
-          <LogOut size={16} />
-          <span>Sign Out</span>
+          <div className="flex-shrink-0 flex items-center justify-center w-5">
+            <LogOut size={20} />
+          </div>
+          <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">Sign Out</span>
         </button>
       </div>
     </div>
