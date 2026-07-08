@@ -21,10 +21,15 @@ We algorithmically evaluate and rank agents using our proprietary 0-100 **Pulse 
 - ⭐ **Popularity (25%)**: Total market reach and community awareness.
 - 🗳️ **Trust (20%)**: On-platform community voting and watchlist additions.
 
-### 🌐 Market Terminal
+### 🌐 Market Terminal & Discovery
 - **Real-Time Discovery**: A live feed of new and trending agents, automatically identifying "Market Movers."
 - **Smart Analytics**: Every agent features sparklines and progression bars visualizing their Pulse Breakdown.
 - **Categorization**: Agents are tagged (e.g., Blue Chip, Surging, Hidden Gem) to help cut through the noise.
+- **Verified Agents & Filtering**: Use robust filters to instantly discover vetted, high-quality "Verified Agents".
+
+### 🏷️ Pulse Badge Integration
+- **Showcase Your Momentum**: Repository owners can generate a dynamic **Pulse Badge** through MoltPulse and embed it directly into their project's README.
+- **Live Updates**: Badges automatically sync with your real-time Pulse Score, instantly signaling project health and popularity to your users and contributors.
 
 ### 📚 Knowledge Base
 - **Playbooks**: A curated, interactive library of tutorials, technical guides, and architectural breakdowns.
@@ -39,52 +44,39 @@ MoltPulse is built for speed, real-time data, and beautiful visualizations:
 - **Visualization**: Recharts & custom interactive SVGs
 - **Deployment**: Vercel
 
-## 🚀 Getting Started Locally
+## 🚀 Development Setup
 
-Want to run MoltPulse on your own machine? It's easy:
+MoltPulse requires [Node.js](https://nodejs.org/) and a [Supabase](https://supabase.com) instance.
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/kartikgarg3000/MoltPulse.git
-   cd MoltPulse
-   ```
+```bash
+npm install
+npm run dev
+```
 
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
-
-3. **Database Setup**
-   Create a [Supabase](https://supabase.com) project and run the provided SQL migration scripts found in the `data/` folder to create the necessary tables (`agents`, `playbooks`, `agent_votes`, etc.).
-
-4. **Environment Variables**
-   Create a `.env.local` file at the root:
+1. **Database Setup**: Create a Supabase project and execute the SQL migrations located in the `data/` directory.
+2. **Environment Variables**: Create a `.env.local` file at the root of the project with your Supabase credentials:
    ```env
    NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
    NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
    ```
+3. Visit `http://localhost:3000` to view the application.
 
-5. **Start the development server**
-   ```bash
-   npm run dev
-   ```
-   Open `http://localhost:3000` in your browser.
+## 🤝 Contributing
 
-## 🤝 Contributing to MoltPulse
+MoltPulse is a community-driven open-source project. We invite developers, data scientists, and AI enthusiasts to help us build the premier Market Terminal for AI agents.
 
-MoltPulse is **100% open source** and built by the community, for the community. We welcome contributions of all shapes and sizes!
-
-### How you can help:
-- **Add New Agents**: Submit PRs or use the in-app submission form to add new AI agents to our directory.
-- **Improve the Pulse Algorithm**: Have ideas for better metrics? We'd love to refine the Pulse Score with your input.
-- **Write Playbooks**: Share your knowledge! Contribute markdown-based tutorials to the Playbooks library.
-- **Squash Bugs**: Check out our [Issues](https://github.com/kartikgarg3000/MoltPulse/issues) tab to find UI bugs or performance enhancements.
+### Ways to Contribute
+- **Core Platform**: Enhance the Next.js frontend, optimize Supabase queries, or improve the UI/UX.
+- **Pulse Algorithm**: Propose data science and algorithmic improvements to our Pulse Score weighting.
+- **Agent Integration**: Submit new AI agents to our directory or integrate Pulse Badges into your own repositories.
+- **Documentation**: Write playbooks, tutorials, or architectural overviews to help onboard new developers.
 
 ### Contribution Process
-1. Fork the repo and create your branch (`git checkout -b feature/AmazingFeature`).
-2. Commit your changes (`git commit -m 'Add some AmazingFeature'`).
-3. Push to the branch (`git push origin feature/AmazingFeature`).
-4. Open a Pull Request!
+We welcome contributions of all sizes! Please review our [Issues](https://github.com/kartikgarg3000/MoltPulse/issues) board for open tasks.
+
+1. Fork the repository and create a feature branch (`git checkout -b feature/your-feature-name`).
+2. Ensure your code follows existing styling conventions and passes all checks.
+3. Submit a descriptive Pull Request detailing your changes and their impact.
 
 ## 📜 License
 Distributed under the MIT License. See `LICENSE` for more information.
