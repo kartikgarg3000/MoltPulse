@@ -145,7 +145,7 @@ export default async function AgentPage({ params }: PageProps) {
                              <div className="flex items-center justify-between mb-6">
                                 <div className="relative group/pulse cursor-help">
                                   <h3 className="text-sm font-black uppercase tracking-widest text-blue-400 flex items-center gap-2 border-b border-dashed border-blue-400/50 pb-0.5">
-                                      <Activity size={16} /> Molt Pulse
+                                      <Activity size={16} /> MoltPulse
                                   </h3>
                                   <div className="absolute left-0 top-full mt-2 w-48 p-2.5 bg-[#111] border border-white/10 rounded-md text-xs text-gray-400 opacity-0 invisible group-hover/pulse:opacity-100 group-hover/pulse:visible transition-all duration-200 z-50 shadow-2xl pointer-events-none normal-case tracking-normal font-medium">
                                     Based on repository activity, growth velocity and community engagement.

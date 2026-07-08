@@ -55,10 +55,10 @@ export default async function Home() {
             <span className="text-xs font-mono text-green-500 uppercase tracking-widest">Market Open • Real-time</span>
           </div>
           <h1 className="text-4xl font-bold text-white tracking-tight">
-            Market Terminal
+            MoltPulse Market Terminal
           </h1>
           <p className="text-sm text-gray-500 max-w-md">
-            The definitive source for discovering new and trending autonomous agents.
+            MoltPulse (also written as &quot;Molt Pulse&quot;) is the definitive source for discovering new and trending autonomous agents.
           </p>
         </div>
         
