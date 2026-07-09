@@ -58,7 +58,7 @@ export default async function Home() {
             MoltPulse Market Terminal
           </h1>
           <p className="text-sm text-gray-500 max-w-md">
-            MoltPulse (also written as &quot;Molt Pulse&quot;) is the definitive source for discovering new and trending autonomous agents.
+            MoltPulse (also written as &quot;Molt Pulse&quot;) is the definitive source for discovering new and trending autonomous AI agents.
           </p>
         </div>
         
