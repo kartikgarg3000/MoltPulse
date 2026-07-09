@@ -236,8 +236,8 @@ async function main() {
             const repoName = repo.full_name.toLowerCase();
             let category = "General";
 
-            if (desc.includes("molthub") || repoName.includes("molthub") || desc.includes("nsfw") || desc.includes("adult") || desc.includes("hub")) {
-                category = "MoltHub";
+            if (desc.includes("trade") || desc.includes("trading") || desc.includes("finance") || desc.includes("market") || desc.includes("exchange") || desc.includes("arbitrage")) {
+                category = "Trading";
             }
             else if (desc.includes("code") || desc.includes("dev") || desc.includes("hack")) category = "Coding";
             else if (desc.includes("chat") || desc.includes("social") || desc.includes("talk")) category = "Assistant";

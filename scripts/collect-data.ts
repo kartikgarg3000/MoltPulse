@@ -34,7 +34,11 @@ const SEED_AGENTS = [
     "yoheinakajima/babyagi",
     "geekan/MetaGPT",
     "OpenInterpreter/open-interpreter",
-    "microsoft/autogen"
+    "microsoft/autogen",
+    "freqtrade/freqtrade",
+    "hummingbot/hummingbot",
+    "jesse-ai/jesse",
+    "ccxt/ccxt"
 ];
 
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
