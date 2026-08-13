@@ -31,7 +31,7 @@ export default async function AgentsPage() {
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
        <header>
-        <h1 className="text-4xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
+        <h1 className="text-4xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-cyan-400">
           Agent Directory
         </h1>
         <p className="text-gray-400">Discover and explore the ever-growing index of AI innovators.</p>

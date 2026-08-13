@@ -53,7 +53,7 @@ export default async function ProfilePage() {
             
             <div className="flex flex-wrap justify-center md:justify-start gap-6 pt-2">
               <div className="flex items-center gap-2 text-gray-400 text-sm">
-                <Mail size={16} className="text-purple-500" />
+                <Mail size={16} className="text-blue-500" />
                 <span>{user.email}</span>
               </div>
               <div className="flex items-center gap-2 text-gray-400 text-sm">

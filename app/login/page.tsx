@@ -11,7 +11,7 @@ export default async function LoginPage({
   return (
     <div className="flex flex-col items-center justify-center min-h-[70vh] space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
       <div className="text-center space-y-4">
-        <div className="w-20 h-20 bg-gradient-to-tr from-blue-500 to-purple-600 rounded-3xl mx-auto flex items-center justify-center shadow-2xl shadow-blue-500/20 mb-8">
+        <div className="w-20 h-20 bg-gradient-to-tr from-blue-500 to-cyan-500 rounded-3xl mx-auto flex items-center justify-center shadow-2xl shadow-blue-500/20 mb-8">
             <span className="text-white font-black text-4xl">M</span>
         </div>
         <h1 className="text-5xl font-black bg-clip-text text-transparent bg-gradient-to-r from-white via-gray-400 to-gray-600">

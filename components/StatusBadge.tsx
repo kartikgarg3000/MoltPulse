@@ -21,8 +21,8 @@ export default function StatusBadge({ type, className = '' }: StatusBadgeProps) 
     'gem': {
       label: 'HIDDEN GEM',
       icon: Gem,
-      style: 'bg-purple-900/40 text-purple-400 border-purple-500/30',
-      iconStyle: 'text-purple-400'
+      style: 'bg-amber-900/40 text-amber-400 border-amber-500/30',
+      iconStyle: 'text-amber-400'
     },
     'trending': {
       label: 'SURGING',

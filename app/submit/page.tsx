@@ -77,7 +77,7 @@ export default function SubmitPage() {
   return (
     <div className="max-w-4xl mx-auto py-12 px-4 space-y-12 animate-in fade-in slide-in-from-bottom-4 duration-700">
       <header className="text-center space-y-4">
-        <h1 className="text-5xl font-black bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 pb-2">
+        <h1 className="text-5xl font-black bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-cyan-400 to-teal-400 pb-2">
           Add an Agent to the Map
         </h1>
         <p className="text-gray-400 text-lg max-w-2xl mx-auto">
@@ -88,7 +88,7 @@ export default function SubmitPage() {
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 bg-white/5 p-8 lg:p-12 rounded-[2rem] border border-white/10 glass relative overflow-hidden">
         {/* Glow effect */}
         <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 blur-[100px] pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-64 h-64 bg-purple-500/10 blur-[100px] pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-500/10 blur-[100px] pointer-events-none" />
 
         <div className="lg:col-span-2 space-y-8 relative z-10">
           <div className="space-y-4">
@@ -165,7 +165,7 @@ export default function SubmitPage() {
           <button 
             disabled={loading}
             type="submit"
-            className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-bold py-5 rounded-xl transition-all shadow-xl shadow-blue-500/20 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 group"
+            className="w-full bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-500 hover:to-cyan-500 text-white font-bold py-5 rounded-xl transition-all shadow-xl shadow-blue-500/20 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 group"
           >
             {loading ? (
               <Loader2 className="animate-spin" size={20} />

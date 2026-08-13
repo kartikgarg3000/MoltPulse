@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { Activity, LayoutGrid, BarChart2, Book, PlusSquare, Github } from 'lucide-react';
+import { Activity, LayoutGrid, BarChart2, Book, PlusSquare } from 'lucide-react';
 import NavLinks from './NavLinks';
 import UserNav from './UserNav';
 
@@ -12,7 +12,6 @@ const navItems = [
   { name: 'Rankings', href: '/rankings', icon: BarChart2 },
   { name: 'Playbooks', href: '/playbooks', icon: Book },
   { name: 'Submit', href: '/submit', icon: PlusSquare },
-  { name: 'GitHub', href: 'https://github.com/kartikgarg3000/MoltPulse', icon: Github },
 ];
 
 export default function Navigation() {

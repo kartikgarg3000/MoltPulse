@@ -34,7 +34,7 @@ export default function PlaybookLibrary({ playbooks }: { playbooks: Playbook[] }
       {/* Search & Filter Controls */}
       <div className="flex flex-col md:flex-row gap-6 items-center justify-between mb-12">
         <div className="flex items-center gap-3">
-           <div className="w-10 h-10 rounded-xl bg-purple-500/10 flex items-center justify-center text-purple-400">
+           <div className="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center text-blue-400">
               <BookOpen size={20} />
            </div>
            <h2 className="text-3xl font-bold text-white">Library</h2>
@@ -129,8 +129,8 @@ export default function PlaybookLibrary({ playbooks }: { playbooks: Playbook[] }
             </a>
 
              <a href="https://github.com/topics/autonomous-agents" target="_blank" className="p-6 rounded-2xl bg-white/5 border border-white/5 hover:border-white/20 hover:bg-white/10 transition-all group">
-                <BookOpen className="text-purple-400 mb-4" size={24} />
-                <h4 className="font-bold text-white mb-1 group-hover:text-purple-400 transition-colors">Awesome Agents</h4>
+                <BookOpen className="text-teal-400 mb-4" size={24} />
+                <h4 className="font-bold text-white mb-1 group-hover:text-teal-400 transition-colors">Awesome Agents</h4>
                 <p className="text-xs text-gray-500">Curated list of autonomous agent projects on GitHub.</p>
             </a>
         </div>

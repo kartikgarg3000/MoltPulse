@@ -22,6 +22,9 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://molt-pulse.com'),
   title: "MoltPulse | Real-time AI Agent Map",
   description: "The Bloomberg for AI Agents. Discover, track, and rank the top autonomous agents, dev frameworks, and AI tools with real-time Pulse Scores.",
+  icons: {
+    icon: '/icon.svg',
+  },
   openGraph: {
     title: "MoltPulse | The Real-time AI Agent Map",
     description: "Discover, track, and rank the top autonomous agents with real-time Pulse Scores and market analytics.",
@@ -59,6 +62,23 @@ export default function RootLayout({
               </Suspense>
             ) : null}
           </main>
+
+          {/* Footer */}
+          <footer className="border-t border-white/10 py-8 px-4 md:px-8 mt-12">
+            <div className="max-w-[1600px] mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-gray-500">
+              <div className="flex items-center gap-1">
+                <span>&copy; {new Date().getFullYear()} MoltPulse.</span>
+                <span>All rights reserved.</span>
+              </div>
+              <div className="flex items-center gap-4">
+                <a href="/privacy" className="hover:text-gray-300 transition-colors">Privacy Policy</a>
+                <span className="w-0.5 h-0.5 bg-gray-600 rounded-full" />
+                <a href="/terms" className="hover:text-gray-300 transition-colors">Terms</a>
+                <span className="w-0.5 h-0.5 bg-gray-600 rounded-full" />
+                <a href="https://github.com/kartikgarg3000/MoltPulse" target="_blank" rel="noopener noreferrer" className="hover:text-gray-300 transition-colors">GitHub</a>
+              </div>
+            </div>
+          </footer>
         </div>
       </body>
     </html>

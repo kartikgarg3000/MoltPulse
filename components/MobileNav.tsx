@@ -4,14 +4,13 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Activity, LayoutGrid, BarChart2, Book, PlusSquare, Github, User } from 'lucide-react';
+import { Activity, LayoutGrid, BarChart2, Book, PlusSquare, User } from 'lucide-react';
 
 const navItems = [
   { name: 'Pulse', href: '/', icon: <Activity size={20} /> },
   { name: 'Agents', href: '/agents', icon: <LayoutGrid size={20} /> },
   { name: 'Submit', href: '/submit', icon: <PlusSquare size={20} /> },
   { name: 'Account', href: '/login', icon: <User size={20} /> },
-  { name: 'GitHub', href: 'https://github.com/kartikgarg3000/MoltPulse', icon: <Github size={20} /> },
 ];
 
 export default function MobileNav() {

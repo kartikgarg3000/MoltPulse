@@ -22,12 +22,9 @@ export default async function PlaybooksPage() {
            <div className="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-blue-600/10 blur-[120px] rounded-full" />
            
            <div className="max-w-7xl mx-auto relative z-10 text-center space-y-6">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-gray-300 text-xs font-black uppercase tracking-[0.2em] mb-4">
-                 <Sparkles size={14} className="text-yellow-500" />
-                 Molt Knowledge Base
-              </div>
+          
               <h1 className="text-5xl md:text-7xl font-black text-white tracking-tight leading-tight">
-                Master the <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">Agent Economy</span>
+                Master the <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-cyan-400">Agent Economy</span>
               </h1>
               <p className="text-xl text-gray-400 leading-relaxed max-w-2xl mx-auto">
                 The definitive resource for building, deploying, and monetizing autonomous agents in the Molt ecosystem.
@@ -56,8 +53,8 @@ export default async function PlaybooksPage() {
                   </p>
                </div>
 
-               <div className="glass p-8 rounded-3xl border border-white/5 hover:border-purple-500/30 transition-colors group">
-                  <div className="w-12 h-12 bg-purple-500/10 rounded-2xl flex items-center justify-center text-purple-400 mb-6 group-hover:scale-110 transition-transform">
+               <div className="glass p-8 rounded-3xl border border-white/5 hover:border-teal-500/30 transition-colors group">
+                  <div className="w-12 h-12 bg-teal-500/10 rounded-2xl flex items-center justify-center text-teal-400 mb-6 group-hover:scale-110 transition-transform">
                      <Code size={24} />
                   </div>
                   <h3 className="text-xl font-bold text-white mb-3">2. Implementation</h3>
@@ -108,7 +105,7 @@ export default async function PlaybooksPage() {
                   
                   {/* Visual placeholder for roadmap graphic or just abstract art */}
                   <div className="md:w-1/2 flex justify-center">
-                     <div className="relative w-full max-w-sm aspect-square bg-gradient-to-tr from-blue-500/20 to-purple-500/20 rounded-full blur-3xl opacity-50" />
+                     <div className="relative w-full max-w-sm aspect-square bg-gradient-to-tr from-blue-500/20 to-cyan-500/20 rounded-full blur-3xl opacity-50" />
                      <div className="absolute glass p-8 rounded-2xl border border-white/10 max-w-xs rotate-3">
                         <h4 className="font-bold text-white mb-2">Curriculum Beta</h4>
                         <p className="text-xs text-gray-400">We are actively building new modules for the Molt Academy.</p>

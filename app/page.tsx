@@ -51,8 +51,8 @@ export default async function Home() {
       <header className="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-white/10 pb-6">
         <div className="space-y-2">
           <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-            <span className="text-xs font-mono text-green-500 uppercase tracking-widest">Market Open • Real-time</span>
+            {/* <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span> */}
+            {/* <span className="text-xs font-mono text-green-500 uppercase tracking-widest">Market Open • Real-time</span> */}
           </div>
           <h1 className="text-4xl font-bold text-white tracking-tight">
             MoltPulse Market Terminal
@@ -109,9 +109,6 @@ export default async function Home() {
                     <Clock size={16} />
                     <h3 className="text-xs font-black uppercase tracking-widest">Fresh on Market</h3>
                  </div>
-                 <span className="text-[10px] bg-green-500/10 text-green-400 px-2 py-0.5 rounded-full border border-green-500/20 animate-pulse">
-                    LIVE
-                 </span>
               </div>
               
               <div className="overflow-y-auto custom-scrollbar">

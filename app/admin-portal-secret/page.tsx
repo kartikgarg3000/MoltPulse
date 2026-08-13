@@ -442,7 +442,7 @@ export default function AdminPortal() {
                         <span className="truncate">{sub.submitter_name}</span>
                      </div>
                      <div className="flex items-center gap-2 text-sm text-gray-400">
-                        <Clock size={14} className="text-purple-500" />
+                        <Clock size={14} className="text-gray-500" />
                         <span>{new Date(sub.created_at).toLocaleDateString()}</span>
                      </div>
                   </div>

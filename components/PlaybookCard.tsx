@@ -19,7 +19,7 @@ export default function PlaybookCard({ playbook }: { playbook: Playbook }) {
     switch (diff.toLowerCase()) {
       case 'beginner': return 'text-green-400 bg-green-500/10 border-green-500/20';
       case 'intermediate': return 'text-blue-400 bg-blue-500/10 border-blue-500/20';
-      case 'advanced': return 'text-purple-400 bg-purple-500/10 border-purple-500/20';
+      case 'advanced': return 'text-cyan-400 bg-cyan-500/10 border-cyan-500/20';
       default: return 'text-gray-400 bg-gray-500/10 border-gray-500/20';
     }
   };

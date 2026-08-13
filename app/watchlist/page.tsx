@@ -87,7 +87,7 @@ export default async function WatchlistPage() {
       )}
 
       {agents.length > 0 && (
-        <div className="p-8 bg-gradient-to-br from-blue-600/10 to-purple-600/10 rounded-[2rem] border border-white/5 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="p-8 bg-gradient-to-br from-blue-600/10 to-cyan-600/10 rounded-[2rem] border border-white/5 flex flex-col md:flex-row items-center justify-between gap-6">
            <div className="space-y-1">
               <h3 className="text-lg font-bold flex items-center gap-2">
                 <Zap className="text-blue-500" size={18} />

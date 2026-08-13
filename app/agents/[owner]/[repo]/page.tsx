@@ -102,7 +102,7 @@ export default async function AgentPage({ params }: PageProps) {
                 <div className="glass p-8 rounded-2xl flex flex-col md:flex-row gap-8 items-start justify-between">
                     <div className="flex-1 space-y-4">
                         <div className="flex items-center gap-4">
-                            <h1 className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 pb-2">
+                            <h1 className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-cyan-400 to-teal-400 pb-2">
                                 {agentData.name}
                             </h1>
                         </div>
@@ -141,7 +141,7 @@ export default async function AgentPage({ params }: PageProps) {
                     <div className="flex flex-col gap-4 items-center w-full md:w-auto md:min-w-[300px]">
                         
                         {/* Pulse Score & Analytics Card */}
-                        <div className="w-full glass p-6 rounded-2xl border border-white/10 bg-gradient-to-br from-blue-500/5 to-purple-500/5">
+                        <div className="w-full glass p-6 rounded-2xl border border-white/10 bg-gradient-to-br from-blue-500/5 to-cyan-500/5">
                              <div className="flex items-center justify-between mb-6">
                                 <div className="relative group/pulse cursor-help">
                                   <h3 className="text-sm font-black uppercase tracking-widest text-blue-400 flex items-center gap-2 border-b border-dashed border-blue-400/50 pb-0.5">
@@ -152,7 +152,7 @@ export default async function AgentPage({ params }: PageProps) {
                                   </div>
                                 </div>
                                 {(agentData.pulse_score !== undefined) && (
-                                    <div className="text-3xl font-black bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
+                                    <div className="text-3xl font-black bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-cyan-400">
                                         {Math.round(agentData.pulse_score)}
                                     </div>
                                 )}
@@ -162,7 +162,7 @@ export default async function AgentPage({ params }: PageProps) {
                              <div className="space-y-4 mb-6">
                                 {[
                                     { label: 'Growth', value: agentData.growth_score, max: 30, color: 'bg-blue-500' },
-                                    { label: 'Activity', value: agentData.activity_score, max: 25, color: 'bg-purple-500' },
+                                    { label: 'Activity', value: agentData.activity_score, max: 25, color: 'bg-cyan-500' },
                                     { label: 'Popularity', value: agentData.popularity_score, max: 25, color: 'bg-green-500' },
                                     { label: 'Trust', value: agentData.trust_score, max: 20, color: 'bg-yellow-500' }
                                 ].map((stat) => (

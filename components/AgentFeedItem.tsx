@@ -27,7 +27,7 @@ export default function AgentFeedItem({ agent }: AgentFeedItemProps) {
 
   return (
     <div className="group flex items-start gap-4 p-4 border-b border-white/5 hover:bg-white/5 transition-colors">
-      <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center text-xs font-bold text-white shrink-0 border border-white/10 group-hover:border-blue-500/30">
+      <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500/20 to-cyan-500/20 flex items-center justify-center text-xs font-bold text-white shrink-0 border border-white/10 group-hover:border-blue-500/30">
         {agent.name.slice(0, 2).toUpperCase()}
       </div>
       
