@@ -22,6 +22,7 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://molt-pulse.com'),
   title: "MoltPulse | Real-time AI Agent Map",
   description: "The Bloomberg for AI Agents. Discover, track, and rank the top autonomous agents, dev frameworks, and AI tools with real-time Pulse Scores.",
+  keywords: ["moltpulse", "molt pulse", "ai agents", "autonomous agents", "ai directory", "crypto agents", "agent economy"],
   icons: {
     icon: '/icon.svg',
   },
