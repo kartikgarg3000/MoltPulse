@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: ['/admin-portal-secret/'],
     },
-    sitemap: 'https://molt-pulse.com/sitemap.xml',
+    sitemap: 'https://www.molt-pulse.com/sitemap.xml',
   };
 }

@@ -34,6 +34,9 @@ export async function generateMetadata({ params }: PageProps) {
   return {
     title,
     description,
+    alternates: {
+      canonical: `/agents/${owner}/${repo}`,
+    },
     openGraph: {
       title,
       description,

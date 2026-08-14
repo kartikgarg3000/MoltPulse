@@ -19,7 +19,10 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://molt-pulse.com'),
+  metadataBase: new URL('https://www.molt-pulse.com'),
+  alternates: {
+    canonical: "/",
+  },
   title: "MoltPulse | Real-time AI Agent Map",
   description: "The Bloomberg for AI Agents. Discover, track, and rank the top autonomous agents, dev frameworks, and AI tools with real-time Pulse Scores.",
   keywords: ["moltpulse", "molt pulse", "ai agents", "autonomous agents", "ai directory", "crypto agents", "agent economy"],
@@ -29,7 +32,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "MoltPulse | The Real-time AI Agent Map",
     description: "Discover, track, and rank the top autonomous agents with real-time Pulse Scores and market analytics.",
-    url: "https://molt-pulse.com",
+    url: "https://www.molt-pulse.com",
     siteName: "MoltPulse",
     type: "website",
   },
