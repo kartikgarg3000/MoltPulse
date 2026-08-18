@@ -261,8 +261,7 @@ export default async function AgentPage({ params }: PageProps) {
                         </p>
                         
                         <div className="mb-4 inline-block bg-black/50 p-2 rounded-lg border border-white/5">
-                           {/* eslint-disable-next-line @next/next/no-img-element */}
-                           <img src={`/api/badge/${owner}/${repo}`} alt="MoltPulse Badge" />
+                           <img src={`/api/badge/${owner}/${repo}?t=${Date.now()}`} alt="MoltPulse Badge" />
                         </div>
                         
                         <CopyBadgeSnippet textToCopy={`[![MoltPulse Score](https://molt-pulse.com/api/badge/${owner}/${repo})](https://molt-pulse.com/agents/${owner}/${repo})`} />
