@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { createClient } from '@/utils/supabase/server';
 
-export const revalidate = 3600; // Cache for 1 hour
+export const revalidate = 0; // Disable cache so changes show immediately
 
 export async function GET(
   request: Request,

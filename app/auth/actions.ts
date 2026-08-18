@@ -49,3 +49,47 @@ export async function signOut() {
     await supabase.auth.signOut()
     return redirect('/')
 }
+
+export async function loginWithEmail(formData: FormData) {
+    const email = formData.get('email') as string
+    const password = formData.get('password') as string
+    
+    if (!email || !password) {
+        return redirect('/login?error=Email and password are required')
+    }
+
+    const supabase = await createClient()
+
+    const { error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+    })
+
+    if (error) {
+        return redirect('/login?error=Invalid email or password')
+    }
+
+    return redirect('/')
+}
+
+export async function signupWithEmail(formData: FormData) {
+    const email = formData.get('email') as string
+    const password = formData.get('password') as string
+    
+    if (!email || !password) {
+        return redirect('/login?error=Email and password are required')
+    }
+
+    const supabase = await createClient()
+
+    const { error } = await supabase.auth.signUp({
+        email,
+        password,
+    })
+
+    if (error) {
+        return redirect(`/login?error=${encodeURIComponent(error.message)}`)
+    }
+
+    return redirect('/login?error=Check your email to verify your account')
+}
