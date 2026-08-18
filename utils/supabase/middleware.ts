@@ -36,16 +36,25 @@ export async function updateSession(request: NextRequest) {
         data: { user },
     } = await supabase.auth.getUser();
 
-    if (
-        !user &&
-        !request.nextUrl.pathname.startsWith("/login") &&
-        !request.nextUrl.pathname.startsWith("/auth") &&
-        request.nextUrl.pathname.startsWith("/admin-portal-secret") // Protect admin portal
-    ) {
-        // no user, potentially respond by redirecting the user to the login page
-        const url = request.nextUrl.clone();
-        url.pathname = "/login";
-        return NextResponse.redirect(url);
+    // --- Admin Portal Protection ---
+    // Only the owner (ADMIN_EMAIL) can access the admin portal.
+    // Everyone else gets redirected, whether logged in or not.
+    if (request.nextUrl.pathname.startsWith("/admin-portal-secret")) {
+        const adminEmail = process.env.ADMIN_EMAIL;
+
+        if (!user) {
+            // Not logged in → redirect to login
+            const url = request.nextUrl.clone();
+            url.pathname = "/login";
+            return NextResponse.redirect(url);
+        }
+
+        if (!adminEmail || user.email !== adminEmail) {
+            // Logged in but not the admin → redirect to home
+            const url = request.nextUrl.clone();
+            url.pathname = "/";
+            return NextResponse.redirect(url);
+        }
     }
 
     // IMPORTANT: You *must* return the supabaseResponse object as it is. If you're
@@ -62,3 +71,4 @@ export async function updateSession(request: NextRequest) {
 
     return supabaseResponse;
 }
+

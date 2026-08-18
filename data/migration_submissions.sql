@@ -13,3 +13,6 @@ create table if not exists submissions (
 alter table submissions enable row level security;
 create policy "Anyone can submit" on submissions for insert with check (true);
 create policy "Admin can view submissions" on submissions for select using (true); -- We'll tighten this later
+create policy "Admin can update submissions" on submissions for update using (true);
+create policy "Admin can delete submissions" on submissions for delete using (true);
+
