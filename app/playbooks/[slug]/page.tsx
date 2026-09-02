@@ -38,7 +38,7 @@ export default async function PlaybookPage({ params }: PageProps) {
                 Back to Playbooks
             </Link>
 
-            <article className="glass rounded-[3rem] p-8 md:p-12 border border-white/5 relative overflow-hidden">
+            <article className="glass rounded-[3rem] p-8 md:p-12 border border-white/5 relative overflow-hidden min-w-0 w-full">
                 {/* Background Decoration */}
                 <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/5 blur-[100px] rounded-full pointer-events-none" />
 
@@ -69,7 +69,7 @@ export default async function PlaybookPage({ params }: PageProps) {
                     </div>
                 </header>
 
-                <div className="prose prose-invert prose-lg max-w-none prose-headings:font-bold prose-headings:text-white prose-a:text-blue-400 prose-code:text-blue-300 prose-pre:bg-black/50 prose-pre:border prose-pre:border-white/10 relative z-10">
+                <div className="prose prose-invert prose-lg max-w-none prose-headings:font-bold prose-headings:text-white prose-a:text-blue-400 prose-code:text-blue-300 prose-pre:bg-black/50 prose-pre:border prose-pre:border-white/10 relative z-10 break-words prose-pre:overflow-x-auto">
                     <ReactMarkdown>{playbook.content}</ReactMarkdown>
                 </div>
             </article>
