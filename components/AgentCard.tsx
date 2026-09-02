@@ -1,6 +1,6 @@
 "use client";
 import Link from 'next/link';
-import { TrendingUp, TrendingDown, Star, MessageSquare, ExternalLink, Zap, Heart, Check } from 'lucide-react';
+import { Star } from 'lucide-react';
 
 import WatchlistButton from './WatchlistButton';
 import VoteButton from './VoteButton';
@@ -101,15 +101,18 @@ export default function AgentCard({ agent }: AgentCardProps) {
         </p>
         
         <div className="mt-auto flex items-center justify-between text-xs text-gray-400 pt-4 border-t border-white/5">
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
             <div className="flex items-center gap-1.5 hover:text-white transition-colors">
               <Star size={14} className="text-gray-500" />
               <span>{formatStars(agent.stars)}</span>
             </div>
-            <div className="flex items-center gap-1.5" title="Votes">
-               <TrendingUp size={14} className="text-gray-500" />
-               <span>{agent.votes || 0}</span>
-            </div>
+            {/* Compact 👍/👎 agent classifier widget */}
+            <VoteButton
+              repo={agent.repo}
+              initialVotes={agent.votes || 0}
+              initialDownvotes={agent.downvotes || 0}
+              compact
+            />
           </div>
           <div className="flex items-center gap-1.5">
             <span className="text-gray-500">Updated {getRelativeTime(agent.last_update)}</span>

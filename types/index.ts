@@ -8,6 +8,7 @@ export interface Agent {
     created_at: string;
     trend: string | null;
     votes?: number;
+    downvotes?: number;
     category?: string;
     velocity?: number;
 

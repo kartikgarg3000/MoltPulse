@@ -209,9 +209,12 @@ export default async function AgentPage({ params }: PageProps) {
                              </div>
                         </div>
 
-                        <div className="flex flex-col items-center p-4 rounded-xl bg-white/5 border border-white/10 w-full">
-                           <span className="text-gray-400 text-sm uppercase tracking-wider font-bold">Votes</span>
-                           <VoteButton repo={agentData.repo} initialVotes={agentData.votes || 0} />
+                        <div className="w-full glass p-4 rounded-xl border border-white/10">
+                           <VoteButton
+                             repo={agentData.repo}
+                             initialVotes={agentData.votes || 0}
+                             initialDownvotes={agentData.downvotes || 0}
+                           />
                         </div>
                         <div className="flex items-center gap-2 text-yellow-400 font-bold text-xl">
                             <Star className="fill-yellow-400" />
