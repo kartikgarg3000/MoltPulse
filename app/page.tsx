@@ -41,7 +41,14 @@ export default async function Home() {
 
   // Derived Lists
   const trendingAgents = agents.slice(0, 5); // Top 5 by Velocity
-  const newArrivals = [...agents].sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()).slice(0, 10);
+
+  // "Fresh on Market" — only show verified agents or those with a high quality score (≥60).
+  // This prevents non-agent repos (blog templates, admin panels, etc.) from appearing
+  // in the most prominent new-arrival slot on the homepage.
+  const newArrivals = [...agents]
+    .filter(a => a.is_verified === true || (a.quality_score !== undefined && a.quality_score >= 60))
+    .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+    .slice(0, 10);
   const ecosystems = [...new Set(agents.map(a => a.category).filter((c): c is string => !!c))];
 
   return (
@@ -109,6 +116,9 @@ export default async function Home() {
                     <Clock size={16} />
                     <h3 className="text-xs font-black uppercase tracking-widest">Fresh on Market</h3>
                  </div>
+                 <span className="text-[10px] font-mono text-green-400/70 bg-green-500/10 px-2 py-0.5 rounded-full border border-green-500/20">
+                    {newArrivals.length} verified
+                 </span>
               </div>
               
               <div className="overflow-y-auto custom-scrollbar">
@@ -116,8 +126,9 @@ export default async function Home() {
                     <AgentFeedItem key={agent.repo} agent={agent} />
                  ))}
                  {newArrivals.length === 0 && (
-                     <div className="p-8 text-center text-gray-600 text-xs">
-                        No new agents in the last 24h.
+                     <div className="p-8 text-center text-gray-600 text-xs space-y-1">
+                        <div className="text-gray-500 font-bold">No verified agents yet</div>
+                        <div>New agents appear here once they clear classification.</div>
                      </div>
                  )}
               </div>
