@@ -264,7 +264,7 @@ function WatchedAgentCard({
                         watchlistId={agent.watchlist_id}
                         enabled={agent.alert_on_surge}
                     />
-                    <WatchlistButton repo={agent.repo} variant="compact" />
+                    <WatchlistButton repo={agent.repo} variant="remove" />
                 </div>
             </div>
         </div>

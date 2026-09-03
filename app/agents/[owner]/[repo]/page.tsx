@@ -3,6 +3,7 @@ import { createClient } from '@/utils/supabase/server';
 import { notFound } from 'next/navigation';
 import ReactMarkdown from 'react-markdown';
 import VoteButton from '@/components/VoteButton';
+import WatchlistButton from '@/components/WatchlistButton';
 import Link from 'next/link';
 import { ArrowLeft, Star, GitBranch, Terminal, Zap, Check, ExternalLink, Sliders, Activity, Code } from 'lucide-react';
 import PulseChart from '@/components/PulseChart';
@@ -125,15 +126,17 @@ export default async function AgentPage({ params }: PageProps) {
                         <p className="text-xl text-gray-300">
                             {agentData.description}
                         </p>
-                        <div className="flex flex-wrap gap-4 pt-2">
+                        <div className="flex flex-wrap items-center gap-4 pt-2">
                             <a 
                                 href={`https://github.com/${agentData.repo}`} 
                                 target="_blank" 
-                                className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors font-mono text-sm"
+                                className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-white/10 hover:bg-white/20 transition-colors font-mono text-sm"
                             >
                                 <GitBranch size={16} />
                                 {agentData.repo}
                             </a>
+                            
+                            <WatchlistButton repo={agentData.repo} variant="large" />
                             
                              {/* Badge Logic Replica for Details Page */}
                              {(agentData.velocity && agentData.velocity > 0.5 && agentData.stars > 1000) && <StatusBadge type="blue-chip" />}

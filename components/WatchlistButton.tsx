@@ -3,12 +3,12 @@
 
 import { useState, useEffect } from 'react';
 import { createClient } from '@/utils/supabase/client';
-import { Star, Loader2 } from 'lucide-react';
+import { Star, Loader2, Trash2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 interface WatchlistButtonProps {
   repo: string;
-  variant?: 'compact' | 'large';
+  variant?: 'compact' | 'large' | 'remove';
 }
 
 export default function WatchlistButton({ repo, variant = 'compact' }: WatchlistButtonProps) {
@@ -81,6 +81,29 @@ export default function WatchlistButton({ repo, variant = 'compact' }: Watchlist
   };
 
   const isLarge = variant === 'large';
+
+  // ── Remove variant: explicit labeled button for the watchlist dashboard ──
+  if (variant === 'remove') {
+    return (
+      <button
+        disabled={checking}
+        onClick={handleToggleWatch}
+        title="Remove from watchlist"
+        className={`group flex items-center gap-2 px-3 py-1.5 rounded-lg border text-xs font-bold transition-all duration-200
+          ${
+            loading
+              ? 'opacity-60 cursor-wait bg-white/5 border-white/5 text-gray-500'
+              : 'bg-white/5 border-white/10 text-gray-500 hover:bg-red-500/10 hover:border-red-500/30 hover:text-red-400'
+          } disabled:cursor-default`}
+      >
+        {loading
+          ? <Loader2 size={13} className="animate-spin" />
+          : <Trash2 size={13} className="group-hover:scale-110 transition-transform" />
+        }
+        <span>Remove</span>
+      </button>
+    );
+  }
 
   return (
     <button
