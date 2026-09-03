@@ -3,11 +3,12 @@
 import { createClient } from '@/utils/supabase/client'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
-import { LogOut, User, Settings, Zap } from 'lucide-react'
+import { LogOut, User, Zap } from 'lucide-react'
 
 export default function UserNav() {
   const [user, setUser] = useState<any>(null)
   const [loading, setLoading] = useState(true)
+  const [unreadAlerts, setUnreadAlerts] = useState(0)
   const supabase = createClient()
 
   useEffect(() => {
@@ -15,6 +16,16 @@ export default function UserNav() {
       const { data: { user } } = await supabase.auth.getUser()
       setUser(user)
       setLoading(false)
+
+      // Fetch unread alert count for the badge
+      if (user) {
+        const { count } = await supabase
+          .from('watchlist_alerts')
+          .select('id', { count: 'exact', head: true })
+          .eq('user_id', user.id)
+          .is('read_at', null)
+        setUnreadAlerts(count ?? 0)
+      }
     }
     fetchUser()
   }, [])
@@ -28,7 +39,7 @@ export default function UserNav() {
 
   if (!user) {
     return (
-      <Link 
+      <Link
         href="/login"
         className="flex items-center gap-4 px-3 py-3 bg-white text-black font-bold rounded-xl hover:bg-gray-200 transition-all duration-300 text-sm whitespace-nowrap overflow-hidden"
       >
@@ -47,9 +58,9 @@ export default function UserNav() {
     <div className="space-y-4">
       {/* Profile Bubble */}
       <div className="flex items-center gap-4 p-2 bg-white/5 rounded-2xl border border-white/10 w-full overflow-hidden transition-all duration-300">
-        <img 
-          src={avatarUrl} 
-          alt={fullName} 
+        <img
+          src={avatarUrl}
+          alt={fullName}
           className="w-8 h-8 rounded-full border border-white/20 flex-shrink-0 ml-1"
         />
         <div className="flex-1 min-w-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
@@ -66,15 +77,26 @@ export default function UserNav() {
           </div>
           <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">Profile</span>
         </Link>
-        
-        <Link href="/watchlist" className="flex items-center gap-4 px-3 py-3 rounded-md transition-all duration-300 text-sm font-medium whitespace-nowrap overflow-hidden text-gray-400 hover:text-gray-200 hover:bg-[#111] border border-transparent">
-          <div className="flex-shrink-0 flex items-center justify-center w-5">
+
+        {/* Watchlist with unread badge */}
+        <Link href="/watchlist" className="relative flex items-center gap-4 px-3 py-3 rounded-md transition-all duration-300 text-sm font-medium whitespace-nowrap overflow-hidden text-gray-400 hover:text-gray-200 hover:bg-[#111] border border-transparent">
+          <div className="relative flex-shrink-0 flex items-center justify-center w-5">
             <Zap size={20} />
+            {unreadAlerts > 0 && (
+              <span className="absolute -top-1 -right-1 w-3.5 h-3.5 bg-yellow-400 rounded-full flex items-center justify-center text-[8px] font-black text-black">
+                {unreadAlerts > 9 ? '9+' : unreadAlerts}
+              </span>
+            )}
           </div>
-          <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">My Watchlist</span>
+          <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            My Watchlist
+            {unreadAlerts > 0 && (
+              <span className="ml-1.5 text-yellow-400 font-bold">({unreadAlerts})</span>
+            )}
+          </span>
         </Link>
-        
-        <button 
+
+        <button
           onClick={handleSignOut}
           className="flex items-center gap-4 px-3 py-3 rounded-md transition-all duration-300 text-sm font-medium whitespace-nowrap overflow-hidden text-red-400/70 hover:text-red-400 hover:bg-[#111] border border-transparent w-full text-left"
         >
@@ -87,3 +109,5 @@ export default function UserNav() {
     </div>
   )
 }
+
+

@@ -44,6 +44,12 @@ jobs:
           NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
         run: npx tsx scripts/update-pulse.ts
 
+      - name: Generate Watchlist Alerts
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+        run: npx tsx scripts/generate-watchlist-alerts.ts
+
       - name: Commit and Push Changes
         run: |
           git config --global user.name 'github-actions[bot]'
