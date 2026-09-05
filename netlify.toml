@@ -1,0 +1,23 @@
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+  NETLIFY_NEXT_PLUGIN_SKIP = "false"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+# Environment variables — add these in Netlify dashboard > Site > Environment Variables
+# NEXT_PUBLIC_SUPABASE_URL
+# NEXT_PUBLIC_SUPABASE_ANON_KEY
+# SUPABASE_SERVICE_ROLE_KEY
+# GITHUB_TOKEN
+# ADMIN_EMAIL
+# CRON_SECRET
+# NEXT_PUBLIC_GA_ID (optional)
+
+[[headers]]
+  for = "/api/badge/*"
+  [headers.values]
+    Cache-Control = "public, s-maxage=3600, stale-while-revalidate=86400"

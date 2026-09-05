@@ -5,7 +5,6 @@ import "./globals.css";
 import Navigation from "../components/Navigation";
 import MobileNav from "../components/MobileNav";
 import MarketTicker from "../components/MarketTicker";
-import { Analytics } from "@vercel/analytics/next";
 import GoogleAnalytics from "../components/GoogleAnalytics";
 
 const outfit = Outfit({
@@ -59,7 +58,6 @@ export default function RootLayout({
         <div className="md:ml-16 min-h-screen flex flex-col">
           <main className="flex-1 p-4 md:p-8 pb-24 md:pb-8 max-w-[1600px] w-full mx-auto">
             {children}
-            <Analytics />
             {process.env.NEXT_PUBLIC_GA_ID ? (
               <Suspense fallback={null}>
                 <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
