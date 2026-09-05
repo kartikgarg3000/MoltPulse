@@ -5,7 +5,7 @@ import PulseActivity from '@/components/PulseActivity';
 import AgentFeedItem from '@/components/AgentFeedItem';
 import { TrendingUp, Clock, Filter, Layers } from 'lucide-react';
 
-export const revalidate = 0; // Disable static caching for real-time updates
+export const revalidate = 300; // Cache for 5 minutes — pulse data doesn't change per-second
 
 import { Agent } from '@/types';
 

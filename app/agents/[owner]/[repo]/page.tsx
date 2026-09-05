@@ -10,7 +10,7 @@ import PulseChart from '@/components/PulseChart';
 import StatusBadge from '@/components/StatusBadge';
 import CopyBadgeSnippet from '@/components/CopyBadgeSnippet';
 
-export const revalidate = 0; // Dynamic
+export const revalidate = 600; // Cache for 10 minutes
 
 interface PageProps {
     params: Promise<{

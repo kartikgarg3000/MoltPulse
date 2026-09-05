@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 import { createClient } from '@/utils/supabase/server';
 import DirectoryFilter from '@/components/DirectoryFilter';
 
-export const revalidate = 0;
+export const revalidate = 300; // Cache for 5 minutes
 
 async function getAgents() {
   const supabase = await createClient();

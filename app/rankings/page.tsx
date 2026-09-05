@@ -3,7 +3,7 @@ import { createClient } from '@/utils/supabase/server';
 import AgentCard from '@/components/AgentCard';
 import { Trophy, Star, ThumbsUp } from 'lucide-react';
 
-export const revalidate = 0;
+export const revalidate = 600; // Cache for 10 minutes
 
 async function getTopAgents() {
   const supabase = await createClient();
