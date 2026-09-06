@@ -82,6 +82,10 @@ export default async function Home() {
               <span className="block text-[10px] uppercase tracking-wider text-gray-500 font-bold mb-0.5">Listed Agents</span>
               <span className="text-xl font-mono text-blue-400 font-bold">{agents.length}</span>
            </div>
+           <div className="px-4 py-2 rounded-lg bg-white/5 border border-white/10 text-center hidden sm:block">
+              <span className="block text-[10px] uppercase tracking-wider text-gray-500 font-bold mb-0.5">Active Builders</span>
+              <span className="text-xl font-mono text-green-400 font-bold">8,000+</span>
+           </div>
         </div>
       </header>
 
