@@ -79,19 +79,29 @@ export default function AgentCard({ agent }: AgentCardProps) {
             </div>
           </div>
           
-          <div className="flex items-start gap-3">
+          <div className="flex items-center gap-4">
             {agent.pulse_score !== undefined && (
-              <div className="flex flex-col items-end relative group/pulse cursor-help">
-                <span className="text-[10px] text-gray-500 font-medium tracking-wide uppercase border-b border-dashed border-gray-600/50 pb-0.5">Pulse</span>
-                <div className="text-xl font-bold text-white">
-                  {Math.round(agent.pulse_score)}
+              <>
+                <div className="w-16 h-8 opacity-40 group-hover:opacity-100 transition-opacity hidden sm:block">
+                  <PulseChart 
+                    data={sparklineData} 
+                    color={agent.velocity && agent.velocity > 0 ? "#10b981" : "#3b82f6"} 
+                    height={32} 
+                    showAxis={false} 
+                  />
                 </div>
-                
-                {/* Tooltip */}
-                <div className="absolute right-0 top-full mt-2 w-48 p-2.5 bg-[#111] border border-white/10 rounded-md text-xs text-gray-400 opacity-0 invisible group-hover/pulse:opacity-100 group-hover/pulse:visible transition-all duration-200 z-50 shadow-2xl pointer-events-none">
-                  Based on repository activity, growth velocity and community engagement.
+                <div className="flex flex-col items-end relative group/pulse cursor-help">
+                  <span className="text-[10px] text-gray-500 font-medium tracking-wide uppercase border-b border-dashed border-gray-600/50 pb-0.5">Pulse</span>
+                  <div className="text-xl font-bold text-white mt-1 leading-none">
+                    {Math.round(agent.pulse_score)}
+                  </div>
+                  
+                  {/* Tooltip */}
+                  <div className="absolute right-0 top-full mt-2 w-48 p-2.5 bg-[#111] border border-white/10 rounded-md text-xs text-gray-400 opacity-0 invisible group-hover/pulse:opacity-100 group-hover/pulse:visible transition-all duration-200 z-50 shadow-2xl pointer-events-none">
+                    Based on repository activity, growth velocity and community engagement.
+                  </div>
                 </div>
-              </div>
+              </>
             )}
           </div>
         </div>
