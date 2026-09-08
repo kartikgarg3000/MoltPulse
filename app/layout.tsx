@@ -6,6 +6,7 @@ import Navigation from "../components/Navigation";
 import MobileNav from "../components/MobileNav";
 import MarketTicker from "../components/MarketTicker";
 import GoogleAnalytics from "../components/GoogleAnalytics";
+import HideNetlifyBadge from "../components/HideNetlifyBadge";
 
 const outfit = Outfit({
   variable: "--font-outfit",
@@ -52,6 +53,7 @@ export default function RootLayout({
       <body
         className={`${outfit.variable} ${geistMono.variable} antialiased bg-black text-white min-h-screen`}
       >
+        <HideNetlifyBadge />
         <MarketTicker />
         <Navigation />
         <MobileNav />
