@@ -36,6 +36,8 @@ body {
 }
 
 /* Hide Netlify Badges and Drawers */
+#nl-badge,
+.nl-badge,
 #netlify-badge, 
 netlify-drawer, 
 .netlify-badge {
