@@ -12,10 +12,12 @@ import { Agent } from '@/types';
 async function getAgents(): Promise<Agent[]> {
   const supabase = await createClient();
 
+  const AGENT_FIELDS = 'name,repo,description,stars,last_update,created_at,category,velocity,pulse_score,growth_score,votes,downvotes,is_verified,is_visible,quality_score,language,topics';
+
   // Try with quality gate filter first
   const { data, error } = await supabase
     .from('agents')
-    .select('*')
+    .select(AGENT_FIELDS)
     .or('is_visible.eq.true,is_visible.is.null')
     .order('velocity', { ascending: false });
 
@@ -23,7 +25,7 @@ async function getAgents(): Promise<Agent[]> {
   if (error) {
     const { data: fallback, error: fallbackError } = await supabase
       .from('agents')
-      .select('*')
+      .select(AGENT_FIELDS)
       .order('velocity', { ascending: false });
 
     if (fallbackError) {

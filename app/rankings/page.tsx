@@ -7,17 +7,19 @@ export const revalidate = 600; // Cache for 10 minutes
 
 async function getTopAgents() {
   const supabase = await createClient();
+  const AGENT_FIELDS = 'name,repo,description,stars,last_update,created_at,category,velocity,pulse_score,growth_score,votes,downvotes,is_verified,is_visible,quality_score,language,topics';
+
   // Get top 5 by stars
   const { data: topStars } = await supabase
     .from('agents')
-    .select('*')
+    .select(AGENT_FIELDS)
     .order('stars', { ascending: false })
     .limit(5);
 
   // Get top 5 by votes
   const { data: topVotes } = await supabase
     .from('agents')
-    .select('*')
+    .select(AGENT_FIELDS)
     .order('votes', { ascending: false })
     .limit(5);
 

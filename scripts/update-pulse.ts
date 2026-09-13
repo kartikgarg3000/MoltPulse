@@ -105,7 +105,8 @@ function calculateTrust(metrics: AgentMetrics): number {
 
 async function updatePulseScores() {
     console.log("Fetching agents...");
-    const { data: agents, error } = await supabase.from('agents').select('*');
+    const { data: agents, error } = await supabase.from('agents')
+        .select('repo,name,stars,forks,watchers,open_issues,contributors_count,last_update,created_at,velocity');
 
     if (error || !agents) {
         console.error("Error fetching agents:", error);

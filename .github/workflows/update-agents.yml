@@ -3,7 +3,7 @@ name: Update Agent Data
 
 on:
   schedule:
-    - cron: '0 */6 * * *' # Every 6 hours
+    - cron: '0 0 * * *' # Once per day at midnight UTC (was every 6h — reduces Supabase egress by 75%)
   workflow_dispatch:
 
 permissions:
