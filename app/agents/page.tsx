@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
 import { createClient } from '@/utils/supabase/server';
 import DirectoryFilter from '@/components/DirectoryFilter';
+import { getStaticAgents } from '@/lib/static-fallback';
 
 export const revalidate = 300; // Cache for 5 minutes
 
@@ -9,23 +10,20 @@ async function getAgents() {
 
   const AGENT_FIELDS = 'name,repo,description,stars,last_update,created_at,category,velocity,pulse_score,growth_score,votes,downvotes,is_verified,is_visible,quality_score,language,topics';
 
-  // Try with quality gate filter first
-  const { data, error } = await supabase
-    .from('agents')
-    .select(AGENT_FIELDS)
-    .or('is_visible.eq.true,is_visible.is.null')
-    .order('pulse_score', { ascending: false, nullsFirst: false });
-
-  // If is_visible column doesn't exist yet (pre-migration), fall back to unfiltered
-  if (error) {
-    const { data: fallback } = await supabase
+  try {
+    const { data, error } = await supabase
       .from('agents')
       .select(AGENT_FIELDS)
-      .order('stars', { ascending: false });
-    return fallback || [];
+      .or('is_visible.eq.true,is_visible.is.null')
+      .order('pulse_score', { ascending: false, nullsFirst: false });
+
+    if (error) throw error;
+    if (data && data.length > 0) return data;
+  } catch {
+    console.warn('[Fallback] Supabase unavailable, serving from agents-static.json');
   }
 
-  return data || [];
+  return getStaticAgents();
 }
 
 export default async function AgentsPage() {

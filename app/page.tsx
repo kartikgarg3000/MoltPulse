@@ -1,9 +1,9 @@
 import Link from 'next/link';
 import { createClient } from '@/utils/supabase/server';
 import AgentCard from '@/components/AgentCard';
-import PulseActivity from '@/components/PulseActivity';
 import AgentFeedItem from '@/components/AgentFeedItem';
-import { TrendingUp, Clock, Filter, Layers } from 'lucide-react';
+import { TrendingUp, Clock, Layers } from 'lucide-react';
+import { getStaticAgents } from '@/lib/static-fallback';
 
 export const revalidate = 300; // Cache for 5 minutes — pulse data doesn't change per-second
 
@@ -14,28 +14,22 @@ async function getAgents(): Promise<Agent[]> {
 
   const AGENT_FIELDS = 'name,repo,description,stars,last_update,created_at,category,velocity,pulse_score,growth_score,votes,downvotes,is_verified,is_visible,quality_score,language,topics';
 
-  // Try with quality gate filter first
-  const { data, error } = await supabase
-    .from('agents')
-    .select(AGENT_FIELDS)
-    .or('is_visible.eq.true,is_visible.is.null')
-    .order('velocity', { ascending: false });
-
-  // If is_visible column doesn't exist yet (pre-migration), fall back to unfiltered
-  if (error) {
-    const { data: fallback, error: fallbackError } = await supabase
+  try {
+    // Try with quality gate filter first
+    const { data, error } = await supabase
       .from('agents')
       .select(AGENT_FIELDS)
+      .or('is_visible.eq.true,is_visible.is.null')
       .order('velocity', { ascending: false });
 
-    if (fallbackError) {
-      console.error("Failed to fetch agents:", fallbackError);
-      return [];
-    }
-    return fallback as unknown as Agent[];
+    if (error) throw error;
+    if (data && data.length > 0) return data as unknown as Agent[];
+  } catch {
+    // Supabase is restricted or unavailable — serve from static JSON fallback
+    console.warn('[Fallback] Supabase unavailable, serving from agents-static.json');
   }
 
-  return data as unknown as Agent[];
+  return getStaticAgents();
 }
 
 export default async function Home() {
