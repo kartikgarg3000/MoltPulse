@@ -2,39 +2,43 @@
   {
     "name": "ArtCraft",
     "repo": "artcraft-ai/artcraft",
-    "tagline": "AI-native studio for procedural art generation and 3D assets",
-    "description": "An AI-built generative design platform creating procedural 2D/3D game assets, concept art, and UI components in real-time.",
+    "tagline": "Vibe-coded, Claude-built alternative to Adobe — create graphics entirely with prompts",
+    "description": "ArtCraft is a fully AI-native creative suite built with Claude and Cursor via vibe-coding. It replaces the Photoshop & Illustrator workflow: designers describe what they want in natural language, and ArtCraft generates, layers, and exports production-ready graphics, UI screens, and brand assets — no mouse required.",
     "app_type": "ai_software",
     "category": "Creative & Design",
     "demo_url": "https://artcraft.ai",
     "website_url": "https://artcraft.ai",
     "built_with": [
       "Claude 3.7",
-      "Cursor",
-      "Three.js",
+      "Cursor (vibe-coded)",
+      "React",
+      "Fabric.js",
       "SDXL"
     ],
     "capabilities": [
-      "3D Asset Generation",
-      "Procedural Texturing",
-      "Vector Export"
+      "Prompt-to-Vector Graphics",
+      "Photoshop-Style Layered Editing via Chat",
+      "Brand Kit & Style System Generation",
+      "One-click Figma & SVG Export",
+      "UI Screen Generation"
     ],
-    "stars": 4820,
-    "forks": 390,
+    "stars": 7890,
+    "forks": 650,
     "last_update": "2026-10-18T20:03:01.109Z",
     "created_at": "2024-05-10T10:00:00Z",
     "language": "TypeScript",
     "topics": [
-      "ai-art",
-      "creative-ai",
-      "3d-assets",
       "vibe-coding",
-      "generative-design"
+      "adobe-alternative",
+      "ai-design",
+      "creative-ai",
+      "claude-built",
+      "no-code-design"
     ],
     "license": "MIT",
-    "velocity": 0.88,
-    "pulse_score": 94,
-    "growth_score": 28,
+    "velocity": 0.97,
+    "pulse_score": 98,
+    "growth_score": 44,
     "popularity_score": 21,
     "activity_score": 18,
     "trust_score": 12,
@@ -43,43 +47,47 @@
     "is_verified": true,
     "is_visible": true,
     "quality_score": 96,
-    "trend": "+12.4%"
+    "trend": "+31.2%",
+    "ai_summary": "ArtCraft is the breakout vibe-coded app of the moment — a Claude-built Adobe alternative that went viral. Prompt-driven layered design with export to Figma is a genuine threat to the incumbent creative stack."
   },
   {
     "name": "REA",
     "repo": "rea-labs/rea-autonomous-agent",
-    "tagline": "Autonomous real estate scout, valuation & deal negotiation agent",
-    "description": "An autonomous agent that monitors MLS and property portals 24/7, computes cap rates, assesses repair costs, and drafts LOIs for real estate investors.",
+    "tagline": "Reverse-engineering agent that deconstructs any codebase into architecture maps",
+    "description": "REA (Reverse-Engineering Agent) is an autonomous AI agent that takes any GitHub repo or uploaded codebase, reverse-engineers its entire architecture, and outputs interactive dependency graphs, function-level call trees, and Mermaid diagrams — making legacy or unfamiliar code instantly understandable.",
     "app_type": "autonomous_agent",
-    "category": "Real Estate & Industry",
+    "category": "Coding & Dev",
     "demo_url": "https://rea-agent.dev",
     "website_url": "https://rea-agent.dev",
     "built_with": [
+      "Claude 3.7 Sonnet",
       "LangGraph",
-      "Claude 3.5",
-      "Playwright",
-      "FastAPI"
+      "TypeScript",
+      "AST Parser"
     ],
     "capabilities": [
-      "24/7 MLS Ingestion",
-      "Cap Rate Underwriting",
-      "Automated LOI Drafting"
+      "Codebase Reverse Engineering",
+      "Architecture Map Generation",
+      "Dependency & Call Graph Visualization",
+      "Legacy Code Explainer",
+      "Mermaid / PlantUML Export"
     ],
-    "stars": 3240,
-    "forks": 295,
+    "stars": 5140,
+    "forks": 420,
     "last_update": "2026-10-18T20:03:01.110Z",
     "created_at": "2024-06-15T12:00:00Z",
-    "language": "Python",
+    "language": "TypeScript",
     "topics": [
-      "real-estate-ai",
+      "reverse-engineering",
+      "code-analysis",
       "autonomous-agent",
-      "deal-sourcing",
-      "underwriting"
+      "architecture-maps",
+      "codebase-ai"
     ],
-    "license": "Apache-2.0",
-    "velocity": 0.82,
-    "pulse_score": 91,
-    "growth_score": 32,
+    "license": "MIT",
+    "velocity": 0.93,
+    "pulse_score": 96,
+    "growth_score": 38,
     "popularity_score": 19,
     "activity_score": 16,
     "trust_score": 11,
@@ -88,7 +96,8 @@
     "is_verified": true,
     "is_visible": true,
     "quality_score": 95,
-    "trend": "+18.1%"
+    "trend": "+22.7%",
+    "ai_summary": "REA is surging — reverse-engineering is one of the top pain points in engineering orgs right now. Call graphs + auto-generated architecture docs in one autonomous pass is a strong moat."
   },
   {
     "name": "OpenClaw",
