@@ -40,6 +40,15 @@ body {
 .nl-badge,
 #netlify-badge, 
 netlify-drawer, 
+netlify-floating-badge,
+[data-netlify-badge],
+[data-netlify-drawer],
+iframe[title*="Netlify" i],
+iframe[src*="netlify" i],
+div[data-testid="netlify-floating-badge"],
 .netlify-badge {
   display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
 }

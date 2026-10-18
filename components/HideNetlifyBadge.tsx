@@ -3,11 +3,9 @@
 import { useEffect } from 'react';
 
 /**
- * Removes the Netlify floating badge that is injected into the DOM on
- * Netlify-hosted sites. The badge is rendered inside a custom element
- * (<netlify-drawer> / <netlify-floating-badge>) which CSS from the page
- * cannot reach (Shadow DOM). We use a MutationObserver so it is removed
- * as soon as it appears, regardless of when Netlify injects it.
+ * Removes the Netlify floating badge and feedback drawer that is injected into the DOM on
+ * Netlify-hosted sites. Netlify injects custom elements (<netlify-drawer>, <netlify-floating-badge>)
+ * or fixed iframes. We catch and eradicate them across all selectors and mutation events.
  */
 export default function HideNetlifyBadge() {
   useEffect(() => {
@@ -18,18 +16,36 @@ export default function HideNetlifyBadge() {
       '.netlify-badge',
       '#nl-badge',
       '.nl-badge',
+      '[data-netlify-badge]',
+      '[data-netlify-drawer]',
+      'div[data-testid="netlify-floating-badge"]',
+      'iframe[title*="Netlify" i]',
+      'iframe[src*="netlify" i]',
     ];
 
     const remove = () => {
       SELECTORS.forEach((sel) => {
-        document.querySelectorAll(sel).forEach((el) => el.remove());
+        try {
+          document.querySelectorAll(sel).forEach((el) => el.remove());
+        } catch {
+          // ignore invalid query selector in edge environments
+        }
+      });
+
+      // Also check any fixed floating elements containing netlify links
+      document.querySelectorAll('a[href*="netlify.com"]').forEach((a) => {
+        const parent = a.closest('div');
+        if (parent) {
+          const style = window.getComputedStyle(parent);
+          if (style.position === 'fixed') {
+            parent.remove();
+          }
+        }
       });
     };
 
-    // Remove immediately in case it already exists
     remove();
 
-    // Watch for it being injected after page load
     const observer = new MutationObserver(remove);
     observer.observe(document.body, { childList: true, subtree: true });
 
@@ -38,3 +54,4 @@ export default function HideNetlifyBadge() {
 
   return null;
 }
+
