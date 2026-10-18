@@ -52,16 +52,25 @@ export async function generateMetadata({ params }: PageProps) {
   };
 }
 
-// Fetch Agent from Supabase
+import { getStaticAgents } from '@/lib/static-fallback';
+
+// Fetch Agent from Supabase with static fallback
 async function getAgent(owner: string, repo: string) {
-  const supabase = await createClient();
-  const fullRepoName = `${owner}/${repo}`;
-  const { data } = await supabase
-    .from('agents')
-    .select('*')
-    .ilike('repo', fullRepoName)
-    .single();
-  return data;
+  const fullRepoName = `${owner}/${repo}`.toLowerCase();
+  try {
+    const supabase = await createClient();
+    const { data } = await supabase
+      .from('agents')
+      .select('*')
+      .ilike('repo', `${owner}/${repo}`)
+      .single();
+    if (data) return data;
+  } catch (err) {
+    // Continue to static fallback
+  }
+
+  const staticAgents = getStaticAgents();
+  return staticAgents.find(a => a.repo.toLowerCase() === fullRepoName) || null;
 }
 
 // Fetch Readme from GitHub
@@ -105,10 +114,13 @@ export default async function AgentPage({ params }: PageProps) {
 
                 <div className="glass p-8 rounded-2xl flex flex-col md:flex-row gap-8 items-start justify-between">
                     <div className="flex-1 space-y-4">
-                        <div className="flex items-center gap-4">
+                        <div className="flex items-center gap-4 flex-wrap">
                             <h1 className="text-4xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-cyan-400 to-teal-400 pb-2">
                                 {agentData.name}
                             </h1>
+                            {agentData.app_type === 'ai_software' && <StatusBadge type="ai-built" />}
+                            {agentData.app_type === 'autonomous_agent' && <StatusBadge type="autonomous" />}
+                            {agentData.app_type === 'task_bot' && <StatusBadge type="task-bot" />}
                         </div>
                         
                         {agentData.ai_summary && (
@@ -124,9 +136,48 @@ export default async function AgentPage({ params }: PageProps) {
                         )}
 
                         <p className="text-xl text-gray-300">
-                            {agentData.description}
+                            {agentData.tagline || agentData.description}
                         </p>
-                        <div className="flex flex-wrap items-center gap-4 pt-2">
+
+                        {/* Built With Tags */}
+                        {agentData.built_with && agentData.built_with.length > 0 && (
+                          <div className="flex items-center gap-2 flex-wrap pt-1">
+                            <span className="text-xs text-gray-500 font-mono">Built with:</span>
+                            {agentData.built_with.map((tool: string, i: number) => (
+                              <span key={i} className="px-2.5 py-1 rounded-md bg-purple-950/40 border border-purple-500/30 text-xs text-purple-300 font-mono">
+                                ⚡ {tool}
+                              </span>
+                            ))}
+                          </div>
+                        )}
+
+                        {/* Core Capabilities */}
+                        {agentData.capabilities && agentData.capabilities.length > 0 && (
+                          <div className="p-4 rounded-xl bg-white/5 border border-white/10 space-y-2 mt-2">
+                            <h4 className="text-[10px] font-black uppercase tracking-wider text-cyan-400">Core Capabilities</h4>
+                            <div className="flex flex-wrap gap-2">
+                              {agentData.capabilities.map((cap: string, i: number) => (
+                                <span key={i} className="px-3 py-1 rounded-lg bg-black/40 border border-white/10 text-xs text-gray-200">
+                                  ✓ {cap}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+
+                        <div className="flex flex-wrap items-center gap-4 pt-4">
+                            {agentData.demo_url && (
+                              <a 
+                                href={agentData.demo_url} 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold text-sm shadow-lg shadow-cyan-500/20 transition-all hover:scale-105"
+                              >
+                                <ExternalLink size={16} />
+                                Launch Live Demo
+                              </a>
+                            )}
+
                             <a 
                                 href={`https://github.com/${agentData.repo}`} 
                                 target="_blank" 

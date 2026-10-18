@@ -54,14 +54,14 @@ export default async function Home() {
       <header className="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-white/10 pb-6">
         <div className="space-y-2">
           <div className="flex items-center gap-2">
-            {/* <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span> */}
-            {/* <span className="text-xs font-mono text-green-500 uppercase tracking-widest">Market Open • Real-time</span> */}
+            <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+            <span className="text-xs font-mono text-cyan-400 uppercase tracking-widest">Discovery Terminal • Live</span>
           </div>
           <h1 className="text-4xl font-bold text-white tracking-tight">
-            MoltPulse Market Terminal
+            MoltPulse Discovery Engine
           </h1>
-          <p className="text-sm text-gray-500 max-w-md">
-            MoltPulse (also written as &quot;Molt Pulse&quot;) is the definitive source for discovering new and trending autonomous AI agents.
+          <p className="text-sm text-gray-400 max-w-xl">
+            The definitive platform for discovering <span className="text-cyan-300 font-medium">AI-built software</span>, <span className="text-purple-300 font-medium">autonomous agents</span>, and task bots with real-time Pulse Scores.
           </p>
         </div>
         
@@ -75,7 +75,7 @@ export default async function Home() {
               </span>
            </div>
            <div className="px-4 py-2 rounded-lg bg-white/5 border border-white/10 text-center">
-              <span className="block text-[10px] uppercase tracking-wider text-gray-500 font-bold mb-0.5">Listed Agents</span>
+              <span className="block text-[10px] uppercase tracking-wider text-gray-500 font-bold mb-0.5">Listed Products</span>
               <span className="text-xl font-mono text-blue-400 font-bold">{agents.length}</span>
            </div>
            <div className="px-4 py-2 rounded-lg bg-white/5 border border-white/10 text-center hidden sm:block">

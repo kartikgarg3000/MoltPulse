@@ -31,10 +31,10 @@ export default async function AgentsPage() {
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
        <header>
-        <h1 className="text-4xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-cyan-400">
-          Agent Directory
+        <h1 className="text-4xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-cyan-400 to-purple-400">
+          AI Software & Agent Directory
         </h1>
-        <p className="text-gray-400">Discover and explore the ever-growing index of AI innovators.</p>
+        <p className="text-gray-400">Discover and explore cutting-edge AI-built applications, autonomous task agents, and intelligent tools.</p>
        </header>
        
        <Suspense fallback={<div className="h-96 w-full animate-pulse bg-white/5 rounded-xl"></div>}>

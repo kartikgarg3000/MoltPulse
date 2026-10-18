@@ -23,23 +23,23 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/",
   },
-  title: "MoltPulse | Real-time AI Agent Map",
-  description: "The Bloomberg for AI Agents. Discover, track, and rank the top autonomous agents, dev frameworks, and AI tools with real-time Pulse Scores.",
-  keywords: ["moltpulse", "molt pulse", "ai agents", "autonomous agents", "ai directory", "crypto agents", "agent economy"],
+  title: "MoltPulse | Discovery Platform for AI-Built Software & Agents",
+  description: "The discovery engine for AI-built software and autonomous agents. Explore, track, and rank production-ready software created with AI and autonomous task bots with real-time Pulse Scores.",
+  keywords: ["moltpulse", "ai built software", "autonomous agents", "ai apps", "vibe coding", "task agents", "agent directory", "artcraft", "openclaw", "rea agent"],
   icons: {
     icon: '/icon.svg',
   },
   openGraph: {
-    title: "MoltPulse | The Real-time AI Agent Map",
-    description: "Discover, track, and rank the top autonomous agents with real-time Pulse Scores and market analytics.",
+    title: "MoltPulse | Discovery Platform for AI-Built Software & Agents",
+    description: "Discover, track, and rank the top AI-built software and autonomous agents with real-time Pulse Scores and live demos.",
     url: "https://www.molt-pulse.com",
     siteName: "MoltPulse",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "MoltPulse | Real-time AI Agent Map",
-    description: "Discover, track, and rank the top autonomous agents with real-time Pulse Scores.",
+    title: "MoltPulse | Discovery Platform for AI-Built Software & Agents",
+    description: "Discover and explore production-ready AI-built software and autonomous agents.",
   },
 };
 

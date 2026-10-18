@@ -1,9 +1,18 @@
 "use client";
 
 import React from 'react';
-import { Gem, TrendingUp, Award, Zap, ShieldCheck } from 'lucide-react';
+import { Gem, TrendingUp, Award, Zap, ShieldCheck, Sparkles, Bot, Layers, Compass } from 'lucide-react';
 
-export type BadgeType = 'blue-chip' | 'gem' | 'trending' | 'new' | 'verified';
+export type BadgeType = 
+  | 'blue-chip' 
+  | 'gem' 
+  | 'trending' 
+  | 'new' 
+  | 'verified'
+  | 'ai-built'
+  | 'autonomous'
+  | 'task-bot'
+  | 'software';
 
 interface StatusBadgeProps {
   type: BadgeType;
@@ -11,7 +20,31 @@ interface StatusBadgeProps {
 }
 
 export default function StatusBadge({ type, className = '' }: StatusBadgeProps) {
-  const config = {
+  const config: Record<BadgeType, { label: string; icon: React.ElementType; style: string; iconStyle: string }> = {
+    'ai-built': {
+      label: 'AI-BUILT',
+      icon: Sparkles,
+      style: 'bg-purple-950/50 text-purple-300 border-purple-500/40 shadow-sm shadow-purple-500/10',
+      iconStyle: 'text-purple-400'
+    },
+    'autonomous': {
+      label: 'AUTONOMOUS',
+      icon: Bot,
+      style: 'bg-cyan-950/50 text-cyan-300 border-cyan-500/40 shadow-sm shadow-cyan-500/10',
+      iconStyle: 'text-cyan-400'
+    },
+    'task-bot': {
+      label: 'TASK BOT',
+      icon: Compass,
+      style: 'bg-emerald-950/50 text-emerald-300 border-emerald-500/40',
+      iconStyle: 'text-emerald-400'
+    },
+    'software': {
+      label: 'AI SOFTWARE',
+      icon: Layers,
+      style: 'bg-indigo-950/50 text-indigo-300 border-indigo-500/40',
+      iconStyle: 'text-indigo-400'
+    },
     'blue-chip': {
       label: 'BLUE CHIP',
       icon: Award,
@@ -44,12 +77,13 @@ export default function StatusBadge({ type, className = '' }: StatusBadgeProps) 
     }
   };
 
-  const { label, icon: Icon, style, iconStyle } = config[type];
+  const { label, icon: Icon, style, iconStyle } = config[type] || config['verified'];
 
   return (
-    <div className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-[9px] font-black uppercase tracking-wider ${style} ${className}`}>
+    <div className={`flex items-center gap-1.5 px-2.5 py-0.5 rounded-full border text-[9px] font-black uppercase tracking-wider ${style} ${className}`}>
       <Icon size={10} className={iconStyle} />
       {label}
     </div>
   );
 }
+

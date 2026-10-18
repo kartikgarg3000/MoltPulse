@@ -1,5 +1,186 @@
 [
   {
+    "name": "ArtCraft",
+    "repo": "artcraft-ai/artcraft",
+    "tagline": "AI-native studio for procedural art generation and 3D assets",
+    "description": "An AI-built generative design platform creating procedural 2D/3D game assets, concept art, and UI components in real-time.",
+    "app_type": "ai_software",
+    "category": "Creative & Design",
+    "demo_url": "https://artcraft.ai",
+    "website_url": "https://artcraft.ai",
+    "built_with": [
+      "Claude 3.7",
+      "Cursor",
+      "Three.js",
+      "SDXL"
+    ],
+    "capabilities": [
+      "3D Asset Generation",
+      "Procedural Texturing",
+      "Vector Export"
+    ],
+    "stars": 4820,
+    "forks": 390,
+    "last_update": "2026-10-18T20:03:01.109Z",
+    "created_at": "2024-05-10T10:00:00Z",
+    "language": "TypeScript",
+    "topics": [
+      "ai-art",
+      "creative-ai",
+      "3d-assets",
+      "vibe-coding",
+      "generative-design"
+    ],
+    "license": "MIT",
+    "velocity": 0.88,
+    "pulse_score": 94,
+    "growth_score": 28,
+    "popularity_score": 21,
+    "activity_score": 18,
+    "trust_score": 12,
+    "votes": 42,
+    "downvotes": 1,
+    "is_verified": true,
+    "is_visible": true,
+    "quality_score": 96,
+    "trend": "+12.4%"
+  },
+  {
+    "name": "REA",
+    "repo": "rea-labs/rea-autonomous-agent",
+    "tagline": "Autonomous real estate scout, valuation & deal negotiation agent",
+    "description": "An autonomous agent that monitors MLS and property portals 24/7, computes cap rates, assesses repair costs, and drafts LOIs for real estate investors.",
+    "app_type": "autonomous_agent",
+    "category": "Real Estate & Industry",
+    "demo_url": "https://rea-agent.dev",
+    "website_url": "https://rea-agent.dev",
+    "built_with": [
+      "LangGraph",
+      "Claude 3.5",
+      "Playwright",
+      "FastAPI"
+    ],
+    "capabilities": [
+      "24/7 MLS Ingestion",
+      "Cap Rate Underwriting",
+      "Automated LOI Drafting"
+    ],
+    "stars": 3240,
+    "forks": 295,
+    "last_update": "2026-10-18T20:03:01.110Z",
+    "created_at": "2024-06-15T12:00:00Z",
+    "language": "Python",
+    "topics": [
+      "real-estate-ai",
+      "autonomous-agent",
+      "deal-sourcing",
+      "underwriting"
+    ],
+    "license": "Apache-2.0",
+    "velocity": 0.82,
+    "pulse_score": 91,
+    "growth_score": 32,
+    "popularity_score": 19,
+    "activity_score": 16,
+    "trust_score": 11,
+    "votes": 38,
+    "downvotes": 0,
+    "is_verified": true,
+    "is_visible": true,
+    "quality_score": 95,
+    "trend": "+18.1%"
+  },
+  {
+    "name": "OpenClaw",
+    "repo": "openclaw-ai/openclaw",
+    "tagline": "Autonomous browser operator & resilient web intelligence claw",
+    "description": "A next-gen autonomous browser agent that navigates dynamic web apps, bypasses multi-step auth gates, and extracts structured intelligence on autopilot.",
+    "app_type": "task_bot",
+    "category": "Web & Automation",
+    "demo_url": "https://openclaw.dev",
+    "website_url": "https://openclaw.dev",
+    "built_with": [
+      "Browserbase",
+      "TypeScript",
+      "Stagehand",
+      "OpenAI"
+    ],
+    "capabilities": [
+      "Headless Browser Automation",
+      "Anti-Bot Bypass",
+      "Dynamic Form Filling"
+    ],
+    "stars": 6150,
+    "forks": 580,
+    "last_update": "2026-10-18T20:03:01.110Z",
+    "created_at": "2024-04-02T08:00:00Z",
+    "language": "TypeScript",
+    "topics": [
+      "browser-agent",
+      "web-automation",
+      "scraping-agent",
+      "ai-operator"
+    ],
+    "license": "MIT",
+    "velocity": 0.94,
+    "pulse_score": 96,
+    "growth_score": 35,
+    "popularity_score": 23,
+    "activity_score": 20,
+    "trust_score": 14,
+    "votes": 67,
+    "downvotes": 2,
+    "is_verified": true,
+    "is_visible": true,
+    "quality_score": 98,
+    "trend": "+24.5%"
+  },
+  {
+    "name": "Job Application Agent",
+    "repo": "autoapply-ai/job-application-agent",
+    "tagline": "Autonomous career agent that customizes resumes & applies on autopilot",
+    "description": "Autonomous end-to-end career agent that matches LinkedIn/Indeed postings, tailors ATS-optimized resumes and cover letters, and submits verified applications.",
+    "app_type": "autonomous_agent",
+    "category": "Career & Productivity",
+    "demo_url": "https://autoapply-agent.io",
+    "website_url": "https://autoapply-agent.io",
+    "built_with": [
+      "Python",
+      "Selenium",
+      "LlamaIndex",
+      "GPT-4o"
+    ],
+    "capabilities": [
+      "ATS Resume Tailoring",
+      "Automated Greenhouse/Workday Submissions",
+      "Status Tracker"
+    ],
+    "stars": 5890,
+    "forks": 710,
+    "last_update": "2026-10-18T20:03:01.110Z",
+    "created_at": "2024-03-20T14:30:00Z",
+    "language": "Python",
+    "topics": [
+      "job-agent",
+      "auto-apply",
+      "career-automation",
+      "resume-tailoring"
+    ],
+    "license": "MIT",
+    "velocity": 0.89,
+    "pulse_score": 93,
+    "growth_score": 31,
+    "popularity_score": 22,
+    "activity_score": 17,
+    "trust_score": 12,
+    "votes": 54,
+    "downvotes": 1,
+    "is_verified": true,
+    "is_visible": true,
+    "quality_score": 94,
+    "trend": "+15.8%"
+  },
+  {
     "name": "AutoGPT",
     "repo": "Significant-Gravitas/AutoGPT",
     "description": "AutoGPT is the vision of accessible AI for everyone, to use and to build on. Our mission is to provide the tools, so that you can focus on what matters.",
@@ -34,7 +215,8 @@
     "is_verified": true,
     "is_visible": true,
     "quality_score": 100,
-    "trend": "+0.0%"
+    "trend": "+0.0%",
+    "app_type": "autonomous_agent"
   },
   {
     "name": "langchain",
@@ -80,7 +262,8 @@
     "is_verified": true,
     "is_visible": true,
     "quality_score": 100,
-    "trend": "+0.0%"
+    "trend": "+0.0%",
+    "app_type": "dev_tool"
   },
   {
     "name": "MetaGPT",
@@ -281,7 +464,8 @@
     "is_verified": true,
     "is_visible": true,
     "quality_score": 100,
-    "trend": "+0.0%"
+    "trend": "+0.0%",
+    "app_type": "dev_tool"
   },
   {
     "name": "freqtrade",
@@ -352,7 +536,8 @@
     "is_verified": true,
     "is_visible": true,
     "quality_score": 100,
-    "trend": "+0.0%"
+    "trend": "+0.0%",
+    "app_type": "dev_tool"
   },
   {
     "name": "gpt-engineer",
@@ -376,7 +561,7 @@
       "python"
     ],
     "license": "MIT",
-    "category": "Code",
+    "category": "Coding & Dev",
     "velocity": 0.8943726833647777,
     "pulse_score": 85,
     "growth_score": 26,
@@ -388,7 +573,8 @@
     "is_verified": true,
     "is_visible": true,
     "quality_score": 100,
-    "trend": "+0.0%"
+    "trend": "+0.0%",
+    "app_type": "task_bot"
   },
   {
     "name": "private-gpt",
@@ -542,7 +728,8 @@
     "is_verified": true,
     "is_visible": true,
     "quality_score": 86,
-    "trend": "+0.0%"
+    "trend": "+0.0%",
+    "app_type": "autonomous_agent"
   },
   {
     "name": "agno",
@@ -604,7 +791,8 @@
     "is_verified": true,
     "is_visible": true,
     "quality_score": 79,
-    "trend": "+0.0%"
+    "trend": "+0.0%",
+    "app_type": "dev_tool"
   },
   {
     "name": "Scrapegraph-ai",
@@ -753,7 +941,8 @@
     "is_verified": true,
     "is_visible": true,
     "quality_score": 72,
-    "trend": "+0.0%"
+    "trend": "+0.0%",
+    "app_type": "autonomous_agent"
   },
   {
     "name": "hummingbot",
