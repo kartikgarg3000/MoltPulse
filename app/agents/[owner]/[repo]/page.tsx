@@ -10,7 +10,7 @@ import PulseChart from '@/components/PulseChart';
 import StatusBadge from '@/components/StatusBadge';
 import CopyBadgeSnippet from '@/components/CopyBadgeSnippet';
 
-export const revalidate = 600; // Cache for 10 minutes
+export const revalidate = 3600; // Cache for 1 hour — detail pages rarely change
 
 interface PageProps {
     params: Promise<{
@@ -52,11 +52,18 @@ export async function generateMetadata({ params }: PageProps) {
   };
 }
 
-import { getStaticAgents } from '@/lib/static-fallback';
+import { getStaticAgents, isStaticOnlyMode } from '@/lib/static-fallback';
 
 // Fetch Agent from Supabase with static fallback
 async function getAgent(owner: string, repo: string) {
   const fullRepoName = `${owner}/${repo}`.toLowerCase();
+
+  // Short-circuit: skip Supabase init entirely when quota is exceeded
+  if (isStaticOnlyMode()) {
+    const staticAgents = getStaticAgents();
+    return staticAgents.find(a => a.repo.toLowerCase() === fullRepoName) || null;
+  }
+
   try {
     const supabase = await createClient();
     const { data } = await supabase

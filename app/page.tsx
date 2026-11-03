@@ -3,13 +3,18 @@ import { createClient } from '@/utils/supabase/server';
 import AgentCard from '@/components/AgentCard';
 import AgentFeedItem from '@/components/AgentFeedItem';
 import { TrendingUp, Clock, Layers } from 'lucide-react';
-import { getStaticAgents } from '@/lib/static-fallback';
+import { getStaticAgents, isStaticOnlyMode } from '@/lib/static-fallback';
 
-export const revalidate = 300; // Cache for 5 minutes — pulse data doesn't change per-second
+// Bump cache to 1 hour — reduces compute invocations dramatically.
+// With static-only mode active this page only runs once per hour.
+export const revalidate = 3600;
 
 import { Agent } from '@/types';
 
 async function getAgents(): Promise<Agent[]> {
+  // Short-circuit: skip Supabase init entirely when quota is exceeded
+  if (isStaticOnlyMode()) return getStaticAgents();
+
   const supabase = await createClient();
 
   const AGENT_FIELDS = 'name,repo,description,stars,last_update,created_at,category,velocity,pulse_score,growth_score,votes,downvotes,is_verified,is_visible,quality_score,language,topics';

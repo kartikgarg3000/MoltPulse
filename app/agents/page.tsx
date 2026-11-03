@@ -1,11 +1,15 @@
 import { Suspense } from 'react';
 import { createClient } from '@/utils/supabase/server';
 import DirectoryFilter from '@/components/DirectoryFilter';
-import { getStaticAgents } from '@/lib/static-fallback';
+import { getStaticAgents, isStaticOnlyMode } from '@/lib/static-fallback';
 
-export const revalidate = 300; // Cache for 5 minutes
+// Bump to 1 hour — agents list changes infrequently; avoids spinning compute every 5 min
+export const revalidate = 3600;
 
 async function getAgents() {
+  // Short-circuit: skip Supabase init entirely when quota is exceeded
+  if (isStaticOnlyMode()) return getStaticAgents();
+
   const supabase = await createClient();
 
   const AGENT_FIELDS = 'name,repo,description,stars,last_update,created_at,category,velocity,pulse_score,growth_score,votes,downvotes,is_verified,is_visible,quality_score,language,topics';
@@ -32,7 +36,7 @@ export default async function AgentsPage() {
     <div className="space-y-8 animate-in fade-in duration-500">
        <header>
         <h1 className="text-4xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-cyan-400 to-purple-400">
-          AI Software & Agent Directory
+          AI Software &amp; Agent Directory
         </h1>
         <p className="text-gray-400">Discover and explore cutting-edge AI-built applications, autonomous task agents, and intelligent tools.</p>
        </header>
