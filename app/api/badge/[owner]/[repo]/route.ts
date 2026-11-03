@@ -1,9 +1,11 @@
 import { NextResponse } from 'next/server';
 import { createClient } from '@/utils/supabase/server';
+import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
+import { getStaticAgents, isStaticOnlyMode } from '@/lib/static-fallback';
 
 // Cache at edge for 1 hour, allow up to 24h stale while revalidating.
 // This is the critical fix to avoid Origin Transfer overages —
-// badge SVGs served from Vercel's CDN edge instead of hitting the
+// badge SVGs served from Netlify's CDN edge instead of hitting the
 // serverless function + Supabase on every GitHub README page view.
 export const dynamic = 'force-dynamic';
 
@@ -11,25 +13,59 @@ export async function GET(
   request: Request,
   { params }: { params: Promise<{ owner: string; repo: string }> }
 ) {
+  // Rate limit: 30 requests per minute per IP
+  const ip = getClientIp(request);
+  const rl = checkRateLimit('badge', ip, 30, 60_000);
+
+  if (!rl.success) {
+    return new NextResponse('Too Many Requests', {
+      status: 429,
+      headers: {
+        'Retry-After': String(Math.ceil((rl.reset - Date.now()) / 1000)),
+        'X-RateLimit-Limit': String(rl.limit),
+        'X-RateLimit-Remaining': '0',
+        'X-RateLimit-Reset': String(rl.reset),
+      },
+    });
+  }
+
   const { owner, repo } = await params;
   const fullRepo = `${owner}/${repo}`;
 
-  const supabase = await createClient();
-  
-  const { data } = await supabase
-    .from('agents')
-    .select('pulse_score')
-    .ilike('repo', fullRepo)
-    .single();
-
   let scoreText = 'N/A';
-  if (data && data.pulse_score !== undefined && data.pulse_score !== null) {
-    scoreText = Math.round(data.pulse_score).toString();
+
+  try {
+    if (isStaticOnlyMode()) {
+      // Serve from static JSON — zero Supabase egress
+      const agents = getStaticAgents();
+      const agent = agents.find(a => a.repo.toLowerCase() === fullRepo.toLowerCase());
+      if (agent?.pulse_score !== undefined && agent.pulse_score !== null) {
+        scoreText = Math.round(agent.pulse_score as number).toString();
+      }
+    } else {
+      const supabase = await createClient();
+      const { data } = await supabase
+        .from('agents')
+        .select('pulse_score')
+        .ilike('repo', fullRepo)
+        .single();
+
+      if (data?.pulse_score !== undefined && data.pulse_score !== null) {
+        scoreText = Math.round(data.pulse_score).toString();
+      }
+    }
+  } catch {
+    // Fallback to static on any error
+    const agents = getStaticAgents();
+    const agent = agents.find(a => a.repo.toLowerCase() === fullRepo.toLowerCase());
+    if (agent?.pulse_score !== undefined && agent.pulse_score !== null) {
+      scoreText = Math.round(agent.pulse_score as number).toString();
+    }
   }
 
-  const leftText = "🔥 Pulse";
+  const leftText = '🔥 Pulse';
   const leftWidth = 65;
-  const rightWidth = scoreText === 'N/A' ? 40 : 25 + (scoreText.length * 8);
+  const rightWidth = scoreText === 'N/A' ? 40 : 25 + scoreText.length * 8;
   const totalWidth = leftWidth + rightWidth;
 
   const svg = `
@@ -62,6 +98,8 @@ export async function GET(
       // CDN caches for 1 hour, serves stale up to 1 day while revalidating.
       // Prevents thousands of badge embeds from hammering the origin server.
       'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400',
+      'X-RateLimit-Limit': String(rl.limit),
+      'X-RateLimit-Remaining': String(rl.remaining),
     },
   });
 }
