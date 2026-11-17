@@ -1,5 +1,5 @@
 import React from 'react';
-import { createClient } from '@/utils/supabase/server';
+import { createPublicClient } from '@/utils/supabase/public';
 import { notFound } from 'next/navigation';
 import ReactMarkdown from 'react-markdown';
 import VoteButton from '@/components/VoteButton';
@@ -65,13 +65,15 @@ async function getAgent(owner: string, repo: string) {
   }
 
   try {
-    const supabase = await createClient();
-    const { data } = await supabase
-      .from('agents')
-      .select('*')
-      .ilike('repo', `${owner}/${repo}`)
-      .single();
-    if (data) return data;
+    const supabase = createPublicClient();
+    if (supabase) {
+      const { data } = await supabase
+        .from('agents')
+        .select('*')
+        .ilike('repo', `${owner}/${repo}`)
+        .single();
+      if (data) return data;
+    }
   } catch (err) {
     // Continue to static fallback
   }

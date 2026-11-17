@@ -1,16 +1,17 @@
 import { Suspense } from 'react';
-import { createClient } from '@/utils/supabase/server';
+import { createPublicClient } from '@/utils/supabase/public';
 import DirectoryFilter from '@/components/DirectoryFilter';
 import { getStaticAgents, isStaticOnlyMode } from '@/lib/static-fallback';
 
-// Bump to 1 hour — agents list changes infrequently; avoids spinning compute every 5 min
+// ISR Cache for 1 hour — serves from CDN edge without spinning serverless compute
 export const revalidate = 3600;
 
 async function getAgents() {
   // Short-circuit: skip Supabase init entirely when quota is exceeded
   if (isStaticOnlyMode()) return getStaticAgents();
 
-  const supabase = await createClient();
+  const supabase = createPublicClient();
+  if (!supabase) return getStaticAgents();
 
   const AGENT_FIELDS = 'name,repo,description,stars,last_update,created_at,category,velocity,pulse_score,growth_score,votes,downvotes,is_verified,is_visible,quality_score,language,topics';
 

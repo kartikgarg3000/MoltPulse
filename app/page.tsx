@@ -1,12 +1,12 @@
 import Link from 'next/link';
-import { createClient } from '@/utils/supabase/server';
+import { createPublicClient } from '@/utils/supabase/public';
 import AgentCard from '@/components/AgentCard';
 import AgentFeedItem from '@/components/AgentFeedItem';
 import { TrendingUp, Clock, Layers } from 'lucide-react';
 import { getStaticAgents, isStaticOnlyMode } from '@/lib/static-fallback';
 
-// Bump cache to 1 hour — reduces compute invocations dramatically.
-// With static-only mode active this page only runs once per hour.
+// ISR Cache for 1 hour. Because we use createPublicClient (no cookies),
+// Next.js & Netlify CDN can statically cache this page at the edge.
 export const revalidate = 3600;
 
 import { Agent } from '@/types';
@@ -15,7 +15,8 @@ async function getAgents(): Promise<Agent[]> {
   // Short-circuit: skip Supabase init entirely when quota is exceeded
   if (isStaticOnlyMode()) return getStaticAgents();
 
-  const supabase = await createClient();
+  const supabase = createPublicClient();
+  if (!supabase) return getStaticAgents();
 
   const AGENT_FIELDS = 'name,repo,description,stars,last_update,created_at,category,velocity,pulse_score,growth_score,votes,downvotes,is_verified,is_visible,quality_score,language,topics';
 

@@ -1,5 +1,5 @@
 
-import { createClient } from '@/utils/supabase/server';
+import { createPublicClient } from '@/utils/supabase/public';
 import { notFound } from 'next/navigation';
 import ReactMarkdown from 'react-markdown';
 import Link from 'next/link';
@@ -14,13 +14,18 @@ interface PageProps {
 }
 
 async function getPlaybook(slug: string) {
-    const supabase = await createClient();
-    const { data } = await supabase
-        .from('playbooks')
-        .select('*')
-        .eq('slug', slug)
-        .single();
-    return data;
+    try {
+        const supabase = createPublicClient();
+        if (!supabase) return null;
+        const { data } = await supabase
+            .from('playbooks')
+            .select('*')
+            .eq('slug', slug)
+            .single();
+        return data;
+    } catch {
+        return null;
+    }
 }
 
 export default async function PlaybookPage({ params }: PageProps) {

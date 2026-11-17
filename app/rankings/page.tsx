@@ -1,32 +1,45 @@
 import React from 'react';
-import { createClient } from '@/utils/supabase/server';
+import { createPublicClient } from '@/utils/supabase/public';
+import { getStaticAgents, isStaticOnlyMode } from '@/lib/static-fallback';
 import AgentCard from '@/components/AgentCard';
 import { Trophy, Star, ThumbsUp } from 'lucide-react';
 
-export const revalidate = 600; // Cache for 10 minutes
+export const revalidate = 3600; // Cache for 1 hour at CDN edge
 
 async function getTopAgents() {
-  const supabase = await createClient();
+  if (isStaticOnlyMode()) {
+    const staticAgents = getStaticAgents();
+    const sortedByStars = [...staticAgents].sort((a, b) => (b.stars || 0) - (a.stars || 0)).slice(0, 5);
+    const sortedByVotes = [...staticAgents].sort((a, b) => (b.votes || 0) - (a.votes || 0)).slice(0, 5);
+    return { topStars: sortedByStars, topVotes: sortedByVotes };
+  }
+
+  const supabase = createPublicClient();
+  if (!supabase) {
+    const staticAgents = getStaticAgents();
+    const sortedByStars = [...staticAgents].sort((a, b) => (b.stars || 0) - (a.stars || 0)).slice(0, 5);
+    const sortedByVotes = [...staticAgents].sort((a, b) => (b.votes || 0) - (a.votes || 0)).slice(0, 5);
+    return { topStars: sortedByStars, topVotes: sortedByVotes };
+  }
+
   const AGENT_FIELDS = 'name,repo,description,stars,last_update,created_at,category,velocity,pulse_score,growth_score,votes,downvotes,is_verified,is_visible,quality_score,language,topics';
 
-  // Get top 5 by stars
-  const { data: topStars } = await supabase
-    .from('agents')
-    .select(AGENT_FIELDS)
-    .order('stars', { ascending: false })
-    .limit(5);
+  try {
+    const [{ data: topStars }, { data: topVotes }] = await Promise.all([
+      supabase.from('agents').select(AGENT_FIELDS).order('stars', { ascending: false }).limit(5),
+      supabase.from('agents').select(AGENT_FIELDS).order('votes', { ascending: false }).limit(5),
+    ]);
 
-  // Get top 5 by votes
-  const { data: topVotes } = await supabase
-    .from('agents')
-    .select(AGENT_FIELDS)
-    .order('votes', { ascending: false })
-    .limit(5);
-
-  return {
-    topStars: topStars || [],
-    topVotes: topVotes || []
-  };
+    return {
+      topStars: topStars && topStars.length > 0 ? topStars : getStaticAgents().slice(0, 5),
+      topVotes: topVotes && topVotes.length > 0 ? topVotes : getStaticAgents().slice(0, 5),
+    };
+  } catch {
+    const staticAgents = getStaticAgents();
+    const sortedByStars = [...staticAgents].sort((a, b) => (b.stars || 0) - (a.stars || 0)).slice(0, 5);
+    const sortedByVotes = [...staticAgents].sort((a, b) => (b.votes || 0) - (a.votes || 0)).slice(0, 5);
+    return { topStars: sortedByStars, topVotes: sortedByVotes };
+  }
 }
 
 export default async function RankingsPage() {

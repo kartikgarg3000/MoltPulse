@@ -1,4 +1,4 @@
-import { createClient } from '@/utils/supabase/server';
+import { createPublicClient } from '@/utils/supabase/public';
 import PlaybookCard from '@/components/PlaybookCard';
 import PlaybookLibrary from '@/components/PlaybookLibrary';
 
@@ -7,11 +7,19 @@ import { BookOpen, Search, Sparkles, Layers, Cpu, Code, Target, ArrowRight } fro
 export const revalidate = 3600; // Refresh once per hour
 
 export default async function PlaybooksPage() {
-    const supabase = await createClient();
-    const { data: playbooks } = await supabase
-        .from('playbooks')
-        .select('*')
-        .order('created_at', { ascending: false });
+    let playbooks: any[] = [];
+    try {
+      const supabase = createPublicClient();
+      if (supabase) {
+        const { data } = await supabase
+          .from('playbooks')
+          .select('*')
+          .order('created_at', { ascending: false });
+        playbooks = data || [];
+      }
+    } catch {
+      playbooks = [];
+    }
 
     return (
       <div className="space-y-20 pb-20 animate-in fade-in duration-700">
