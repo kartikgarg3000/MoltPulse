@@ -445,12 +445,24 @@ export default function AdminDashboard() {
                       </div>
                       <p className="text-xs text-gray-500 font-mono italic">{sub.repo}</p>
                     </div>
-                    <div className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${
-                      sub.status === 'approved' ? 'bg-green-500 text-white' :
-                      sub.status === 'rejected' ? 'bg-red-500 text-white' :
-                      'bg-yellow-500 text-black'
-                    }`}>
-                      {sub.status}
+                    <div className="flex items-center gap-2">
+                      {(sub.plan === 'featured' || sub.notes?.includes('FEATURED') || sub.submitter_contact?.includes('FEATURED')) && (
+                        <span className="px-2.5 py-0.5 rounded-full bg-orange-500/20 border border-orange-500/50 text-orange-400 text-[10px] font-black uppercase tracking-wider animate-pulse">
+                          🔥 Featured $21
+                        </span>
+                      )}
+                      {(sub.plan === 'priority' || sub.notes?.includes('PRIORITY') || sub.submitter_contact?.includes('PRIORITY')) && (
+                        <span className="px-2.5 py-0.5 rounded-full bg-cyan-500/20 border border-cyan-500/50 text-cyan-400 text-[10px] font-black uppercase tracking-wider">
+                          ⚡ Priority $10
+                        </span>
+                      )}
+                      <div className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${
+                        sub.status === 'approved' ? 'bg-green-500 text-white' :
+                        sub.status === 'rejected' ? 'bg-red-500 text-white' :
+                        'bg-yellow-500 text-black'
+                      }`}>
+                        {sub.status}
+                      </div>
                     </div>
                   </div>
 
