@@ -69,7 +69,7 @@ function SubmitFormContent() {
       console.warn("Database notice:", err);
     }
 
-    // If paid plan selected, redirect to Stripe Checkout
+    // If paid plan selected, redirect to Dodo Payments Checkout
     if (selectedPlan === 'priority' || selectedPlan === 'featured') {
       try {
         const checkoutRes = await fetch('/api/checkout', {
@@ -80,6 +80,7 @@ function SubmitFormContent() {
             productName: productName.trim() || 'AI Product',
             repo: repo.trim(),
             demoUrl: demoUrl.trim(),
+            email: contact.trim(),
             submissionId,
           }),
         });
@@ -90,7 +91,7 @@ function SubmitFormContent() {
           window.location.href = checkoutData.url;
           return;
         } else {
-          console.warn("Stripe checkout error:", checkoutData.error);
+          console.warn("Checkout error:", checkoutData.error);
           // If checkout fails (e.g. keys not set), still show confirmation
           setSuccess(true);
         }
@@ -339,7 +340,7 @@ function SubmitFormContent() {
 
           <div className="p-4 rounded-xl bg-blue-500/5 border border-blue-500/20 flex items-center gap-3 text-xs text-blue-300">
             <ShieldCheck size={20} className="text-blue-400 flex-shrink-0" />
-            <span>Secure checkout powered by Stripe. You will be redirected to complete payment if priority or featured tier is selected.</span>
+            <span>Secure global checkout powered by Dodo Payments (Supports Apple Pay, Google Pay &amp; Cards). You will be redirected to complete payment if priority or featured tier is selected.</span>
           </div>
         </div>
 
